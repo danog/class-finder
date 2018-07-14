@@ -1,0 +1,12 @@
+{
+    "name": "hpierce1102/class-finder",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hayden Pierce",
+            "email": "hayden@haydenpierce.com"
+        }
+    ],
+    "require": {}
+}
