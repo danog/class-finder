@@ -3,9 +3,36 @@ namespace HaydenPierce\ClassFinder;
 
 class ClassFinder
 {
-    //This value should be the directory that contains composer.json
-    const appRoot = __DIR__ . "/../../";
+    /**
+     * @throws \Exception
+     */
+    private static function findAppRoot()
+    {
+        $workingDirectory = str_replace('\\', '/', __DIR__);
+        $directoryPathPieces = explode('/', $workingDirectory);
 
+        $appRoot = null;
+        do {
+            $path = implode('/', $directoryPathPieces) . '/composer.json';
+            if (file_exists($path)) {
+                $appRoot = implode('/', $directoryPathPieces);
+            } else {
+                array_pop($directoryPathPieces);
+            }
+        } while (is_null($appRoot) || count($directoryPathPieces) > 0);
+
+        if (is_null($appRoot)) {
+            throw new \Exception('Could not locate composer.json.');
+        } else {
+            return $appRoot;
+        }
+    }
+
+    /**
+     * @param $namespace
+     * @return array
+     * @throws \Exception
+     */
     public static function getClassesInNamespace($namespace)
     {
         $files = scandir(self::getNamespaceDirectory($namespace));
@@ -19,9 +46,15 @@ class ClassFinder
         });
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     private static function getDefinedNamespaces()
     {
-        $composerJsonPath = self::appRoot . 'composer.json';
+        $appRoot = self::findAppRoot();
+
+        $composerJsonPath = $appRoot. 'composer.json';
         $composerConfig = json_decode(file_get_contents($composerJsonPath));
 
         //Apparently PHP doesn't like hyphens, so we use variable variables instead.
@@ -29,8 +62,15 @@ class ClassFinder
         return (array) $composerConfig->autoload->$psr4;
     }
 
+    /**
+     * @param $namespace
+     * @return bool|string
+     * @throws \Exception
+     */
     private static function getNamespaceDirectory($namespace)
     {
+        $appRoot = self::findAppRoot();
+
         $composerNamespaces = self::getDefinedNamespaces();
 
         $namespaceFragments = explode('\\', $namespace);
@@ -40,7 +80,7 @@ class ClassFinder
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
 
             if(array_key_exists($possibleNamespace, $composerNamespaces)){
-                return realpath(self::appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments));
+                return realpath($appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments));
             }
 
             $undefinedNamespaceFragments[] = array_pop($namespaceFragments);
