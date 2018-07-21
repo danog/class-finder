@@ -8,5 +8,13 @@
             "email": "hayden@haydenpierce.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "HaydenPierce\\ClassFinder\\": "src/"
+        }
+    }
 }

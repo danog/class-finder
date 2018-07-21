@@ -1,0 +1,17 @@
+{
+  "name": "HaydenPierce/testApp",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hayden Pierce",
+      "email": "hayden@haydenpierce.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "TestApp1\\": "src/"
+    }
+  }
+}

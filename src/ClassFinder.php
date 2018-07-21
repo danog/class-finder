@@ -3,11 +3,17 @@ namespace HaydenPierce\ClassFinder;
 
 class ClassFinder
 {
+    public static $appRoot;
+
     /**
      * @throws \Exception
      */
     private static function findAppRoot()
     {
+        if (self::$appRoot) {
+            return self::$appRoot;
+        }
+
         $workingDirectory = str_replace('\\', '/', __DIR__);
         $directoryPathPieces = explode('/', $workingDirectory);
 
@@ -15,11 +21,11 @@ class ClassFinder
         do {
             $path = implode('/', $directoryPathPieces) . '/composer.json';
             if (file_exists($path)) {
-                $appRoot = implode('/', $directoryPathPieces);
+                $appRoot = implode('/', $directoryPathPieces) . '/';
             } else {
                 array_pop($directoryPathPieces);
             }
-        } while (is_null($appRoot) || count($directoryPathPieces) > 0);
+        } while (is_null($appRoot) && count($directoryPathPieces) > 0);
 
         if (is_null($appRoot)) {
             throw new \Exception('Could not locate composer.json.');
