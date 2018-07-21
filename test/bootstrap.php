@@ -20,7 +20,7 @@ function findTestApps($rootDir) {
     });
 
     $testAppPaths = array_map(function($path) {
-        return __DIR__  . '/' . $path;
+        return realpath(__DIR__  . '/' . $path);
     }, $testAppPaths);
 
     return $testAppPaths;
@@ -69,5 +69,28 @@ function copyInCurrentClasses($testApp) {
 $testApps = findTestApps(__DIR__);
 
 foreach($testApps as $testApp) {
+
+    $autoloaderPath = $testApp . '/vendor/autoload.php';
+
+    $autoloaderExists = false;
+    if (!file_exists($autoloaderPath)) {
+        echo "No autoloader detected.\n";
+        echo "Running composer install for $testApp...\n";
+
+        // TODO: Programically run composer install?
+        // https://stackoverflow.com/a/45831624/3000068
+        // I ran into a problem getting composer to run via shell_exec() - Stack Overflow suggests it could be xdebug related.
+        // I couldn't figure out how to set an environment variable before running a command on Windows.
+        // This should be capable of Windows and Unix systems.
+        echo "FAILED.\n";
+
+        echo "************\n";
+        echo "* SOLUTION *\n";
+        echo "************\n";
+        echo "You will need to run the following command to get this up and running:\n";
+        echo "composer install --working-dir=\"$testApp\"\n";
+        exit;
+    }
+
     copyInCurrentClasses($testApp);
 }

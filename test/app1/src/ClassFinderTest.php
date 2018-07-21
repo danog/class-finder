@@ -1,15 +1,19 @@
 <?php
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+namespace TestApp1;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/hpierce1102/ClassFinder.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
+use \PHPUnit\Framework\TestCase;
 
-class ClassFinderTest extends \PHPUnit\Framework\TestCase
+
+// "vendor/bin/phpunit" "./test/app1/src/ClassFinderTest.php"
+class ClassFinderTest extends TestCase
 {
     public function testClassFinder()
     {
-        ClassFinder::$appRoot = realpath(__DIR__ . '/../') . '/';
-
         try {
             $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
         } catch (Exception $e) {
@@ -18,7 +22,9 @@ class ClassFinderTest extends \PHPUnit\Framework\TestCase
         }
 
         $this->assertEquals(array(
-
+            'TestApp1\Foo\Bar',
+            'TestApp1\Foo\Baz',
+            'TestApp1\Foo\Foo'
         ), $classes);
     }
 }
