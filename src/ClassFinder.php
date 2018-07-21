@@ -47,9 +47,11 @@ class ClassFinder
             return $namespace . '\\' . str_replace('.php', '', $file);
         }, $files);
 
-        return array_filter($classes, function($possibleClass){
+        $classes = array_filter($classes, function($possibleClass){
             return class_exists($possibleClass);
         });
+
+        return array_values($classes);
     }
 
     /**
