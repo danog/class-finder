@@ -54,7 +54,7 @@ function buildDirectories($path) {
 
 function copyInCurrentClasses($testApp) {
     $classFinderSource = realpath(__DIR__ . '/../src/ClassFinder.php');
-    $classFinderPath = $testApp . '/vendor/hpierce1102/ClassFinder.php';
+    $classFinderPath = $testApp . '/vendor/haydenpierce/ClassFinder.php';
     $classFinderPath = str_replace('\\', '/', $classFinderPath);
 
     buildDirectories($classFinderPath);
