@@ -91,7 +91,7 @@ class ClassFinder
                 return realpath($appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments));
             }
 
-            $undefinedNamespaceFragments[] = array_pop($namespaceFragments);
+            array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));
         }
 
         return false;

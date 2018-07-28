@@ -12,19 +12,41 @@ use \PHPUnit\Framework\TestCase;
 // "vendor/bin/phpunit" "./test/app1/src/ClassFinderTest.php"
 class ClassFinderTest extends TestCase
 {
-    public function testClassFinder()
+    /**
+     * @dataProvider classFinderDataProvider
+     */
+    public function testClassFinder($namespace, $expected)
     {
         try {
-            $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
+            $classes = ClassFinder::getClassesInNamespace($namespace);
         } catch (Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
             $classes = array();
         }
 
-        $this->assertEquals(array(
-            'TestApp1\Foo\Bar',
-            'TestApp1\Foo\Baz',
-            'TestApp1\Foo\Foo'
-        ), $classes);
+        $this->assertEquals($expected, $classes);
     }
+
+    public function classFinderDataProvider()
+    {
+        return array(
+            array(
+                'TestApp1\Foo',
+                array(
+                    'TestApp1\Foo\Bar',
+                    'TestApp1\Foo\Baz',
+                    'TestApp1\Foo\Foo'
+                )
+            ),
+            array(
+                'TestApp1\Foo\Loo',
+                array(
+                    'TestApp1\Foo\Loo\Lar',
+                    'TestApp1\Foo\Loo\Laz',
+                    'TestApp1\Foo\Loo\Loo'
+                )
+            )
+        );
+    }
+
 }
