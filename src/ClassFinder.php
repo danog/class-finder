@@ -95,6 +95,9 @@ class ClassFinder
             array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));
         }
 
-        return false;
+        throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace prefix to composer.json. See '%s' for details.",
+            $namespace,
+            'https://gitlab.com/hpierce1102/ClassFinder' // TODO: write documentation and update this link.
+        ));
     }
 }

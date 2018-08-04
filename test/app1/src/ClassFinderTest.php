@@ -50,6 +50,7 @@ class ClassFinderTest extends TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedExceptionMessage Unknown namespace 'DoesNotExist\Foo\Bar'. You should add the namespace prefix to composer.json.
      */
     public function testThrowsOnUnknownNameSpace()
     {
