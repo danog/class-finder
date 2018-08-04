@@ -48,4 +48,14 @@ class ClassFinderTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     */
+    public function testThrowsOnUnknownNameSpace()
+    {
+        // The root wasn't registered in composer.json.
+        // "Unknown namespace '$namespace'. You should add the namespace prefix to composer.json. See '$link' for details."
+        ClassFinder::getClassesInNamespace('DoesNotExist\Foo\Bar');
+    }
+
 }
