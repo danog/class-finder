@@ -26,44 +26,56 @@ function findTestApps($rootDir) {
     return $testAppPaths;
 }
 
-function buildDirectories($path) {
-    $pathPieces = explode('/', $path);
-
-    // Remove the file, this isn't a directory
-    array_pop($pathPieces);
-
-    // On Windows, the first element could be C:/, representing the first directory. Remove that.
-    // I suspect someone's going to have an issue with this and report a bug.
-    // ✨ oh well ✨
-    $isFirstElementWindowsDrive = strpos($pathPieces[0], ':') !== false;
-    if ($isFirstElementWindowsDrive) {
-        array_shift($pathPieces);
+// https://stackoverflow.com/a/3349792/3000068
+function deleteDir($dirPath) {
+    if (! is_dir($dirPath)) {
+        throw new InvalidArgumentException("$dirPath must be a directory");
     }
-
-    $requiredDirectory = '/';
-    foreach($pathPieces as $piece) {
-        $requiredDirectory = $requiredDirectory . $piece;
-
-        if(!is_dir($requiredDirectory)) {
-            mkdir($requiredDirectory);
+    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+        $dirPath .= '/';
+    }
+    $files = glob($dirPath . '*', GLOB_MARK);
+    foreach ($files as $file) {
+        if (is_dir($file)) {
+            deleteDir($file);
+        } else {
+            unlink($file);
         }
-
-        $requiredDirectory = $requiredDirectory . '/';
     }
+    rmdir($dirPath);
+}
+
+// https://stackoverflow.com/a/2050909/3000068
+function recurse_copy($src,$dst) {
+    $dir = opendir($src);
+    @mkdir($dst);
+    while(false !== ( $file = readdir($dir)) ) {
+        if (( $file != '.' ) && ( $file != '..' )) {
+            if ( is_dir($src . '/' . $file) ) {
+                recurse_copy($src . '/' . $file,$dst . '/' . $file);
+            }
+            else {
+                copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+    }
+    closedir($dir);
 }
 
 function copyInCurrentClasses($testApp) {
-    $classFinderSource = realpath(__DIR__ . '/../src/ClassFinder.php');
-    $classFinderPath = $testApp . '/vendor/haydenpierce/ClassFinder.php';
+    $classFinderSource = realpath(__DIR__ . '/../src');
+    $classFinderPath = $testApp . '/vendor/haydenpierce/src';
     $classFinderPath = str_replace('\\', '/', $classFinderPath);
 
-    buildDirectories($classFinderPath);
-
-    if (file_exists($classFinderPath)) {
-        unlink($classFinderPath);
+    if (is_dir($classFinderPath)) {
+        deleteDir($classFinderPath);
     }
 
-    copy($classFinderSource, $classFinderPath);
+    recurse_copy($classFinderSource, $classFinderPath);
+
+    $composerSource = realpath(__DIR__ . '/../composer.json');
+    $composerPath =  $testApp . '/vendor/haydenpierce/composer.json';
+    copy($composerSource, $composerPath);
 }
 
 $testApps = findTestApps(__DIR__);
