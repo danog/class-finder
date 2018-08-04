@@ -15,6 +15,7 @@ class ClassFinder
         }
 
         $workingDirectory = str_replace('\\', '/', __DIR__);
+        $workingDirectory = str_replace('/vendor/haydenpierce/src', '', $workingDirectory);
         $directoryPathPieces = explode('/', $workingDirectory);
 
         $appRoot = null;
