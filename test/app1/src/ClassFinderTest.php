@@ -54,9 +54,21 @@ class ClassFinderTest extends TestCase
      */
     public function testThrowsOnUnknownNameSpace()
     {
-        // The root wasn't registered in composer.json.
+        // The top level namespace ("DoesNotExist") wasn't registered in composer.json.
         // "Unknown namespace '$namespace'. You should add the namespace prefix to composer.json. See '$link' for details."
         ClassFinder::getClassesInNamespace('DoesNotExist\Foo\Bar');
     }
 
+    /**
+     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedExceptionMessage
+     */
+    public function testThrowsOnMissingComposerConfig()
+    {
+        // ClassFinder will fail to identify a valid composer.json file.
+        ClassFinder::$appRoot = "/"; // Obviously, the application isn't running directly on the OS's root.
+
+        // "Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually. See '$link' for details."
+        ClassFinder::getClassesInNamespace('TestApp1\Foo\Loo');
+    }
 }
