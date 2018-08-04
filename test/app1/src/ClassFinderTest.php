@@ -11,6 +11,11 @@ use \PHPUnit\Framework\TestCase;
 // "vendor/bin/phpunit" "./test/app1/src/ClassFinderTest.php"
 class ClassFinderTest extends TestCase
 {
+    public function setup()
+    {
+        // Reset ClassFinder back to normal.
+        ClassFinder::$appRoot = null;
+    }
     /**
      * @dataProvider classFinderDataProvider
      */
@@ -57,6 +62,15 @@ class ClassFinderTest extends TestCase
         // The top level namespace ("DoesNotExist") wasn't registered in composer.json.
         // "Unknown namespace '$namespace'. You should add the namespace prefix to composer.json. See '$link' for details."
         ClassFinder::getClassesInNamespace('DoesNotExist\Foo\Bar');
+    }
+
+    /**
+     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedExceptionMessage
+     */
+    public function testThrowsOnUnknownSubNameSpace()
+    {
+        ClassFinder::getClassesInNamespace('TestApp1\DoesNotExist');
     }
 
     /**
