@@ -61,7 +61,7 @@ class ClassFinderTest extends TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\ClassFinderException
-     * @expectedExceptionMessage
+     * @expectedExceptionMessage Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually.
      */
     public function testThrowsOnMissingComposerConfig()
     {
