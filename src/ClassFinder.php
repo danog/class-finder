@@ -93,7 +93,19 @@ class ClassFinder
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
 
             if(array_key_exists($possibleNamespace, $composerNamespaces)){
-                return realpath($appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments));
+                $resolvedDirectory = $appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments);
+                $realDirectory = realpath($resolvedDirectory);
+                if ($realDirectory !== false) {
+                    return $realDirectory;
+                } else {
+                    throw new ClassFinderException(sprintf("Unknown namespace '%s'. Checked for files in %s, but that directory did not exist. See %s for details.",
+                        $namespace,
+                        $resolvedDirectory,
+                        'https://gitlab.com/hpierce1102/ClassFinder' // TODO: write documentation and update this link.
+                    ));
+                }
+
+                return realpath($resolvedDirectory);
             }
 
             array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));

@@ -66,7 +66,7 @@ class ClassFinderTest extends TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\ClassFinderException
-     * @expectedExceptionMessage
+     * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\. Checked for files in .*, but that directory did not exist\./
      */
     public function testThrowsOnUnknownSubNameSpace()
     {
