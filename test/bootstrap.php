@@ -48,7 +48,7 @@ function deleteDir($dirPath) {
 // https://stackoverflow.com/a/2050909/3000068
 function recurse_copy($src,$dst) {
     $dir = opendir($src);
-    @mkdir($dst);
+    @mkdir($dst, 0777, true);
     while(false !== ( $file = readdir($dir)) ) {
         if (( $file != '.' ) && ( $file != '..' )) {
             if ( is_dir($src . '/' . $file) ) {
@@ -64,7 +64,7 @@ function recurse_copy($src,$dst) {
 
 function copyInCurrentClasses($testApp) {
     $classFinderSource = realpath(__DIR__ . '/../src');
-    $classFinderPath = $testApp . '/vendor/haydenpierce/src';
+    $classFinderPath = $testApp . '/vendor/haydenpierce/class-finder/src';
     $classFinderPath = str_replace('\\', '/', $classFinderPath);
 
     if (is_dir($classFinderPath)) {
@@ -74,7 +74,7 @@ function copyInCurrentClasses($testApp) {
     recurse_copy($classFinderSource, $classFinderPath);
 
     $composerSource = realpath(__DIR__ . '/../composer.json');
-    $composerPath =  $testApp . '/vendor/haydenpierce/composer.json';
+    $composerPath =  $testApp . '/vendor/haydenpierce/class-finder/composer.json';
     copy($composerSource, $composerPath);
 }
 
