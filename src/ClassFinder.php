@@ -30,7 +30,7 @@ class ClassFinder
 
         if (!file_exists($appRoot . '/composer.json')) {
             throw new ClassFinderException(sprintf("Could not locate composer.json. You can get around this by setting ClassFinder::\$appRoot manually. See '%s' for details.",
-                'https://gitlab.com/hpierce1102/ClassFinder' // TODO: write documentation and update this link.
+                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/missingComposerConfig.md'
                 ));
         } else {
             self::$appRoot = $appRoot;
