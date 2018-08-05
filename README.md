@@ -51,3 +51,9 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
 var_dump($classes);
 ```
  
+Documentation
+-------------
+
+**Exceptions**:
+
+* [Unknown namespace - (Unregistered)](docs/exceptions/unregisteredRoot.md)
