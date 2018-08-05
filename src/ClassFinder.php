@@ -101,11 +101,9 @@ class ClassFinder
                     throw new ClassFinderException(sprintf("Unknown namespace '%s'. Checked for files in %s, but that directory did not exist. See %s for details.",
                         $namespace,
                         $resolvedDirectory,
-                        'https://gitlab.com/hpierce1102/ClassFinder' // TODO: write documentation and update this link.
+                        'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownSubNamespace.md'
                     ));
                 }
-
-                return realpath($resolvedDirectory);
             }
 
             array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));

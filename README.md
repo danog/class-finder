@@ -57,3 +57,4 @@ Documentation
 **Exceptions**:
 
 * [Unknown namespace - (Unregistered)](docs/exceptions/unregisteredRoot.md)
+* [Unknown namespace - (Registered)](docs/exceptions/unknownSubNamespace.md)
