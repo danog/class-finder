@@ -47,3 +47,5 @@ Things to check for:
 * Does PHP have permissions to the directory?
 * Is your app PSR-4 compliant?
 * Is the namespace correct?
+
+If this information doesn't resolve the issue, please feel free to submit an issue.

@@ -33,4 +33,4 @@ $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 
 This is an exotic situation and shouldn't apply to most projects.
 
-
+If this information doesn't resolve the issue, please feel free to submit an issue.

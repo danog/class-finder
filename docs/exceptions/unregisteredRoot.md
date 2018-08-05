@@ -58,3 +58,5 @@ This can be solved by adding `Acme` to the `autoload.psr-4` key like so:
 
 This will allow ClassFinder to search `src/acme/Foo/Bar/*` for classes in the `Acme\Foo\Bar` namespace. You could also add
 `Acme\Foo` to the `autoload.psr-4` config if that makes more sense.
+
+If this information doesn't resolve the issue, please feel free to submit an issue.
