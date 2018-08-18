@@ -2,6 +2,8 @@
 
 namespace HaydenPierce\ClassFinder;
 
+use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+
 /**
  * Class AppConfig
  * @package HaydenPierce\ClassFinder

@@ -59,7 +59,7 @@ class ClassFinderTest extends TestCase
     }
 
     /**
-     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessage Unknown namespace 'DoesNotExist\Foo\Bar'. You should add the namespace prefix to composer.json.
      */
     public function testThrowsOnUnknownNameSpace()
@@ -70,7 +70,7 @@ class ClassFinderTest extends TestCase
     }
 
     /**
-     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\. Checked for files in .*, but that directory did not exist\./
      */
     public function testThrowsOnUnknownSubNameSpace()
@@ -79,7 +79,7 @@ class ClassFinderTest extends TestCase
     }
 
     /**
-     * @expectedException HaydenPierce\ClassFinder\ClassFinderException
+     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessage Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually.
      */
     public function testThrowsOnMissingComposerConfig()

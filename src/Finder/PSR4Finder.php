@@ -2,7 +2,7 @@
 namespace HaydenPierce\ClassFinder\Finder;
 
 use HaydenPierce\ClassFinder\AppConfig;
-use HaydenPierce\ClassFinder\ClassFinderException;
+use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 
 class PSR4Finder implements FinderInterface
 {
