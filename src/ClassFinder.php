@@ -3,41 +3,8 @@ namespace HaydenPierce\ClassFinder;
 
 class ClassFinder
 {
-    public static $appRoot;
-
-    /**
-     * @throws \Exception
-     */
-    private static function findAppRoot()
-    {
-        if (self::$appRoot) {
-            $appRoot = self::$appRoot;
-        } else {
-            $workingDirectory = str_replace('\\', '/', __DIR__);
-            $workingDirectory = str_replace('/vendor/haydenpierce/class-finder/src', '', $workingDirectory);
-            $directoryPathPieces = explode('/', $workingDirectory);
-
-            $appRoot = '/';
-            do {
-                $path = implode('/', $directoryPathPieces) . '/composer.json';
-                if (file_exists($path)) {
-                    $appRoot = implode('/', $directoryPathPieces) . '/';
-                } else {
-                    array_pop($directoryPathPieces);
-                }
-            } while (is_null($appRoot) && count($directoryPathPieces) > 0);
-        }
-
-        if (!file_exists($appRoot . '/composer.json')) {
-            throw new ClassFinderException(sprintf("Could not locate composer.json. You can get around this by setting ClassFinder::\$appRoot manually. See '%s' for details.",
-                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/missingComposerConfig.md'
-                ));
-        } else {
-            self::$appRoot = $appRoot;
-            return self::$appRoot;
-        }
-
-    }
+    /** @var AppConfig */
+    private static $config;
 
     /**
      * @param $namespace
@@ -46,6 +13,8 @@ class ClassFinder
      */
     public static function getClassesInNamespace($namespace)
     {
+        self::initialize();
+
         $files = scandir(self::getNamespaceDirectory($namespace));
 
         $classes = array_map(function($file) use ($namespace){
@@ -65,7 +34,7 @@ class ClassFinder
      */
     private static function getDefinedNamespaces()
     {
-        $appRoot = self::findAppRoot();
+        $appRoot = AppConfig::findAppRoot();
 
         $composerJsonPath = $appRoot. 'composer.json';
         $composerConfig = json_decode(file_get_contents($composerJsonPath));
@@ -82,7 +51,7 @@ class ClassFinder
      */
     private static function getNamespaceDirectory($namespace)
     {
-        $appRoot = self::findAppRoot();
+        $appRoot = AppConfig::findAppRoot();
 
         $composerNamespaces = self::getDefinedNamespaces();
 
@@ -113,5 +82,18 @@ class ClassFinder
             $namespace,
             'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
         ));
+    }
+
+    public static function setAppRoot($appRoot)
+    {
+        self::initialize();
+        AppConfig::$appRoot = $appRoot;
+    }
+
+    private static function initialize()
+    {
+        if (!(self::$config instanceof AppConfig)) {
+            self::$config = new AppConfig();
+        }
     }
 }

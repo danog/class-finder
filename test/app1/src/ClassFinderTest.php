@@ -14,7 +14,7 @@ class ClassFinderTest extends TestCase
     public function setup()
     {
         // Reset ClassFinder back to normal.
-        ClassFinder::$appRoot = null;
+        ClassFinder::setAppRoot(null);
     }
     /**
      * @dataProvider classFinderDataProvider
@@ -85,7 +85,7 @@ class ClassFinderTest extends TestCase
     public function testThrowsOnMissingComposerConfig()
     {
         // ClassFinder will fail to identify a valid composer.json file.
-        ClassFinder::$appRoot = "/"; // Obviously, the application isn't running directly on the OS's root.
+        ClassFinder::setAppRoot("/"); // Obviously, the application isn't running directly on the OS's root.
 
         // "Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually. See '$link' for details."
         ClassFinder::getClassesInNamespace('TestApp1\Foo\Loo');
