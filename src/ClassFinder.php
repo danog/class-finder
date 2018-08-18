@@ -29,31 +29,15 @@ class ClassFinder
     }
 
     /**
-     * @return array
-     * @throws \Exception
-     */
-    private static function getDefinedNamespaces()
-    {
-        $appRoot = AppConfig::findAppRoot();
-
-        $composerJsonPath = $appRoot. 'composer.json';
-        $composerConfig = json_decode(file_get_contents($composerJsonPath));
-
-        //Apparently PHP doesn't like hyphens, so we use variable variables instead.
-        $psr4 = "psr-4";
-        return (array) $composerConfig->autoload->$psr4;
-    }
-
-    /**
      * @param $namespace
      * @return bool|string
      * @throws \Exception
      */
     private static function getNamespaceDirectory($namespace)
     {
-        $appRoot = AppConfig::findAppRoot();
+        $appRoot = self::$config->getAppRoot();
 
-        $composerNamespaces = self::getDefinedNamespaces();
+        $composerNamespaces = self::$config->getDefinedNamespaces();
 
         $namespaceFragments = explode('\\', $namespace);
         $undefinedNamespaceFragments = [];
@@ -87,7 +71,7 @@ class ClassFinder
     public static function setAppRoot($appRoot)
     {
         self::initialize();
-        AppConfig::$appRoot = $appRoot;
+        self::$config->setAppRoot($appRoot);
     }
 
     private static function initialize()
