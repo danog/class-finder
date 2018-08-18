@@ -9,20 +9,20 @@ class PSR4Finder implements FinderInterface
     {
         $this->config = $config;
     }
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getDefinedNamespaces()
+
+    public function findClasses($namespace)
     {
-        $appRoot = $this->config->getAppRoot();
+        $files = scandir($this->getNamespaceDirectory($namespace));
 
-        $composerJsonPath = $appRoot. 'composer.json';
-        $composerConfig = json_decode(file_get_contents($composerJsonPath));
+        $classes = array_map(function($file) use ($namespace){
+            return $namespace . '\\' . str_replace('.php', '', $file);
+        }, $files);
 
-        //Apparently PHP doesn't like hyphens, so we use variable variables instead.
-        $psr4 = "psr-4";
-        return (array) $composerConfig->autoload->$psr4;
+        $classes = array_filter($classes, function($possibleClass){
+            return class_exists($possibleClass);
+        });
+
+        return $classes;
     }
 
     /**
@@ -30,7 +30,7 @@ class PSR4Finder implements FinderInterface
      * @return bool|string
      * @throws \Exception
      */
-    public function getNamespaceDirectory($namespace)
+    private function getNamespaceDirectory($namespace)
     {
         $appRoot = $this->config->getAppRoot();
 

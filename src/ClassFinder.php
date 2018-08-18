@@ -29,15 +29,7 @@ class ClassFinder
     {
         self::initialize();
 
-        $files = scandir(self::$psr4->getNamespaceDirectory($namespace));
-
-        $classes = array_map(function($file) use ($namespace){
-            return $namespace . '\\' . str_replace('.php', '', $file);
-        }, $files);
-
-        $classes = array_filter($classes, function($possibleClass){
-            return class_exists($possibleClass);
-        });
+        $classes = self::$psr4->findClasses($namespace);
 
         return array_values($classes);
     }
