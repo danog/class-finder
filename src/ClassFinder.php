@@ -1,6 +1,8 @@
 <?php
 namespace HaydenPierce\ClassFinder;
 
+use HaydenPierce\ClassFinder\Finder\PSR4Finder;
+
 class ClassFinder
 {
     /** @var AppConfig */

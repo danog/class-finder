@@ -1,5 +1,8 @@
 <?php
-namespace HaydenPierce\ClassFinder;
+namespace HaydenPierce\ClassFinder\Finder;
+
+use HaydenPierce\ClassFinder\AppConfig;
+use HaydenPierce\ClassFinder\ClassFinderException;
 
 class PSR4Finder implements FinderInterface
 {
