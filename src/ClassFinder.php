@@ -6,6 +6,13 @@ class ClassFinder
     /** @var AppConfig */
     private static $config;
 
+    private static function initialize()
+    {
+        if (!(self::$config instanceof AppConfig)) {
+            self::$config = new AppConfig();
+        }
+    }
+
     /**
      * @param $namespace
      * @return array
@@ -72,12 +79,5 @@ class ClassFinder
     {
         self::initialize();
         self::$config->setAppRoot($appRoot);
-    }
-
-    private static function initialize()
-    {
-        if (!(self::$config instanceof AppConfig)) {
-            self::$config = new AppConfig();
-        }
     }
 }
