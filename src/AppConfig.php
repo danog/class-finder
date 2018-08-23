@@ -64,7 +64,7 @@ class AppConfig
      * @return array
      * @throws ClassFinderException
      */
-    public function getDefinedNamespaces()
+    public function getPSR4Namespaces()
     {
         $appRoot = $this->getAppRoot();
         $this->throwIfInvalidAppRoot($appRoot);

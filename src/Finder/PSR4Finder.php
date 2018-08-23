@@ -37,7 +37,7 @@ class PSR4Finder implements FinderInterface
     {
         $appRoot = $this->config->getAppRoot();
 
-        $composerNamespaces = $this->config->getDefinedNamespaces();
+        $composerNamespaces = $this->config->getPSR4Namespaces();
 
         $namespaceFragments = explode('\\', $namespace);
         $undefinedNamespaceFragments = [];
