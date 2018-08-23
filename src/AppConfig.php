@@ -66,15 +66,12 @@ class AppConfig
      */
     public function getPSR4Namespaces()
     {
-        $appRoot = $this->getAppRoot();
-        $this->throwIfInvalidAppRoot($appRoot);
+        $namespaces = $this->getUserDefinedPSR4Namespaces();
 
-        $composerJsonPath = $appRoot. 'composer.json';
-        $composerConfig = json_decode(file_get_contents($composerJsonPath));
+        // This is broken.
+//        $vendorNamespaces = require($this->getAppRoot() . 'vendor/composer/autoload_psr4.php');
 
-        //Apparently PHP doesn't like hyphens, so we use variable variables instead.
-        $psr4 = "psr-4";
-        return (array) $composerConfig->autoload->$psr4;
+        return $namespaces;
     }
 
 
@@ -96,5 +93,21 @@ class AppConfig
     public function setAppRoot($appRoot)
     {
         $this->appRoot = $appRoot;
+    }
+
+    /**
+     * @return array
+     */
+    private function getUserDefinedPSR4Namespaces()
+    {
+        $appRoot = $this->getAppRoot();
+        $this->throwIfInvalidAppRoot($appRoot);
+
+        $composerJsonPath = $appRoot . 'composer.json';
+        $composerConfig = json_decode(file_get_contents($composerJsonPath));
+
+        //Apparently PHP doesn't like hyphens, so we use variable variables instead.
+        $psr4 = "psr-4";
+        return (array)$composerConfig->autoload->$psr4;
     }
 }
