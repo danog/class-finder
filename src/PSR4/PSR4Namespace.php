@@ -34,7 +34,6 @@ class PSR4Namespace
 
     public function findClasses($namespace)
     {
-        // TODO: revisit this. It probably doesn't work.
         $relativePath = substr($namespace, strlen($this->namespace));
 
         $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace){
