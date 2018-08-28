@@ -15,12 +15,12 @@ class ClassFinder
     private static function initialize()
     {
         if (!(self::$config instanceof AppConfig)) {
-            $PSR4Factory = new PSR4NamespaceFactory();
-            self::$config = new AppConfig($PSR4Factory);
+            self::$config = new AppConfig();
         }
 
         if (!(self::$psr4 instanceof PSR4Finder)) {
-            self::$psr4 = new PSR4Finder(self::$config);
+            $PSR4Factory = new PSR4NamespaceFactory(self::$config);
+            self::$psr4 = new PSR4Finder($PSR4Factory);
         }
     }
 

@@ -1,16 +1,15 @@
 <?php
 namespace HaydenPierce\ClassFinder\Finder;
 
-use HaydenPierce\ClassFinder\AppConfig;
 use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 
 class PSR4Finder implements FinderInterface
 {
-    private $config;
+    private $factory;
 
-    public function __construct(AppConfig $config)
+    public function __construct(PSR4NamespaceFactory $factory)
     {
-        $this->config = $config;
+        $this->factory = $factory;
     }
 
     /**
@@ -20,7 +19,7 @@ class PSR4Finder implements FinderInterface
      */
     public function findClasses($namespace)
     {
-        $composerNamespaces = $this->config->getPSR4Namespaces();
+        $composerNamespaces = $this->factory->getPSR4Namespaces();
 
         /** @var PSR4Namespace $bestNamespace */
         $bestNamespace = array_reduce($composerNamespaces, function($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
