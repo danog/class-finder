@@ -2,6 +2,7 @@
 namespace HaydenPierce\ClassFinder;
 
 use HaydenPierce\ClassFinder\Finder\PSR4Finder;
+use HaydenPierce\ClassFinder\Finder\PSR4NamespaceFactory;
 
 class ClassFinder
 {
@@ -14,7 +15,8 @@ class ClassFinder
     private static function initialize()
     {
         if (!(self::$config instanceof AppConfig)) {
-            self::$config = new AppConfig();
+            $PSR4Factory = new PSR4NamespaceFactory();
+            self::$config = new AppConfig($PSR4Factory);
         }
 
         if (!(self::$psr4 instanceof PSR4Finder)) {

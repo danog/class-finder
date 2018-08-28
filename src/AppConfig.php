@@ -3,6 +3,7 @@
 namespace HaydenPierce\ClassFinder;
 
 use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+use HaydenPierce\ClassFinder\Finder\PSR4NamespaceFactory;
 
 /**
  * Class AppConfig
@@ -11,11 +12,16 @@ use HaydenPierce\ClassFinder\Exception\ClassFinderException;
  */
 class AppConfig
 {
+    /** @var PSR4NamespaceFactory  */
+    private $psr4NamespaceFactory;
+
+    /** @var string */
     private $appRoot;
 
-    public function __construct()
+    public function __construct(PSR4NamespaceFactory $PSR4NamespaceFactory)
     {
         $this->appRoot = $this->findAppRoot();
+        $this->psr4NamespaceFactory = $PSR4NamespaceFactory;
     }
 
     /**
@@ -67,9 +73,17 @@ class AppConfig
     public function getPSR4Namespaces()
     {
         $namespaces = $this->getUserDefinedPSR4Namespaces();
+        $vendorNamespaces = require($this->getAppRoot() . 'vendor/composer/autoload_psr4.php');
 
-        // This is broken.
-//        $vendorNamespaces = require($this->getAppRoot() . 'vendor/composer/autoload_psr4.php');
+        $namespaces = array_merge($vendorNamespaces, $namespaces);
+
+        // There's some wackiness going on here for PHP 5.3 compatibility.
+        $names = array_keys($namespaces);
+        $directories = array_values($namespaces);
+        $self = $this;
+        $namespaces = array_map(function($index) use ($self, $names, $directories) {
+            return $self->psr4NamespaceFactory->createNamespace($names[$index], $directories[$index], $this->appRoot);
+        },range(0, count($namespaces) - 1));
 
         return $namespaces;
     }

@@ -13,58 +13,31 @@ class PSR4Finder implements FinderInterface
         $this->config = $config;
     }
 
-    public function findClasses($namespace)
-    {
-        $files = scandir($this->getNamespaceDirectory($namespace));
-
-        $classes = array_map(function($file) use ($namespace){
-            return $namespace . '\\' . str_replace('.php', '', $file);
-        }, $files);
-
-        $classes = array_filter($classes, function($possibleClass){
-            return class_exists($possibleClass);
-        });
-
-        return $classes;
-    }
-
     /**
      * @param $namespace
      * @return bool|string
-     * @throws \Exception
+     * @throws ClassFinderException
      */
-    private function getNamespaceDirectory($namespace)
+    public function findClasses($namespace)
     {
-        $appRoot = $this->config->getAppRoot();
-
         $composerNamespaces = $this->config->getPSR4Namespaces();
 
-        $namespaceFragments = explode('\\', $namespace);
-        $undefinedNamespaceFragments = [];
-
-        while($namespaceFragments) {
-            $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
-
-            if(array_key_exists($possibleNamespace, $composerNamespaces)){
-                $resolvedDirectory = $appRoot . $composerNamespaces[$possibleNamespace] . implode('/', $undefinedNamespaceFragments);
-                $realDirectory = realpath($resolvedDirectory);
-                if ($realDirectory !== false) {
-                    return $realDirectory;
-                } else {
-                    throw new ClassFinderException(sprintf("Unknown namespace '%s'. Checked for files in %s, but that directory did not exist. See %s for details.",
-                        $namespace,
-                        $resolvedDirectory,
-                        'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownSubNamespace.md'
-                    ));
-                }
+        /** @var PSR4Namespace $bestNamespace */
+        $bestNamespace = array_reduce($composerNamespaces, function($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
+            if ($potentialNamespace->matches($namespace)) {
+                return $potentialNamespace;
+            } else {
+                return $carry;
             }
+        }, null);
 
-            array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));
+        if ($bestNamespace instanceof PSR4Namespace) {
+            return $bestNamespace->findClasses($namespace);
+        } else {
+            throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace prefix to composer.json. See '%s' for details.",
+                $namespace,
+                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
+            ));
         }
-
-        throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace prefix to composer.json. See '%s' for details.",
-            $namespace,
-            'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
-        ));
     }
 }
