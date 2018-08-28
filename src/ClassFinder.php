@@ -1,8 +1,8 @@
 <?php
 namespace HaydenPierce\ClassFinder;
 
-use HaydenPierce\ClassFinder\Finder\PSR4Finder;
-use HaydenPierce\ClassFinder\Finder\PSR4NamespaceFactory;
+use HaydenPierce\ClassFinder\PSR4\PSR4Finder;
+use HaydenPierce\ClassFinder\PSR4\PSR4NamespaceFactory;
 
 class ClassFinder
 {

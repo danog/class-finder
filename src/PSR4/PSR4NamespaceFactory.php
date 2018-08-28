@@ -1,5 +1,5 @@
 <?php
-namespace HaydenPierce\ClassFinder\Finder;
+namespace HaydenPierce\ClassFinder\PSR4;
 
 use HaydenPierce\ClassFinder\AppConfig;
 use HaydenPierce\ClassFinder\Exception\ClassFinderException;

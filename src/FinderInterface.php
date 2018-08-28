@@ -1,5 +1,5 @@
 <?php
-namespace HaydenPierce\ClassFinder\Finder;
+namespace HaydenPierce\ClassFinder;
 
 interface FinderInterface
 {
