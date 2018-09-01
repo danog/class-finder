@@ -50,6 +50,13 @@ class ClassFinderTest extends TestCase
                     'TestApp1\Foo\Loo\Loo'
                 )
             ),
+            array(
+                'HaydenPierce\SandboxApp\Foo\Bar',
+                array(
+                    'HaydenPierce\SandboxApp\Foo\Bar\Barc',
+                    'HaydenPierce\SandboxApp\Foo\Bar\Barp'
+                )
+            ),
             // This namespace is empty, but it DOES exist. So we don't throw an exception.
             array(
                 'TestApp1\Foo\Empty',
