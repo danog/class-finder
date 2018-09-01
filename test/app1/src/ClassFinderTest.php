@@ -19,7 +19,7 @@ class ClassFinderTest extends TestCase
     /**
      * @dataProvider classFinderDataProvider
      */
-    public function testClassFinder($namespace, $expected)
+    public function testClassFinder($namespace, $expected, $message)
     {
         try {
             $classes = ClassFinder::getClassesInNamespace($namespace);
@@ -28,7 +28,7 @@ class ClassFinderTest extends TestCase
             $classes = array();
         }
 
-        $this->assertEquals($expected, $classes);
+        $this->assertEquals($expected, $classes, $message);
     }
 
     public function classFinderDataProvider()
@@ -40,7 +40,8 @@ class ClassFinderTest extends TestCase
                     'TestApp1\Foo\Bar',
                     'TestApp1\Foo\Baz',
                     'TestApp1\Foo\Foo'
-                )
+                ),
+                'ClassFinder should be able to find 1st party classes.'
             ),
             array(
                 'TestApp1\Foo\Loo',
@@ -48,19 +49,21 @@ class ClassFinderTest extends TestCase
                     'TestApp1\Foo\Loo\Lar',
                     'TestApp1\Foo\Loo\Laz',
                     'TestApp1\Foo\Loo\Loo'
-                )
+                ),
+                'ClassFinder should be able to find 1st party classes multiple namespaces deep.'
             ),
             array(
                 'HaydenPierce\SandboxApp\Foo\Bar',
                 array(
                     'HaydenPierce\SandboxApp\Foo\Bar\Barc',
                     'HaydenPierce\SandboxApp\Foo\Bar\Barp'
-                )
+                ),
+                'ClassFinder should be able to find 3rd party classes multiple namespaces deep.'
             ),
-            // This namespace is empty, but it DOES exist. So we don't throw an exception.
             array(
                 'TestApp1\Foo\Empty',
-                array()
+                array(),
+                'ClassFinder should return an empty array if the namesapce is known, but contains no classes.'
             )
         );
     }
