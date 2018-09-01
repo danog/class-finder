@@ -61,6 +61,14 @@ class PSR4Namespace
             return $namespace . '\\' . str_replace('.php', '', $file);
         }, $potentialClassFiles);
 
-        return array_filter($potentialClasses, 'class_exists');
+        return array_filter($potentialClasses, function($potentialClass) {
+            if (function_exists($potentialClass)) {
+                // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
+                // Example: DeepCopy\deep_copy
+                return false;
+            } else {
+                return class_exists($potentialClass);
+            }
+        });
     }
 }
