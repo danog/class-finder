@@ -61,6 +61,16 @@ class ClassFinderTest extends TestCase
                 'ClassFinder should be able to find 3rd party classes multiple namespaces deep.'
             ),
             array(
+                'HaydenPierce\SandboxAppMulti',
+                array(
+                    'HaydenPierce\SandboxAppMulti\Zip',
+                    'HaydenPierce\SandboxAppMulti\Zop',
+                    'HaydenPierce\SandboxAppMulti\Zap',
+                    'HaydenPierce\SandboxAppMulti\Zit'
+                ),
+                'ClassFinder should be able to find 3rd party classes when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+            ),
+            array(
                 'TestApp1\Foo\Empty',
                 array(),
                 'ClassFinder should return an empty array if the namesapce is known, but contains no classes.'
