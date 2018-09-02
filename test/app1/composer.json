@@ -15,7 +15,8 @@
   },
   "autoload": {
     "psr-4": {
-      "TestApp1\\": "src/"
+      "TestApp1\\": "src/",
+      "TestApp1\\Multi\\": [ "multi/Jik/", "multi/Jiu/" ]
     }
   }
 }
