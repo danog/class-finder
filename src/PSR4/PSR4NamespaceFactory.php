@@ -69,11 +69,12 @@ class PSR4NamespaceFactory
         }
 
         $self = $this;
-        $directories = array_map(function($directory) use ($self) {
+        $appConfig = $this->appConfig;
+        $directories = array_map(function($directory) use ($self, $appConfig) {
             if ($self->isAbsolutePath($directory)) {
                 return $directory;
             } else {
-                return $self->appConfig->getAppRoot() . $directory;
+                return $appConfig->getAppRoot() . $directory;
             }
         }, $directories);
 
