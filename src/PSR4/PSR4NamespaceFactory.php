@@ -104,7 +104,7 @@ class PSR4NamespaceFactory
         $regExp .= '(?<root>(?:[[:alpha:]]:[/\\\\]|/)?)';
         // Actual path.
         $regExp .= '(?<path>(?:[[:print:]]*))$%';
-        $parts = [];
+        $parts = array();
         if (!preg_match($regExp, $path, $parts)) {
             $mess = sprintf('Path is NOT valid, was given %s', $path);
             throw new ClassFinderException($mess);

@@ -5,11 +5,9 @@ namespace TestApp1;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
-use \PHPUnit\Framework\TestCase;
-
 
 // "vendor/bin/phpunit" "./test/app1/src/ClassFinderTest.php"
-class ClassFinderTest extends TestCase
+class ClassFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function setup()
     {
