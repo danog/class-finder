@@ -1,0 +1,2 @@
+phpunit-53:
+  script: "ci/php53.sh"
