@@ -21,7 +21,7 @@ Mapping a namespace to multiple directories:
 
 Old overriding app root: 
 ```
-ClassFinder::appRoot('/home/hpierce/whatevs'); 
+ClassFinder::appRoot = '/home/hpierce/whatevs'; 
 ```
 
 New overriding app root:
