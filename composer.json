@@ -2,6 +2,7 @@
     "name": "haydenpierce/class-finder",
     "type": "library",
     "license": "MIT",
+    "version": "0.1.0",
     "authors": [
         {
             "name": "Hayden Pierce",
