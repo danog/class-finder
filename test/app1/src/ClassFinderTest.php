@@ -63,6 +63,16 @@ class ClassFinderTest extends TestCase
                 'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
+                'TestApp1\Multi\Yop',
+                array(
+                    'TestApp1\Multi\Yop\Rik',
+                    'TestApp1\Multi\Yop\Tik',
+                    'TestApp1\Multi\Yop\Eij',
+                    'TestApp1\Multi\Yop\Rij'
+                ),
+                'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories multiple levels deep. (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+            ),
+            array(
                 'HaydenPierce\SandboxApp',
                 array(
                     'HaydenPierce\SandboxApp\Foy'
