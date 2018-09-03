@@ -1,2 +1,3 @@
 phpunit-53:
   script: "ci/php53.sh"
+  image: "registry.gitlab.com/hpierce1102/classfinder"
