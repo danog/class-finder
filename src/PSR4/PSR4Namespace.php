@@ -38,7 +38,7 @@ class PSR4Namespace
     public function countMatchingNamespaceSegments($namespace)
     {
         $namespaceFragments = explode('\\', $namespace);
-        $undefinedNamespaceFragments = [];
+        $undefinedNamespaceFragments = array();
 
         while($namespaceFragments) {
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
