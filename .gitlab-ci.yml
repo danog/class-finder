@@ -1,7 +1,7 @@
-phpunit-53:
+PHPUnit - PHP 5.3:
   script: "ci/php53.sh"
   image: "registry.gitlab.com/hpierce1102/classfinder"
 
-phpunit-72:
+PHPUnit - PHP 7.2:
   script: "ci/php72.sh"
   image: "registry.gitlab.com/hpierce1102/classfinder/php72"
