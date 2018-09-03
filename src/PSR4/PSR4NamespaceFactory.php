@@ -92,7 +92,7 @@ class PSR4NamespaceFactory
      * @throws ClassFinderException
      * @return bool
      */
-    private function isAbsolutePath($path) {
+    public function isAbsolutePath($path) {
         if (!is_string($path)) {
             $mess = sprintf('String expected but was given %s', gettype($path));
             throw new ClassFinderException($mess);
