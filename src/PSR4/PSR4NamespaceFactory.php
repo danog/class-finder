@@ -69,11 +69,12 @@ class PSR4NamespaceFactory
         }
 
         $self = $this;
-        $directories = array_map(function($directory) use ($self) {
+        $appConfig = $this->appConfig;
+        $directories = array_map(function($directory) use ($self, $appConfig) {
             if ($self->isAbsolutePath($directory)) {
                 return $directory;
             } else {
-                return $self->appConfig->getAppRoot() . $directory;
+                return $appConfig->getAppRoot() . $directory;
             }
         }, $directories);
 
@@ -92,7 +93,7 @@ class PSR4NamespaceFactory
      * @throws ClassFinderException
      * @return bool
      */
-    private function isAbsolutePath($path) {
+    public function isAbsolutePath($path) {
         if (!is_string($path)) {
             $mess = sprintf('String expected but was given %s', gettype($path));
             throw new ClassFinderException($mess);
@@ -104,7 +105,7 @@ class PSR4NamespaceFactory
         $regExp .= '(?<root>(?:[[:alpha:]]:[/\\\\]|/)?)';
         // Actual path.
         $regExp .= '(?<path>(?:[[:print:]]*))$%';
-        $parts = [];
+        $parts = array();
         if (!preg_match($regExp, $path, $parts)) {
             $mess = sprintf('Path is NOT valid, was given %s', $path);
             throw new ClassFinderException($mess);

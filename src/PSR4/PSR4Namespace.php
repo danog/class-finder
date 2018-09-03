@@ -38,7 +38,7 @@ class PSR4Namespace
     public function countMatchingNamespaceSegments($namespace)
     {
         $namespaceFragments = explode('\\', $namespace);
-        $undefinedNamespaceFragments = [];
+        $undefinedNamespaceFragments = array();
 
         while($namespaceFragments) {
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
@@ -58,7 +58,9 @@ class PSR4Namespace
         $relativePath = substr($namespace, strlen($this->namespace));
 
         $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace){
-            $realDirectory = realpath($directory . '/' . $relativePath);
+            // TODO: perhaps there should be a central place to normalize file paths. AppConfig? Some other Util?
+            $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+            $realDirectory = realpath($path);
             if ($realDirectory !== false) {
                 return array_merge($carry, array($realDirectory));
             } else {

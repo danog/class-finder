@@ -1,3 +1,11 @@
+Version 0.1.1
+-------------
+
+* Fixed a Linux specific bug that caused absolute paths to fail to resolve and erroneously throw exceptions. If you were
+affected by this bug, you would see errors like `Unknown namespace Acme\Whatever. Checked for files in , but that directory did not exist. [...]`
+when that namespace does indeed exist.
+* Support for PHP 5.3 is now under testing harness and should work now. 
+
 Version 0.1.0
 -------------
 
