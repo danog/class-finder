@@ -64,3 +64,4 @@ Documentation
 **Internals**
 
 * [How Testing Works](docs/testing.md)
+* [Continuous Integration Notes](docs/ci.md)
