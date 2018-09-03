@@ -27,7 +27,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
 
-ClassFinder::$appRoot = realpath(__DIR__ . '../../app/'); // This is suggesting that the app root is really someone else.
+ClassFinder::setAppRoot(realpath(__DIR__ . '../../app/')); // This is suggesting that the app root is really someone else.
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 ```
 

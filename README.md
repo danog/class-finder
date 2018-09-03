@@ -15,7 +15,6 @@ Requirements
 Known Limitations
 -----------------
 
-* ClassFinder cannot find 3rd party classes in the vendor directory.
 * ClassFinder can only identify classes autoloaded with PSR-4. PSR-0, classmaps, and files are not supported.
 
 These limitations may eventually be fixed.
@@ -53,6 +52,8 @@ var_dump($classes);
  
 Documentation
 -------------
+
+[Changelog](docs/changelog.md)
 
 **Exceptions**:
 
