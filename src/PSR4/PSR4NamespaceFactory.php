@@ -61,17 +61,57 @@ class PSR4NamespaceFactory
     {
         if (is_string($directories)) {
             // This is an acceptable format according to composer.json
-            $directories = array($this->appConfig->getAppRoot() . $directories);
+            $directories = array($directories);
         } elseif (is_array($directories)) {
             // composer_psr4.php seems to put everything in this format
         } else {
             throw new ClassFinderException('Unknown PSR4 definition.');
         }
 
+        $self = $this;
+        $directories = array_map(function($directory) use ($self) {
+            if ($self->isAbsolutePath($directory)) {
+                return $directory;
+            } else {
+                return $self->appConfig->getAppRoot() . $directory;
+            }
+        }, $directories);
+
         $directories = array_map(function($directory) {
             return realpath($directory);
         }, $directories);
 
         return new PSR4Namespace($namespace, $directories);
+    }
+
+    /**
+     * Mostly this answer https://stackoverflow.com/a/38022806/3000068
+     * A few changes: Changed exceptions to be ClassFinderExceptions, removed some ctype dependencies,
+     * updated the root prefix regex to handle Window paths better.
+     * @param $path string
+     * @throws ClassFinderException
+     * @return bool
+     */
+    private function isAbsolutePath($path) {
+        if (!is_string($path)) {
+            $mess = sprintf('String expected but was given %s', gettype($path));
+            throw new ClassFinderException($mess);
+        }
+
+        // Optional wrapper(s).
+        $regExp = '%^(?<wrappers>(?:[[:print:]]{2,}://)*)';
+        // Optional root prefix.
+        $regExp .= '(?<root>(?:[[:alpha:]]:[/\\\\]|/)?)';
+        // Actual path.
+        $regExp .= '(?<path>(?:[[:print:]]*))$%';
+        $parts = [];
+        if (!preg_match($regExp, $path, $parts)) {
+            $mess = sprintf('Path is NOT valid, was given %s', $path);
+            throw new ClassFinderException($mess);
+        }
+        if ('' !== $parts['root']) {
+            return true;
+        }
+        return false;
     }
 }
