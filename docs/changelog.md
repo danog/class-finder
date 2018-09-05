@@ -1,3 +1,8 @@
+Version 0.1.2
+-------------
+
+* Fixed composer.json so that it can be correctly installed on PHP 7+.
+
 Version 0.1.1
 -------------
 
