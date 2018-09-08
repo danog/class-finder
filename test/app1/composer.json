@@ -17,6 +17,7 @@
     "psr-4": {
       "TestApp1\\": "src/",
       "TestApp1\\Multi\\": [ "multi/Jik/", "multi/Jiu/" ]
-    }
+    },
+    "classmap": ["classmap/woc/", "classmap/wop/", "classmap/woj/" ]
   }
 }
