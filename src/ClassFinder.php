@@ -1,6 +1,7 @@
 <?php
 namespace HaydenPierce\ClassFinder;
 
+use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\PSR4\PSR4Finder;
 use HaydenPierce\ClassFinder\PSR4\PSR4NamespaceFactory;
 
@@ -32,6 +33,14 @@ class ClassFinder
     public static function getClassesInNamespace($namespace)
     {
         self::initialize();
+
+        $isNamespaceKnown = self::$psr4->isNamespaceKnown($namespace);
+        if (!$isNamespaceKnown) {
+            throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace to composer.json. See '%s' for details.",
+                $namespace,
+                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
+            ));
+        }
 
         $classes = self::$psr4->findClasses($namespace);
 

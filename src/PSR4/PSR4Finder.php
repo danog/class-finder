@@ -15,7 +15,7 @@ class PSR4Finder implements FinderInterface
 
     /**
      * @param $namespace
-     * @return bool|string
+     * @return array
      * @throws ClassFinderException
      */
     public function findClasses($namespace)
@@ -25,11 +25,21 @@ class PSR4Finder implements FinderInterface
         if ($bestNamespace instanceof PSR4Namespace) {
             return $bestNamespace->findClasses($namespace);
         } else {
-            throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace prefix to composer.json. See '%s' for details.",
-                $namespace,
-                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
-            ));
+            return array();
         }
+    }
+
+    public function isNamespaceKnown($namespace)
+    {
+        $composerNamespaces = $this->factory->getPSR4Namespaces();
+
+        foreach($composerNamespaces as $psr4Namespace) {
+            if ($psr4Namespace->knowsNamespace($namespace)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

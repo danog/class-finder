@@ -14,6 +14,31 @@ class PSR4Namespace
         $this->directories = $directories;
     }
 
+    public function knowsNamespace($namespace)
+    {
+        $numberOfSegments = count(explode('\\', $namespace));
+        $matchingSegments = $this->countMatchingNamespaceSegments($namespace);
+
+        if ($matchingSegments === 0) {
+            // Provided namespace doesn't map to anything registered.
+            return false;
+        } elseif ($numberOfSegments <= $matchingSegments) {
+            // This namespace is a superset of the provided namespace. Namespace is known.
+            return true;
+        } else {
+            // This namespace is a subset of the provided namespace. We must resolve the remaining segments to a directory.
+            $relativePath = substr($namespace, strlen($this->namespace));
+            foreach ($this->directories as $directory) {
+                $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+                if (is_dir($path)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
     /**
      * Determines how many namespace segments match the internal namespace. This is useful because multiple namespaces
      * may technically match a registered namespace root, but one of the matches may be a better match. Namespaces that
