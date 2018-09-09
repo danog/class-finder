@@ -25,6 +25,6 @@ class ClassmapEntryFactory
         $classmapKeys = array_keys($classmap);
         return array_map(function($index) use ($classmapKeys){
             return new ClassmapEntry($classmapKeys[$index]);
-        }, range(0, count($classmap)));
+        }, range(0, count($classmap) - 1));
     }
 }

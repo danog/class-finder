@@ -34,7 +34,15 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
             array(
                 'TestApp1\ClassmapClasses',
                 array(
-
+                    'TestApp1\ClassmapClasses\Bik',
+                    'TestApp1\ClassmapClasses\Bil',
+                    'TestApp1\ClassmapClasses\Bir',
+                    'TestApp1\ClassmapClasses\Mik',
+                    'TestApp1\ClassmapClasses\Mil',
+                    'TestApp1\ClassmapClasses\Mir',
+                    'TestApp1\ClassmapClasses\Tik',
+                    'TestApp1\ClassmapClasses\Til',
+                    'TestApp1\ClassmapClasses\Tir'
                 ),
                 'Classfinder should be able to load classes based on a classmap.'
             )

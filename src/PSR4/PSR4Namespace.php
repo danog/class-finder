@@ -89,11 +89,7 @@ class PSR4Namespace
             if ($realDirectory !== false) {
                 return array_merge($carry, array($realDirectory));
             } else {
-                throw new ClassFinderException(sprintf("Unknown namespace '%s'. Checked for files in %s, but that directory did not exist. See %s for details.",
-                    $namespace,
-                    $realDirectory,
-                    'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownSubNamespace.md'
-                ));
+                return $carry;
             }
         }, array());
 
