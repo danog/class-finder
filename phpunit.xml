@@ -9,9 +9,10 @@
         <testsuite name="all">
             <file>test/app1/src/ClassFinderTest.php</file>
             <file>test/app1/src/ClassmapTest.php</file>
+            <file>test/app1/src/PSR4Test.php</file>
         </testsuite>
         <testsuite name="psr4">
-            <file>test/app1/src/ClassFinderTest.php</file>
+            <file>test/app1/src/PSR4Test.php</file>
         </testsuite>
         <testsuite name="classmap">
             <file>test/app1/src/ClassmapTest.php</file>
