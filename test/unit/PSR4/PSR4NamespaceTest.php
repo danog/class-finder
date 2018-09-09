@@ -57,4 +57,17 @@ EOL;
         $this->assertEquals(0, $namespace->countMatchingNamespaceSegments('Cactus'));
         $this->assertEquals(0, $namespace->countMatchingNamespaceSegments('Cactus\\Foot'));
     }
+
+    public function testIsAcceptableNamespace()
+    {
+        $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', $this->root->getChild('Baz')->path());
+
+        $this->assertFalse($namespace->isAcceptableNamespace('MyPSR4Root'), 'MyPSR4Root cannot use the directory mapping for MyPSR4Root\\Foot because it does not include the Foot segment.');
+        $this->assertFalse($namespace->isAcceptableNamespace('MyPSR4Root\\Cactus'));
+        $this->assertTrue($namespace->isAcceptableNamespace('MyPSR4Root\\Foot'));
+        $this->assertTrue($namespace->isAcceptableNamespace('MyPSR4Root\\Foot\\Baz'), 'Longer namespaces are acceptable because we can resolve the additional segments');
+        $this->assertTrue($namespace->isAcceptableNamespace('MyPSR4Root\\Foot\\Baz\\Foo'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
+        $this->assertFalse($namespace->isAcceptableNamespace('Cactus'));
+        $this->assertFalse($namespace->isAcceptableNamespace('Cactus\\Foot'));
+    }
 }

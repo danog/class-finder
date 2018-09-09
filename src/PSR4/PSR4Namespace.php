@@ -82,7 +82,7 @@ class PSR4Namespace
     {
         $namespaceSegments = count(explode('\\', $this->namespace)) - 1;
         $matchingSegments = $this->countMatchingNamespaceSegments($namespace);
-        return $namespaceSegments <= $matchingSegments;
+        return $namespaceSegments === $matchingSegments;
     }
 
     public function findClasses($namespace)
