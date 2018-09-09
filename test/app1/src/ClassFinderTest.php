@@ -105,17 +105,6 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
-     * @expectedExceptionMessage Unknown namespace 'DoesNotExist\Foo\Bar'. You should add the namespace to composer.json.
-     */
-    public function testThrowsOnUnknownNameSpace()
-    {
-        // The top level namespace ("DoesNotExist") wasn't registered in composer.json.
-        // "Unknown namespace '$namespace'. You should add the namespace prefix to composer.json. See '$link' for details."
-        ClassFinder::getClassesInNamespace('DoesNotExist\Foo\Bar');
-    }
-
-    /**
-     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\. Checked for files in .*, but that directory did not exist\./
      */
     public function testThrowsOnUnknownSubNameSpace()
