@@ -48,7 +48,7 @@ EOL;
 
     public function testCountMatchingNamespaceSegments()
     {
-        $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', $this->root->getChild('Baz')->path());
+        $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', array($this->root->getChild('Baz')->path()));
 
         $this->assertEquals(1, $namespace->countMatchingNamespaceSegments('MyPSR4Root'));
         $this->assertEquals(2, $namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot'));
@@ -60,7 +60,7 @@ EOL;
 
     public function testIsAcceptableNamespace()
     {
-        $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', $this->root->getChild('Baz')->path());
+        $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', array($this->root->getChild('Baz')->path()));
 
         $this->assertFalse($namespace->isAcceptableNamespace('MyPSR4Root'), 'MyPSR4Root cannot use the directory mapping for MyPSR4Root\\Foot because it does not include the Foot segment.');
         $this->assertFalse($namespace->isAcceptableNamespace('MyPSR4Root\\Cactus'));
@@ -69,5 +69,30 @@ EOL;
         $this->assertTrue($namespace->isAcceptableNamespace('MyPSR4Root\\Foot\\Baz\\Foo'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
         $this->assertFalse($namespace->isAcceptableNamespace('Cactus'));
         $this->assertFalse($namespace->isAcceptableNamespace('Cactus\\Foot'));
+    }
+
+    public function testKnowsNamespace()
+    {
+        $namespace = $this->getMockBuilder('\HaydenPierce\ClassFinder\PSR4\PSR4Namespace')
+            ->setConstructorArgs(array(
+                'MyPSR4Root\\Foot\\',
+                array($this->root->getChild('Baz')->path())
+            ))
+            ->setMethods(array(
+                'normalizePath'
+            ))
+            ->getMock();
+
+        $root = $this->root;
+        $namespace->method('normalizePath')->willReturnCallback(function($directory, $relativePath) use ($root) {
+            return 'vfs://' . $directory . '/' . $relativePath;
+        });
+
+        $this->assertTrue($namespace->knowsNamespace('MyPSR4Root'));
+        $this->assertTrue($namespace->knowsNamespace('MyPSR4Root\\Foot'));
+        $this->assertTrue($namespace->knowsNamespace('MyPSR4Root\\Foot\\Foo'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
+        $this->assertFalse($namespace->knowsNamespace('MyPSR4Root\\Foot\\Cactus'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
+        $this->assertFalse($namespace->knowsNamespace('Cactus'));
+        $this->assertFalse($namespace->knowsNamespace('Cactus\\Foot'));
     }
 }

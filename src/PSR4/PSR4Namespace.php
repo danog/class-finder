@@ -29,7 +29,7 @@ class PSR4Namespace
             // This namespace is a subset of the provided namespace. We must resolve the remaining segments to a directory.
             $relativePath = substr($namespace, strlen($this->namespace));
             foreach ($this->directories as $directory) {
-                $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+                $path = $this->normalizePath($directory, $relativePath);
                 if (is_dir($path)) {
                     return true;
                 }
@@ -89,9 +89,9 @@ class PSR4Namespace
     {
         $relativePath = substr($namespace, strlen($this->namespace));
 
-        $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace){
-            // TODO: perhaps there should be a central place to normalize file paths. AppConfig? Some other Util?
-            $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+        $self = $this;
+        $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace, $self){
+            $path = $self->normalizePath($directory, $relativePath);
             $realDirectory = realpath($path);
             if ($realDirectory !== false) {
                 return array_merge($carry, array($realDirectory));
@@ -121,5 +121,19 @@ class PSR4Namespace
                 return class_exists($potentialClass);
             }
         });
+    }
+
+    /**
+     * Creates a file path based on an absolute path to a directory and a relative path in a way
+     * that will be compatible with both Linux and Windows. This method is also extracted so that
+     * it can be turned into a vfs:// stream URL for unit testing.
+     * @param $directory
+     * @param $relativePath
+     * @return mixed
+     */
+    public function normalizePath($directory, $relativePath)
+    {
+        $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+        return $path;
     }
 }
