@@ -12,6 +12,19 @@ class ClassmapFinder implements FinderInterface
         $this->factory = $factory;
     }
 
+    public function isNamespaceKnown($namespace)
+    {
+        $classmapEntries = $this->factory->getClassmapEntries();
+
+        foreach($classmapEntries as $classmapEntry) {
+            if ($classmapEntry->knowsNamespace($namespace)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @param $namespace
      * @return bool|string

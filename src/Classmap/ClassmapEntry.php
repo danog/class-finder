@@ -10,6 +10,11 @@ class ClassmapEntry
         $this->className = $fullyQualifiedClassName;
     }
 
+    public function knowsNamespace($namespace)
+    {
+        return strpos($this->className, $namespace) !== false;
+    }
+
     /**
      * Checks if the class is a DIRECT child of the given namespace. Currently, no other finders support "recursively"
      * discovering classes, so the Classmap module will not be the exception to that rule.
