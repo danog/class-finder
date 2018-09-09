@@ -114,6 +114,15 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
+     * @expectedExceptionMessageRegExp  /Unknown namespace 'DoesNotExist'\./
+     */
+    public function testThrowsOnUnknownNameSpace()
+    {
+        ClassFinder::getClassesInNamespace('DoesNotExist');
+    }
+
+    /**
+     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessage Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually.
      */
     public function testThrowsOnMissingComposerConfig()
