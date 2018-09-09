@@ -69,7 +69,7 @@ class PSR4Namespace
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
 
             if($this->namespace === $possibleNamespace){
-                return count(explode('\\', $possibleNamespace));
+                return count(explode('\\', $possibleNamespace)) - 1;
             }
 
             array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));

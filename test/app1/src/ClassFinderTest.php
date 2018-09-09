@@ -105,7 +105,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
-     * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\. Checked for files in .*, but that directory did not exist\./
+     * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\./
      */
     public function testThrowsOnUnknownSubNameSpace()
     {

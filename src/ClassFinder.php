@@ -46,7 +46,7 @@ class ClassFinder
 
         $isNamespaceKnown = self::$psr4->isNamespaceKnown($namespace) || self::$classmap->isNamespaceKnown($namespace);
         if (!$isNamespaceKnown) {
-            throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace to composer.json. See '%s' for details.",
+            throw new ClassFinderException(sprintf("Unknown namespace '%s'. See '%s' for details.",
                 $namespace,
                 'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
             ));
