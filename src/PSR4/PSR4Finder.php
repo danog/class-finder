@@ -50,12 +50,16 @@ class PSR4Finder implements FinderInterface
     {
         $composerNamespaces = $this->factory->getPSR4Namespaces();
 
+        $acceptableNamespaces = array_filter($composerNamespaces, function(PSR4Namespace $potentialNamespace) use ($namespace){
+            return $potentialNamespace->isAcceptableNamespace($namespace);
+        });
+
         $carry = new \stdClass();
         $carry->highestMatchingSegments = 0;
         $carry->bestNamespace = null;
 
         /** @var PSR4Namespace $bestNamespace */
-        $bestNamespace = array_reduce($composerNamespaces, function ($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
+        $bestNamespace = array_reduce($acceptableNamespaces, function ($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
             $matchingSegments = $potentialNamespace->countMatchingNamespaceSegments($namespace);
 
             if ($matchingSegments > $carry->highestMatchingSegments) {

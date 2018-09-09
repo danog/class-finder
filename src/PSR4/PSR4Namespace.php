@@ -68,7 +68,7 @@ class PSR4Namespace
         while($namespaceFragments) {
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
 
-            if($this->namespace === $possibleNamespace){
+            if(strpos($this->namespace, $possibleNamespace) !== false){
                 return count(explode('\\', $possibleNamespace)) - 1;
             }
 
@@ -76,6 +76,13 @@ class PSR4Namespace
         }
 
         return 0;
+    }
+
+    public function isAcceptableNamespace($namespace)
+    {
+        $namespaceSegments = count(explode('\\', $this->namespace)) - 1;
+        $matchingSegments = $this->countMatchingNamespaceSegments($namespace);
+        return $namespaceSegments <= $matchingSegments;
     }
 
     public function findClasses($namespace)

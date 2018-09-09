@@ -50,11 +50,11 @@ EOL;
     {
         $namespace = new PSR4Namespace('MyPSR4Root\\Foot\\', $this->root->getChild('Baz')->path());
 
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot'), 2);
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('MyPSR4Root'), 1);
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot\\Baz\\Foo'), 3);
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot\\Baz'), 3);
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('Cactus'), 0);
-        $this->assertEquals($namespace->countMatchingNamespaceSegments('Cactus\\Foot'), 0);
+        $this->assertEquals(1, $namespace->countMatchingNamespaceSegments('MyPSR4Root'));
+        $this->assertEquals(2, $namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot'));
+        $this->assertEquals(2, $namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot\\Baz'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
+        $this->assertEquals(2, $namespace->countMatchingNamespaceSegments('MyPSR4Root\\Foot\\Baz\\Foo'), 'countMatchingNamespaceSegments should only report matches against the registered namespace root. It should not attempt to resolve segments after the registered root.');
+        $this->assertEquals(0, $namespace->countMatchingNamespaceSegments('Cactus'));
+        $this->assertEquals(0, $namespace->countMatchingNamespaceSegments('Cactus\\Foot'));
     }
 }
