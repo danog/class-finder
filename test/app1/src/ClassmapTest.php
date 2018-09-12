@@ -45,6 +45,26 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
                     'TestApp1\ClassmapClasses\Tir'
                 ),
                 'Classfinder should be able to load classes based on a classmap.'
+            ),
+            array(
+                'HaydenPierce\Classmap',
+                array(
+                    'HaydenPierce\Classmap\Classmap2ClassmapINC',
+                    'HaydenPierce\Classmap\Classmap2ClassmapPHP',
+                    'HaydenPierce\Classmap\Classmap3ClassesPHP',
+                    'HaydenPierce\Classmap\ClassmapClassmap2PHP'
+                ),
+                'Classfinder should be able to load classes based on a classmap from 3rd party packages.'
+            ),
+            array(
+                'HaydenPierce\Classmap2',
+                array(
+                    'HaydenPierce\Classmap2\Classmap2ClassmapINC',
+                    'HaydenPierce\Classmap2\Classmap2ClassmapPHP',
+                    'HaydenPierce\Classmap2\Classmap3ClassesPHP',
+                    'HaydenPierce\Classmap2\ClassmapClassmap2PHP'
+                ),
+                'Classfinder should be able to handle multiple namespaces in a single file for a classmap.'
             )
         );
     }
