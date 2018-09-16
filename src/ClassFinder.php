@@ -48,7 +48,7 @@ class ClassFinder
         if (!$isNamespaceKnown) {
             throw new ClassFinderException(sprintf("Unknown namespace '%s'. See '%s' for details.",
                 $namespace,
-                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
+                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownNamespace.md'
             ));
         }
 
