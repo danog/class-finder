@@ -1,6 +1,6 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\UnitTest;
+namespace HaydenPierce\ClassFinder\UnitTest\PSR4;
 
 use HaydenPierce\ClassFinder\PSR4\PSR4Namespace;
 use org\bovigo\vfs\vfsStream;

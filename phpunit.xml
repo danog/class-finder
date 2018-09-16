@@ -18,6 +18,7 @@
         </testsuite>
         <testsuite name="classmap">
             <file>test/app1/src/ClassmapTest.php</file>
+            <directory>test/unit/Classmap</directory>
         </testsuite>
     </testsuites>
 </phpunit>
