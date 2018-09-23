@@ -15,7 +15,7 @@ class PSR4Finder implements FinderInterface
 
     /**
      * @param $namespace
-     * @return bool|string
+     * @return array
      * @throws ClassFinderException
      */
     public function findClasses($namespace)
@@ -25,11 +25,21 @@ class PSR4Finder implements FinderInterface
         if ($bestNamespace instanceof PSR4Namespace) {
             return $bestNamespace->findClasses($namespace);
         } else {
-            throw new ClassFinderException(sprintf("Unknown namespace '%s'. You should add the namespace prefix to composer.json. See '%s' for details.",
-                $namespace,
-                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unregisteredRoot.md'
-            ));
+            return array();
         }
+    }
+
+    public function isNamespaceKnown($namespace)
+    {
+        $composerNamespaces = $this->factory->getPSR4Namespaces();
+
+        foreach($composerNamespaces as $psr4Namespace) {
+            if ($psr4Namespace->knowsNamespace($namespace)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -40,12 +50,16 @@ class PSR4Finder implements FinderInterface
     {
         $composerNamespaces = $this->factory->getPSR4Namespaces();
 
+        $acceptableNamespaces = array_filter($composerNamespaces, function(PSR4Namespace $potentialNamespace) use ($namespace){
+            return $potentialNamespace->isAcceptableNamespace($namespace);
+        });
+
         $carry = new \stdClass();
         $carry->highestMatchingSegments = 0;
         $carry->bestNamespace = null;
 
         /** @var PSR4Namespace $bestNamespace */
-        $bestNamespace = array_reduce($composerNamespaces, function ($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
+        $bestNamespace = array_reduce($acceptableNamespaces, function ($carry, PSR4Namespace $potentialNamespace) use ($namespace) {
             $matchingSegments = $potentialNamespace->countMatchingNamespaceSegments($namespace);
 
             if ($matchingSegments > $carry->highestMatchingSegments) {

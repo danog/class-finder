@@ -1,3 +1,21 @@
+Version 0.2.0
+-------------
+
+* Added support for finding classes declared via `classmap`.
+* Exceptions will no longer be thrown when PSR4 can't find a registered namespace (because it could be a valid class
+declared in a `classmap`)
+
+Example composer.json that is now supported:
+```
+  ...
+  "autoload": {
+    ...
+    "classmap": [ "src/foo/", "src/bar/" ]
+  }
+  ...
+```
+
+
 Version 0.1.2
 -------------
 

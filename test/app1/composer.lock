@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6ba76f7f9ec3361109fe7f6999fd7ed",
+    "content-hash": "91a932c16b1ca9fa4bc53885fc070ffe",
     "packages": [],
     "packages-dev": [
         {
@@ -98,16 +98,16 @@
         },
         {
             "name": "haydenpierce/sandbox-app",
-            "version": "0.1.2",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://gitlab.com/hpierce1102/SandboxApp.git",
-                "reference": "d6b4f244679de7e7f2eeaecbdd2a416eeef0495d"
+                "reference": "a238be756cb7736a1f0b059323282e8b60826fef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/hpierce1102%2FSandboxApp/repository/archive.zip?sha=d6b4f244679de7e7f2eeaecbdd2a416eeef0495d",
-                "reference": "d6b4f244679de7e7f2eeaecbdd2a416eeef0495d",
+                "url": "https://gitlab.com/api/v4/projects/hpierce1102%2FSandboxApp/repository/archive.zip?sha=a238be756cb7736a1f0b059323282e8b60826fef",
+                "reference": "a238be756cb7736a1f0b059323282e8b60826fef",
                 "shasum": ""
             },
             "type": "library",
@@ -118,7 +118,12 @@
                         "multi/Bop",
                         "multi/Bot"
                     ]
-                }
+                },
+                "classmap": [
+                    "src/classmap/",
+                    "src/classmap_2/",
+                    "src/classmap_3/classes.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -131,7 +136,7 @@
                 }
             ],
             "description": "A ridiculous library that defined dumb classes.",
-            "time": "2018-09-02T14:44:40+00:00"
+            "time": "2018-09-12T01:12:10+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

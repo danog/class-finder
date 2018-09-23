@@ -4,4 +4,21 @@
         bootstrap="./test/bootstrap.php"
 >
 
+    <!-- "./vendor/bin/phpunit" \-\-testsuite psr4 -->
+    <testsuites>
+        <testsuite name="all">
+            <file>test/app1/src/ClassFinderTest.php</file>
+            <file>test/app1/src/ClassmapTest.php</file>
+            <file>test/app1/src/PSR4Test.php</file>
+            <directory>test/unit</directory>
+        </testsuite>
+        <testsuite name="psr4">
+            <file>test/app1/src/PSR4Test.php</file>
+            <directory>test/unit/PSR4</directory>
+        </testsuite>
+        <testsuite name="classmap">
+            <file>test/app1/src/ClassmapTest.php</file>
+            <directory>test/unit/Classmap</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

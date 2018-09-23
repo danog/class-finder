@@ -14,6 +14,31 @@ class PSR4Namespace
         $this->directories = $directories;
     }
 
+    public function knowsNamespace($namespace)
+    {
+        $numberOfSegments = count(explode('\\', $namespace));
+        $matchingSegments = $this->countMatchingNamespaceSegments($namespace);
+
+        if ($matchingSegments === 0) {
+            // Provided namespace doesn't map to anything registered.
+            return false;
+        } elseif ($numberOfSegments <= $matchingSegments) {
+            // This namespace is a superset of the provided namespace. Namespace is known.
+            return true;
+        } else {
+            // This namespace is a subset of the provided namespace. We must resolve the remaining segments to a directory.
+            $relativePath = substr($namespace, strlen($this->namespace));
+            foreach ($this->directories as $directory) {
+                $path = $this->normalizePath($directory, $relativePath);
+                if (is_dir($path)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
     /**
      * Determines how many namespace segments match the internal namespace. This is useful because multiple namespaces
      * may technically match a registered namespace root, but one of the matches may be a better match. Namespaces that
@@ -43,8 +68,8 @@ class PSR4Namespace
         while($namespaceFragments) {
             $possibleNamespace = implode('\\', $namespaceFragments) . '\\';
 
-            if($this->namespace === $possibleNamespace){
-                return count(explode('\\', $possibleNamespace));
+            if(strpos($this->namespace, $possibleNamespace) !== false){
+                return count(explode('\\', $possibleNamespace)) - 1;
             }
 
             array_unshift($undefinedNamespaceFragments, array_pop($namespaceFragments));
@@ -53,22 +78,25 @@ class PSR4Namespace
         return 0;
     }
 
+    public function isAcceptableNamespace($namespace)
+    {
+        $namespaceSegments = count(explode('\\', $this->namespace)) - 1;
+        $matchingSegments = $this->countMatchingNamespaceSegments($namespace);
+        return $namespaceSegments === $matchingSegments;
+    }
+
     public function findClasses($namespace)
     {
         $relativePath = substr($namespace, strlen($this->namespace));
 
-        $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace){
-            // TODO: perhaps there should be a central place to normalize file paths. AppConfig? Some other Util?
-            $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+        $self = $this;
+        $directories = array_reduce($this->directories, function($carry, $directory) use ($relativePath, $namespace, $self){
+            $path = $self->normalizePath($directory, $relativePath);
             $realDirectory = realpath($path);
             if ($realDirectory !== false) {
                 return array_merge($carry, array($realDirectory));
             } else {
-                throw new ClassFinderException(sprintf("Unknown namespace '%s'. Checked for files in %s, but that directory did not exist. See %s for details.",
-                    $namespace,
-                    $realDirectory,
-                    'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownSubNamespace.md'
-                ));
+                return $carry;
             }
         }, array());
 
@@ -93,5 +121,19 @@ class PSR4Namespace
                 return class_exists($potentialClass);
             }
         });
+    }
+
+    /**
+     * Creates a file path based on an absolute path to a directory and a relative path in a way
+     * that will be compatible with both Linux and Windows. This method is also extracted so that
+     * it can be turned into a vfs:// stream URL for unit testing.
+     * @param $directory
+     * @param $relativePath
+     * @return mixed
+     */
+    public function normalizePath($directory, $relativePath)
+    {
+        $path = str_replace('\\', '/', $directory . '/' . $relativePath);
+        return $path;
     }
 }
