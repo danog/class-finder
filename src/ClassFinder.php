@@ -44,18 +44,25 @@ class ClassFinder
     {
         self::initialize();
 
-        $isNamespaceKnown = self::$psr4->isNamespaceKnown($namespace) || self::$classmap->isNamespaceKnown($namespace);
-        if (!$isNamespaceKnown) {
+        $supportedFinders = array(
+            self::$psr4,
+            self::$classmap
+        );
+
+        $findersWithNamespace = array_filter($supportedFinders, function(FinderInterface $finder) use ($namespace){
+            return $finder->isNamespaceKnown($namespace);
+        });
+
+        if (count($findersWithNamespace) === 0) {
             throw new ClassFinderException(sprintf("Unknown namespace '%s'. See '%s' for details.",
                 $namespace,
                 'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownNamespace.md'
             ));
         }
 
-        $psr4classes = self::$psr4->findClasses($namespace);
-        $classmapClasses = self::$classmap->findClasses($namespace);
-
-        $classes = array_merge($psr4classes, $classmapClasses);
+        $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace){
+            return array_merge($carry, $finder->findClasses($namespace));
+        }, array());
 
         return array_unique($classes);
     }
