@@ -18,6 +18,7 @@
       "TestApp1\\": "src/",
       "TestApp1\\Multi\\": [ "multi/Jik/", "multi/Jiu/" ]
     },
-    "classmap": ["classmap/woc/", "classmap/wop/", "classmap/woj/" ]
+    "classmap": ["classmap/woc/", "classmap/wop/", "classmap/woj/" ],
+    "files": ["files/files1.php", "files/files2.php", "files/more_files/Boom.php" ]
   }
 }
