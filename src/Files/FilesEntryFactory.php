@@ -52,8 +52,10 @@ class FilesEntryFactory
         }
 
         if (!isset($php)) {
-            // TODO: Add link to docs for this.
-            throw new ClassFinderException('Could not locate PHP interrupter.');
+            throw new ClassFinderException(sprintf(
+                'Could not locate PHP interrupter. See "%s" for details.',
+                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/filesCouldNotLocatePHP.md'
+            ));
         }
 
         return $php;
