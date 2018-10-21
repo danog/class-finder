@@ -42,6 +42,14 @@ class FilesTest extends \PHPUnit_Framework_TestCase
                     'TestApp1\FilesClasses\Lam',
                 ),
                 'ClassFinder should be able to find 1st party classes included from `files` listed in composer.json.'
+            ),
+            array(
+                'TestApp1\FilesClasses\MoreClasses',
+                array(
+                    'TestApp1\FilesClasses\MoreClasses\Pham',
+                    'TestApp1\FilesClasses\MoreClasses\Slam'
+                ),
+                'ClassFinder should be able to find 1st party classes included from `files` listed in composer.json.'
             )
         );
     }
