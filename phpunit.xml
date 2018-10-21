@@ -10,6 +10,7 @@
             <file>test/app1/src/ClassFinderTest.php</file>
             <file>test/app1/src/ClassmapTest.php</file>
             <file>test/app1/src/PSR4Test.php</file>
+            <file>test/app1/src/FilesTest.php</file>
             <directory>test/unit</directory>
         </testsuite>
         <testsuite name="psr4">
