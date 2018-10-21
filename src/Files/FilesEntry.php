@@ -79,7 +79,7 @@ class FilesEntry
      * @param $path
      * @return mixed
      */
-    public function normalizePath($path)
+    private function normalizePath($path)
     {
         $path = str_replace('\\', '/', $path);
         return $path;
