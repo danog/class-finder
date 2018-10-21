@@ -36,7 +36,13 @@ class FilesEntry
         $classes = $this->getClassesInFile();
 
         return array_filter($classes, function($class) use ($namespace) {
-            return strpos($class, $namespace) !== false;
+            $classNameFragments = explode('\\', $class);
+            array_pop($classNameFragments);
+            $classNamespace = implode('\\', $classNameFragments);
+
+            $namespace = trim($namespace, '\\');
+
+            return $namespace === $classNamespace;
         });
     }
 
