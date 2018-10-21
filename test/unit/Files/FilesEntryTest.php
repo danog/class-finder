@@ -73,6 +73,49 @@ EOL
         );
     }
 
+    /**
+     * @param $namespace
+     * @param $expected
+     * @dataProvider knowsNamespaceDataProvider
+     */
+    public function testKnowsNamespace($namespace, $expected)
+    {
+        $metaData = stream_get_meta_data($this->file);
+        $tmpFilename = $metaData['uri'];
+
+        $files = new FilesEntry($tmpFilename, $this->findPHP());
+
+        $classes = $files->knowsNamespace($namespace);
+
+        $this->assertEquals($expected, $classes, 'FilesEntry should be able to determine the classes defined in a given file.');
+    }
+
+    public function knowsNamespaceDataProvider()
+    {
+        return array(
+            array(
+                'Foo\Bar',
+                true
+            ),
+            array(
+                'Foo',
+                true
+            ),
+            array(
+                'Baz',
+                true,
+            ),
+            array(
+                'Stupid',
+                false
+            ),
+            array(
+                'Foobar',
+                false
+            )
+        );
+    }
+
     private function findPHP()
     {
         if (defined("PHP_BINARY")) {
