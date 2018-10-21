@@ -29,6 +29,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $classes, $message);
     }
 
+
     public function classFinderDataProvider()
     {
         return array(
@@ -53,4 +54,15 @@ class FilesTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    /**
+     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
+     * @expectedExceptionMessageRegExp /Unknown namespace 'TestApp1\\FilesClasses'\./
+     */
+    public function testFilesSupportRequiresEnabling()
+    {
+        ClassFinder::disableFilesSupport(); // Disabling FilesSupport should cause no files to be found.
+        $classes = ClassFinder::getClassesInNamespace('TestApp1\FilesClasses');
+    }
+
 }
