@@ -27,12 +27,17 @@ class FilesEntry
     }
 
     /**
-     * @param $namespace
-     * @return bool
+     * Gets a list of classes that belong to the given namespace
+     * @param string $namespace
+     * @return string[]
      */
-    public function matches($namespace)
+    public function getClasses($namespace)
     {
-        // TODO.
+        $classes = $this->getClassesInFile();
+
+        return array_filter($classes, function($class) use ($namespace) {
+            return strpos($class, $namespace) !== false;
+        });
     }
 
     /**

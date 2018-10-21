@@ -33,12 +33,8 @@ class FilesFinder implements FinderInterface
     {
         $filesEntries = $this->factory->getFilesEntries();
 
-        $matchingEntries = array_filter($filesEntries, function(FilesEntry $entry) use ($namespace) {
-            return $entry->matches($namespace);
-        });
-
-        return array_map(function(FilesEntry $entry) {
-            return $entry->getClassName();
-        }, $matchingEntries);
+        return array_reduce($filesEntries, function($carry, FilesEntry $entry) use ($namespace){
+            return array_merge($carry, $entry->getClasses($namespace));
+        }, array());
     }
 }
