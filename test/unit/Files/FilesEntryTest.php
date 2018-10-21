@@ -33,19 +33,44 @@ EOL
         );
     }
 
-    public function testGetClasses()
+    /**
+     * @param $namespace
+     * @param $expected
+     * @dataProvider getClassesDataProvider
+     */
+    public function testGetClasses($namespace, $expected)
     {
         $metaData = stream_get_meta_data($this->file);
         $tmpFilename = $metaData['uri'];
 
         $files = new FilesEntry($tmpFilename, $this->findPHP());
 
-        $classes = $files->getClasses('Foo\Bar');
+        $classes = $files->getClasses($namespace);
 
-        $this->assertEquals(array(
-            'Foo\Bar\Foo',
-            'Foo\Bar\Bar'
-        ), $classes, 'FilesEntry should be able to determine the classes defined in a given file.');
+        $this->assertEquals($expected, $classes, 'FilesEntry should be able to determine the classes defined in a given file.');
+    }
+
+    public function getClassesDataProvider()
+    {
+        return array(
+            array(
+                'Foo\Bar',
+                array(
+                    'Foo\Bar\Foo',
+                    'Foo\Bar\Bar'
+                )
+            ),
+            array(
+                'Baz',
+                array(
+                    'Baz\Boo'
+                )
+            ),
+            array(
+                'Stupid',
+                array()
+            )
+        );
     }
 
     private function findPHP()
