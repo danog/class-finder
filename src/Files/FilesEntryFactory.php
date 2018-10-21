@@ -41,14 +41,19 @@ class FilesEntryFactory
             // PHP_BINARY was made available in PHP 5.4
             $php = PHP_BINARY;
         } else {
-            if (exec('which php', $output)) {
-                $php = $output[0];
-            } elseif (exec('where php', $output)) {
+            $isHostWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+            if ($isHostWindows) {
+                exec('where php', $output);
                 $php = $output[0];
             } else {
-                // TODO: Add link to docs for this.
-                throw new ClassFinderException('Could not locate PHP interrupter.');
+                exec('which php', $output);
+                $php = $output[0];
             }
+        }
+
+        if (!isset($php)) {
+            // TODO: Add link to docs for this.
+            throw new ClassFinderException('Could not locate PHP interrupter.');
         }
 
         return $php;
