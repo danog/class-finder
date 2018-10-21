@@ -19,6 +19,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase
     public function testClassFinder($namespace, $expected, $message)
     {
         try {
+            ClassFinder::enableFilesSupport();
             $classes = ClassFinder::getClassesInNamespace($namespace);
         } catch (\Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());

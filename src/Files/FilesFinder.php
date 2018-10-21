@@ -14,7 +14,7 @@ class FilesFinder implements FinderInterface
 
     public function isNamespaceKnown($namespace)
     {
-        $filesEntries = $this->factory->getfilesEntries();
+        $filesEntries = $this->factory->getFilesEntries();
 
         foreach($filesEntries as $filesEntry) {
             if ($filesEntry->knowsNamespace($namespace)) {
@@ -33,11 +33,11 @@ class FilesFinder implements FinderInterface
     {
         $filesEntries = $this->factory->getFilesEntries();
 
-        $matchingEntries = array_filter($filesEntries, function(filesEntry $entry) use ($namespace) {
+        $matchingEntries = array_filter($filesEntries, function(FilesEntry $entry) use ($namespace) {
             return $entry->matches($namespace);
         });
 
-        return array_map(function(filesEntry $entry) {
+        return array_map(function(FilesEntry $entry) {
             return $entry->getClassName();
         }, $matchingEntries);
     }

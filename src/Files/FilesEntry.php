@@ -5,14 +5,25 @@ class FilesEntry
 {
     private $file;
 
-    public function __construct($fileToInclude)
+    private $php;
+
+    public function __construct($fileToInclude, $php)
     {
-        $this->file = $fileToInclude;
+        $this->file = $this->normalizePath($fileToInclude);
+        $this->php = $php;
     }
 
     public function knowsNamespace($namespace)
     {
-        // TODO.
+        $classes = $this->getClassesInFile();
+
+        foreach($classes as $class) {
+            if (strpos($class, $namespace) !== false) {
+                return true;
+            };
+        }
+
+        return false;
     }
 
     /**
@@ -22,5 +33,44 @@ class FilesEntry
     public function matches($namespace)
     {
         // TODO.
+    }
+
+    /**
+     * This is where the real magic happens. Since classes in a randomly included file could contain classes in any namespace,
+     * (or even multiple namespaces!) we must execute the file and check for newly defined classes. This has a potential
+     * downside that files being executed will execute their side effects - which may be undesirable. However, Composer
+     * will require these files anyway - so hopefully causing those side effects isn't that big of a deal.
+     * execute the
+     * @return array
+     */
+    private function getClassesInFile()
+    {
+        // get_declared_classes() returns a bunch of classes that are built into PHP. So we need a control here.
+        $script = "var_export(get_declared_classes());";
+        exec($this->php . " -r \"$script\"", $output);
+        $classes = 'return ' . implode('', $output) . ';';
+        $initialClasses = eval($classes);
+
+        // clear the exec() buffer.
+        unset($output);
+
+        // This brings in the new classes. so $classes here will include the PHP defaults and the newly defined classes
+        $script = "require_once '{$this->file}'; var_export(get_declared_classes());";
+        exec($this->php . ' -r "' . $script . '"', $output);
+        $classes = 'return ' . implode('', $output) . ';';
+        $allClasses = eval($classes);
+
+        return array_diff($allClasses, $initialClasses);
+    }
+
+    /**
+     * TODO: Similar to PSR4Namespace::normalizePath. Maybe we refactor?
+     * @param $path
+     * @return mixed
+     */
+    public function normalizePath($path)
+    {
+        $path = str_replace('\\', '/', $path);
+        return $path;
     }
 }
