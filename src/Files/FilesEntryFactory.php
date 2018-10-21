@@ -37,7 +37,7 @@ class FilesEntryFactory
      */
     private function findPHP()
     {
-        if (defined(PHP_BINARY)) {
+        if (defined("PHP_BINARY")) {
             // PHP_BINARY was made available in PHP 5.4
             $php = PHP_BINARY;
         } else {
