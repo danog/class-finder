@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
 
-ClassFinder::enableFilesSupport();
+ClassFinder::enableExperimentalFilesSupport();
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 ```
 

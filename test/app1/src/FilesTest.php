@@ -19,7 +19,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase
     public function testClassFinder($namespace, $expected, $message)
     {
         try {
-            ClassFinder::enableFilesSupport();
+            ClassFinder::enableExperimentalFilesSupport();
             $classes = ClassFinder::getClassesInNamespace($namespace);
         } catch (\Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
@@ -61,7 +61,7 @@ class FilesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFilesSupportRequiresEnabling()
     {
-        ClassFinder::disableFilesSupport(); // Disabling FilesSupport should cause no files to be found.
+        ClassFinder::disableExperimentalFilesSupport(); // Disabling FilesSupport should cause no files to be found.
         $classes = ClassFinder::getClassesInNamespace('TestApp1\FilesClasses');
     }
 

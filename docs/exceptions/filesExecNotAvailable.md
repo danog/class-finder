@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
 
-ClassFinder::enableFilesSupport();
+ClassFinder::enableExperimentalFilesSupport();
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 ```
 
@@ -31,7 +31,7 @@ that enabled it, you should remove it and see if you're part of the 99% that doe
 want to explicitly disable it:
 
 ```
-ClassFinder::disableFilesSupport();
+ClassFinder::disableExperimentalFilesSupport();
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 ```
 

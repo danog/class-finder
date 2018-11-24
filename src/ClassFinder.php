@@ -81,12 +81,12 @@ class ClassFinder
         self::$config->setAppRoot($appRoot);
     }
 
-    public static function enableFilesSupport()
+    public static function enableExperimentalFilesSupport()
     {
         self::$useFilesSupport = true;
     }
 
-    public static function disableFilesSupport()
+    public static function disableExperimentalFilesSupport()
     {
         self::$useFilesSupport = false;
     }
