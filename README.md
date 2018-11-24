@@ -9,7 +9,7 @@ Requirements
 ------------
 
  * Application is using Composer.
- * Classes can be autoloaded with PSR-4 or classmaps.
+ * Classes can be autoloaded with Composer.
  * PHP >= 5.3.0
 
 Installing
@@ -22,6 +22,14 @@ $ composer require haydenpierce/class-finder
 ```
 
 No other installation methods are currently supported.
+
+Supported Autoloading Methods
+--------------------------------
+
+* PSR-4
+* Classmaps
+* Files (Experimental, must be explicitly enabled via `ClassFinder::enableExperimentalFilesSupport()`)
+
 
 Example
 -------
