@@ -11,6 +11,9 @@ use HaydenPierce\ClassFinder\PSR4\PSR4NamespaceFactory;
 
 class ClassFinder
 {
+    const STANDARD_MODE = 1;
+    const RECURSIVE_MODE = 2;
+
     /** @var AppConfig */
     private static $config;
 
@@ -50,10 +53,11 @@ class ClassFinder
 
     /**
      * @param $namespace
+     * @param $options - options used to
      * @return array
      * @throws \Exception
      */
-    public static function getClassesInNamespace($namespace)
+    public static function getClassesInNamespace($namespace, $options = self::STANDARD_MODE)
     {
         self::initialize();
 
@@ -68,8 +72,8 @@ class ClassFinder
             ));
         }
 
-        $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace){
-            return array_merge($carry, $finder->findClasses($namespace));
+        $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace, $options){
+            return array_merge($carry, $finder->findClasses($namespace, $options));
         }, array());
 
         return array_unique($classes);

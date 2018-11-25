@@ -1,6 +1,7 @@
 <?php
 namespace HaydenPierce\ClassFinder\Classmap;
 
+use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class ClassmapFinder implements FinderInterface
@@ -26,11 +27,13 @@ class ClassmapFinder implements FinderInterface
     }
 
     /**
+     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
+     * @param $options
      * @return bool|string
      * @throws ClassFinderException
      */
-    public function findClasses($namespace)
+    public function findClasses($namespace, $options)
     {
         $classmapEntries = $this->factory->getClassmapEntries();
 

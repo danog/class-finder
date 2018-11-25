@@ -39,10 +39,13 @@ class FilesFinder implements FinderInterface
     }
 
     /**
+     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
+     * @param $options
      * @return bool|string
+     * @throws ClassFinderException
      */
-    public function findClasses($namespace)
+    public function findClasses($namespace, $options)
     {
         $filesEntries = $this->factory->getFilesEntries();
 

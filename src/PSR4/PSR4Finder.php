@@ -1,7 +1,6 @@
 <?php
 namespace HaydenPierce\ClassFinder\PSR4;
 
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class PSR4Finder implements FinderInterface
@@ -14,11 +13,12 @@ class PSR4Finder implements FinderInterface
     }
 
     /**
+     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
+     * @param $options
      * @return array
-     * @throws ClassFinderException
      */
-    public function findClasses($namespace)
+    public function findClasses($namespace, $options)
     {
         $bestNamespace = $this->findBestPSR4Namespace($namespace);
 
