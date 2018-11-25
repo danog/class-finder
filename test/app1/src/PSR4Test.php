@@ -167,8 +167,7 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                     'HaydenPierce\SandboxAppMulti\Zit'
                 ),
                 'ClassFinder should be able to find 3rd party classes'
-            ),
-            'TestApp1\Foo\Loo'
+            )
         );
     }
 
