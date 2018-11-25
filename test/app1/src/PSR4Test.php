@@ -13,14 +13,15 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
         // Reset ClassFinder back to normal.
         ClassFinder::setAppRoot(null);
     }
+
     /**
-     * @dataProvider classFinderDataProvider
+     * @dataProvider getClassesInNamespaceDataProvider
      */
-    public function testClassFinder($namespace, $expected, $message)
+    public function testGetClassesInNamespace($namespace, $expected, $message)
     {
         try {
             $classes = ClassFinder::getClassesInNamespace($namespace);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
             $classes = array();
         }
@@ -28,7 +29,7 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $classes, $message);
     }
 
-    public function classFinderDataProvider()
+    public function getClassesInNamespaceDataProvider()
     {
         return array(
             array(
@@ -97,8 +98,77 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
             array(
                 'TestApp1\Foo\Empty',
                 array(),
-                'ClassFinder should return an empty array if the namesapce is known, but contains no classes.'
+                'ClassFinder should return an empty array if the namespace is known, but contains no classes.'
             )
+        );
+    }
+
+    /**
+     * @dataProvider getClassesInNamespaceRecursivelyDataProvider
+     */
+    public function testGetClassesInNamespaceRecursively($namespace, $expected, $message)
+    {
+        try {
+            $classes = ClassFinder::getClassesInNamespace($namespace);
+        } catch (\Exception $e) {
+            $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
+            $classes = array();
+        }
+
+        $this->assertEquals($expected, $classes, $message);
+    }
+
+    public function getClassesInNamespaceRecursivelyDataProvider()
+    {
+        return array(
+            array(
+                'TestApp1\Foo',
+                array(
+                    'TestApp1\Foo\Bar',
+                    'TestApp1\Foo\Baz',
+                    'TestApp1\Foo\Foo',
+                    'TestApp1\Foo\Loo\Lar',
+                    'TestApp1\Foo\Loo\Laz',
+                    'TestApp1\Foo\Loo\Loo'
+                ),
+                'ClassFinder should be able to find 1st party classes recursively, multiple namespaces deep.'
+            ),
+            array(
+                array(
+                    'TestApp1\Foo\Loo\Lar',
+                    'TestApp1\Foo\Loo\Laz',
+                    'TestApp1\Foo\Loo\Loo'
+                ),
+                'ClassFinder should not turn up other classes when running in recursive mode.'
+            ),
+            array(
+                'TestApp1\Multi',
+                array(
+                    'TestApp1\Multi\Uij',
+                    'TestApp1\Multi\Yij',
+                    'TestApp1\Multi\Uik',
+                    'TestApp1\Multi\Yik',
+                    'TestApp1\Multi\Yop\Rik',
+                    'TestApp1\Multi\Yop\Tik',
+                    'TestApp1\Multi\Yop\Eij',
+                    'TestApp1\Multi\Yop\Rij'
+                ),
+                'ClassFinder should be able to find 1st party classes recursively when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+            ),
+            array(
+                'HaydenPierce',
+                array(
+                    'HaydenPierce\SandboxApp\Foy',
+                    'HaydenPierce\SandboxApp\Foo\Bar\Barc',
+                    'HaydenPierce\SandboxApp\Foo\Bar\Barp',
+                    'HaydenPierce\SandboxAppMulti\Zip',
+                    'HaydenPierce\SandboxAppMulti\Zop',
+                    'HaydenPierce\SandboxAppMulti\Zap',
+                    'HaydenPierce\SandboxAppMulti\Zit'
+                ),
+                'ClassFinder should be able to find 3rd party classes'
+            ),
+            'TestApp1\Foo\Loo'
         );
     }
 
