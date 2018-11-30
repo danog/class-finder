@@ -159,7 +159,7 @@ class PSR4Namespace
         }, $potentialClassFiles);
 
         if ($options == ClassFinder::RECURSIVE_MODE) {
-            return $this->getClassesFromListRecursively();
+            return $this->getClassesFromListRecursively($namespace);
         } else {
             return array_filter($potentialClasses, function($potentialClass) {
                 if (function_exists($potentialClass)) {
@@ -173,15 +173,54 @@ class PSR4Namespace
         }
     }
 
+    private function getDirectClassesOnly()
+    {
+        $self = $this;
+        $directories = array_reduce($this->directories, function($carry, $directory) use ($self){
+            $path = $self->normalizePath($directory, '');
+            $realDirectory = realpath($path);
+            if ($realDirectory !== false) {
+                return array_merge($carry, array($realDirectory));
+            } else {
+                return $carry;
+            }
+        }, array());
+
+        $arraysOfClasses = array_map(function($directory) {
+            return scandir($directory);
+        }, $directories);
+
+        $potentialClassFiles = array_reduce($arraysOfClasses, function($carry, $arrayOfClasses) {
+            return array_merge($carry, $arrayOfClasses);
+        }, array());
+
+        $potentialClasses = array_map(function($file) use ($self) {
+            return $self->namespace . str_replace('.php', '', $file);
+        }, $potentialClassFiles);
+
+        return array_filter($potentialClasses, function($potentialClass) {
+            if (function_exists($potentialClass)) {
+                // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
+                // Example: DeepCopy\deep_copy
+                return false;
+            } else {
+//                $potentialClass = str_replace('\\\\', '\\', $potentialClass);
+                return class_exists($potentialClass);
+            }
+        });
+    }
+
     /**
      * @param $namespace
      * @return string[]
      */
     public function getClassesFromListRecursively($namespace)
     {
+        $initialClasses = strpos( $this->namespace, $namespace) !== false ? $this->getDirectClassesOnly() : array();
+
         return array_reduce($this->getDirectSubnamespaces(), function($carry, PSR4Namespace $subNamespace) use ($namespace) {
             return array_merge($carry, $subNamespace->getClassesFromListRecursively($namespace));
-        }, $this->findClasses($namespace));
+        }, $initialClasses);
     }
 
     /**

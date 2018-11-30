@@ -156,6 +156,20 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                 'ClassFinder should be able to find 1st party classes recursively when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
+                'TestApp1\Multi',
+                array(
+                    'TestApp1\Multi\Uij',
+                    'TestApp1\Multi\Yij',
+                    'TestApp1\Multi\Uik',
+                    'TestApp1\Multi\Yik',
+                    'TestApp1\Multi\Yop\Rik',
+                    'TestApp1\Multi\Yop\Tik',
+                    'TestApp1\Multi\Yop\Eij',
+                    'TestApp1\Multi\Yop\Rij'
+                ),
+                'ClassFinder should be able to find 1st party classes recursively when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+            ),
+            array(
                 'HaydenPierce',
                 array(
                     'HaydenPierce\SandboxApp\Foy',

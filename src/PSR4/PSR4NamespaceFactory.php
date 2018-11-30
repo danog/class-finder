@@ -100,7 +100,7 @@ class PSR4NamespaceFactory
             $segments = explode('/', $directory);
             $subnamespaceSegment = array_pop($segments);
 
-            $namespace = $psr4Namespace->getNamespace() . "\\" . $subnamespaceSegment;
+            $namespace = $psr4Namespace->getNamespace() . "\\" . $subnamespaceSegment . "\\";
             return $self->createNamespace($namespace, $directory);
         }, $directoreies);
 
