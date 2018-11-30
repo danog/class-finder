@@ -109,7 +109,7 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
     public function testGetClassesInNamespaceRecursively($namespace, $expected, $message)
     {
         try {
-            $classes = ClassFinder::getClassesInNamespace($namespace);
+            $classes = ClassFinder::getClassesInNamespace($namespace, ClassFinder::RECURSIVE_MODE);
         } catch (\Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
             $classes = array();

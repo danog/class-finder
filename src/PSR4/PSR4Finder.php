@@ -23,7 +23,7 @@ class PSR4Finder implements FinderInterface
         $bestNamespace = $this->findBestPSR4Namespace($namespace);
 
         if ($bestNamespace instanceof PSR4Namespace) {
-            return $bestNamespace->findClasses($namespace);
+            return $bestNamespace->findClasses($namespace, $options);
         } else {
             return array();
         }

@@ -82,7 +82,29 @@ class PSR4NamespaceFactory
             return realpath($directory);
         }, $directories);
 
-        return new PSR4Namespace($namespace, $directories);
+        $psr4Namespace = new PSR4Namespace($namespace, $directories);
+
+        $subNamespaces = $this->getSubnamespaces($psr4Namespace);
+        $psr4Namespace->setDirectSubnamespaces($subNamespaces);
+
+        return $psr4Namespace;
+    }
+
+    private function getSubnamespaces(PSR4Namespace $psr4Namespace)
+    {
+        // Scan it's own directories.
+        $directoreies = $psr4Namespace->findDirectories();
+
+        $self = $this;
+        $subnamespaces = array_map(function($directory) use ($self, $psr4Namespace){
+            $segments = explode('/', $directory);
+            $subnamespaceSegment = array_pop($segments);
+
+            $namespace = $psr4Namespace->getNamespace() . "\\" . $subnamespaceSegment;
+            return $self->createNamespace($namespace, $directory);
+        }, $directoreies);
+
+        return $subnamespaces;
     }
 
     /**

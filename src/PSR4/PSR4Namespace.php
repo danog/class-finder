@@ -1,12 +1,16 @@
 <?php
 namespace HaydenPierce\ClassFinder\PSR4;
 
+use HaydenPierce\ClassFinder\ClassFinder;
 use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 
 class PSR4Namespace
 {
     private $namespace;
     private $directories;
+
+    /** @var PSR4Namespace[] */
+    private $directSubnamespaces;
 
     public function __construct($namespace, $directories)
     {
@@ -85,7 +89,49 @@ class PSR4Namespace
         return $namespaceSegments === $matchingSegments;
     }
 
-    public function findClasses($namespace)
+    /**
+     * Used to identify subnamespaces.
+     */
+    public function findDirectories()
+    {
+        $self = $this;
+        $directories = array_reduce($this->directories, function($carry, $directory) use ($self){
+            $path = $self->normalizePath($directory, '');
+            $realDirectory = realpath($path);
+            if ($realDirectory !== false) {
+                return array_merge($carry, array($realDirectory));
+            } else {
+                return $carry;
+            }
+        }, array());
+
+        $arraysOfClasses = array_map(function($directory) use ($self) {
+            $files = scandir($directory);
+            return array_map(function($file) use ($directory, $self) {
+                return $self->normalizePath($directory, $file);
+            }, $files);
+        }, $directories);
+
+        $potentialDirectories = array_reduce($arraysOfClasses, function($carry, $arrayOfClasses) {
+            return array_merge($carry, $arrayOfClasses);
+        }, array());
+
+        // Remove '.' and '..' directories
+        $potentialDirectories = array_filter($potentialDirectories, function($potentialDirectory) {
+            $segments = explode('/', $potentialDirectory);
+            $lastSegment = array_pop($segments);
+
+            return  $lastSegment !== '.' && $lastSegment !== '..';
+        });
+
+        $confirmedDirectories = array_filter($potentialDirectories, function($potentialDirectory) {
+            return is_dir($potentialDirectory);
+        });
+
+        return $confirmedDirectories;
+    }
+
+    public function findClasses($namespace, $options = ClassFinder::STANDARD_MODE)
     {
         $relativePath = substr($namespace, strlen($this->namespace));
 
@@ -112,15 +158,30 @@ class PSR4Namespace
             return $namespace . '\\' . str_replace('.php', '', $file);
         }, $potentialClassFiles);
 
-        return array_filter($potentialClasses, function($potentialClass) {
-            if (function_exists($potentialClass)) {
-                // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
-                // Example: DeepCopy\deep_copy
-                return false;
-            } else {
-                return class_exists($potentialClass);
-            }
-        });
+        if ($options == ClassFinder::RECURSIVE_MODE) {
+            return $this->getClassesFromListRecursively();
+        } else {
+            return array_filter($potentialClasses, function($potentialClass) {
+                if (function_exists($potentialClass)) {
+                    // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
+                    // Example: DeepCopy\deep_copy
+                    return false;
+                } else {
+                    return class_exists($potentialClass);
+                }
+            });
+        }
+    }
+
+    /**
+     * @param $namespace
+     * @return string[]
+     */
+    public function getClassesFromListRecursively($namespace)
+    {
+        return array_reduce($this->getDirectSubnamespaces(), function($carry, PSR4Namespace $subNamespace) use ($namespace) {
+            return array_merge($carry, $subNamespace->getClassesFromListRecursively($namespace));
+        }, $this->findClasses($namespace));
     }
 
     /**
@@ -135,5 +196,29 @@ class PSR4Namespace
     {
         $path = str_replace('\\', '/', $directory . '/' . $relativePath);
         return $path;
+    }
+
+    /**
+     * @return PSR4Namespace[]
+     */
+    public function getDirectSubnamespaces()
+    {
+        return $this->directSubnamespaces;
+    }
+
+    /**
+     * @param PSR4Namespace[] $directSubnamespaces
+     */
+    public function setDirectSubnamespaces($directSubnamespaces)
+    {
+        $this->directSubnamespaces = $directSubnamespaces;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNamespace()
+    {
+        return trim($this->namespace, '\\');
     }
 }
