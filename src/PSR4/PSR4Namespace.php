@@ -89,6 +89,14 @@ class PSR4Namespace
         return $namespaceSegments === $matchingSegments;
     }
 
+    public function isAcceptableNamespaceRecursiveMode($namespace)
+    {
+        // Remove prefix backslash (TODO: review if we do this eariler).
+        $namespace = ltrim($namespace, '\\');
+
+        return strpos($this->namespace, $namespace) === 0;
+    }
+
     /**
      * Used to identify subnamespaces.
      */

@@ -115,6 +115,13 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
             $classes = array();
         }
 
+        // ClassFinder has the ability to find itself. This ability, while intended, is incontinent for tests
+        // because of the 'HaydenPierce' test case. Whenever ClassFinder would be updated, we would need to update the
+        // test. To prevent the flakiness, we just remove ClassFinder's classes.
+        $classes = array_filter($classes, function($class) {
+            return strpos($class, 'HaydenPierce\ClassFinder') !== 0;
+        });
+
         $this->assertEquals($expected, $classes, $message);
     }
 
@@ -160,6 +167,8 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                 'HaydenPierce',
                 array(
                     'HaydenPierce\SandboxApp\Foy',
+                    'HaydenPierce\SandboxApp\Fob\Soz',
+                    'HaydenPierce\SandboxApp\Foo\Larc',
                     'HaydenPierce\SandboxApp\Foo\Bar\Barc',
                     'HaydenPierce\SandboxApp\Foo\Bar\Barp',
                     'HaydenPierce\SandboxAppMulti\Zip',
@@ -179,5 +188,17 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
     public function testThrowsOnUnknownSubNameSpace()
     {
         ClassFinder::getClassesInNamespace('TestApp1\DoesNotExist');
+    }
+
+    public function testCanFindSelf()
+    {
+        try {
+            $classes = ClassFinder::getClassesInNamespace('HaydenPierce\ClassFinder', ClassFinder::RECURSIVE_MODE);
+        } catch (\Exception $e) {
+            $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
+            $classes = array();
+        }
+
+        $this->assertGreaterThan(0, count($classes), 'ClassFinder should be able to find its own internal classes');
     }
 }
