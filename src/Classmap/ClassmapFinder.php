@@ -27,7 +27,6 @@ class ClassmapFinder implements FinderInterface
     }
 
     /**
-     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
      * @param $options
      * @return bool|string
@@ -37,8 +36,8 @@ class ClassmapFinder implements FinderInterface
     {
         $classmapEntries = $this->factory->getClassmapEntries();
 
-        $matchingEntries = array_filter($classmapEntries, function(ClassmapEntry $entry) use ($namespace) {
-            return $entry->matches($namespace);
+        $matchingEntries = array_filter($classmapEntries, function(ClassmapEntry $entry) use ($namespace, $options) {
+            return $entry->matches($namespace, $options);
         });
 
         return array_map(function(ClassmapEntry $entry) {
