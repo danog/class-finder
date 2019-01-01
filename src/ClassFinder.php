@@ -11,6 +11,9 @@ use HaydenPierce\ClassFinder\PSR4\PSR4NamespaceFactory;
 
 class ClassFinder
 {
+    const STANDARD_MODE = 1;
+    const RECURSIVE_MODE = 2;
+
     /** @var AppConfig */
     private static $config;
 
@@ -24,7 +27,13 @@ class ClassFinder
     private static $files;
 
     /** @var boolean */
-    private static $useFilesSupport;
+    private static $useFilesSupport = false;
+
+    /** @var boolean */
+    private static $usePSR4Support = true;
+
+    /** @var boolean */
+    private static $useClassmapSupport = true;
 
     private static function initialize()
     {
@@ -50,10 +59,11 @@ class ClassFinder
 
     /**
      * @param $namespace
+     * @param $options
      * @return array
      * @throws \Exception
      */
-    public static function getClassesInNamespace($namespace)
+    public static function getClassesInNamespace($namespace, $options = self::STANDARD_MODE)
     {
         self::initialize();
 
@@ -68,8 +78,8 @@ class ClassFinder
             ));
         }
 
-        $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace){
-            return array_merge($carry, $finder->findClasses($namespace));
+        $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace, $options){
+            return array_merge($carry, $finder->findClasses($namespace, $options));
         }, array());
 
         return array_unique($classes);
@@ -91,15 +101,48 @@ class ClassFinder
         self::$useFilesSupport = false;
     }
 
+    public static function enablePSR4Support()
+    {
+        self::$usePSR4Support = true;
+    }
+
+    public static function disablePSR4Support()
+    {
+        self::$usePSR4Support = false;
+    }
+
+    public static function enableClassmapSupport()
+    {
+        self::$useClassmapSupport = true;
+    }
+
+    public static function disableClassmapSupport()
+    {
+        self::$useClassmapSupport = false;
+    }
+
     /**
      * @return array
      */
     private static function getSupportedFinders()
     {
-        $supportedFinders = array(
-            self::$psr4,
-            self::$classmap
-        );
+        $supportedFinders = array();
+
+        /*
+         * This is done for testing. For some tests, allowing PSR4 classes contaminates the test results. This could also be
+         * disabled for performance reasons (less finders in use means less work), but most people probably won't do that.
+         */
+        if (self::$usePSR4Support) {
+            $supportedFinders[] = self::$psr4;
+        }
+
+        /*
+         * This is done for testing. For some tests, allowing classmap classes contaminates the test results. This could also be
+         * disabled for performance reasons (less finders in use means less work), but most people probably won't do that.
+         */
+        if (self::$useClassmapSupport) {
+            $supportedFinders[] = self::$classmap;
+        }
 
         /*
          * Files support is tucked away behind a flag because it will need to use some kind of shell access via exec, or

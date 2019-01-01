@@ -1,7 +1,7 @@
 <?php
 namespace HaydenPierce\ClassFinder\PSR4;
 
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+use HaydenPierce\ClassFinder\ClassFinder;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class PSR4Finder implements FinderInterface
@@ -15,18 +15,30 @@ class PSR4Finder implements FinderInterface
 
     /**
      * @param $namespace
+     * @param $options
      * @return array
-     * @throws ClassFinderException
      */
-    public function findClasses($namespace)
+    public function findClasses($namespace, $options)
     {
-        $bestNamespace = $this->findBestPSR4Namespace($namespace);
-
-        if ($bestNamespace instanceof PSR4Namespace) {
-            return $bestNamespace->findClasses($namespace);
-        } else {
-            return array();
+        if ($options === ClassFinder::RECURSIVE_MODE) {
+            $applicableNamespaces = $this->findAllApplicableNamespaces($namespace);
         }
+
+        if (empty($applicableNamespaces)) {
+            $bestNamespace = $this->findBestPSR4Namespace($namespace);
+            $applicableNamespaces = array($bestNamespace);
+        }
+
+        return array_reduce($applicableNamespaces, function($carry, $psr4NamespaceOrNull) use ($namespace, $options) {
+            if ($psr4NamespaceOrNull instanceof PSR4Namespace) {
+                $classes = $psr4NamespaceOrNull->findClasses($namespace, $options);
+            } else {
+                $classes = array();
+            }
+
+            return array_merge($carry, $classes);
+        }, array());
+
     }
 
     public function isNamespaceKnown($namespace)
@@ -40,6 +52,21 @@ class PSR4Finder implements FinderInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param $namespace
+     * @return PSR4Namespace[]
+     */
+    private function findAllApplicableNamespaces($namespace)
+    {
+        $composerNamespaces = $this->factory->getPSR4Namespaces();
+
+        $acceptableNamespaces = array_filter($composerNamespaces, function(PSR4Namespace $potentialNamespace) use ($namespace){
+            return $potentialNamespace->isAcceptableNamespaceRecursiveMode($namespace);
+        });
+
+        return $acceptableNamespaces;
     }
 
     /**

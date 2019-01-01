@@ -3,7 +3,7 @@ namespace HaydenPierce\ClassFinder;
 
 interface FinderInterface
 {
-    public function findClasses($namespace);
+    public function findClasses($namespace, $options);
 
     /**
      * A namespace is "known" if a Finder can determine that the autoloader can create classes from that namespace.

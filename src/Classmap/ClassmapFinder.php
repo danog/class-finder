@@ -1,6 +1,7 @@
 <?php
 namespace HaydenPierce\ClassFinder\Classmap;
 
+use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class ClassmapFinder implements FinderInterface
@@ -27,15 +28,16 @@ class ClassmapFinder implements FinderInterface
 
     /**
      * @param $namespace
+     * @param $options
      * @return bool|string
      * @throws ClassFinderException
      */
-    public function findClasses($namespace)
+    public function findClasses($namespace, $options)
     {
         $classmapEntries = $this->factory->getClassmapEntries();
 
-        $matchingEntries = array_filter($classmapEntries, function(ClassmapEntry $entry) use ($namespace) {
-            return $entry->matches($namespace);
+        $matchingEntries = array_filter($classmapEntries, function(ClassmapEntry $entry) use ($namespace, $options) {
+            return $entry->matches($namespace, $options);
         });
 
         return array_map(function(ClassmapEntry $entry) {
