@@ -27,7 +27,10 @@ class ClassFinder
     private static $files;
 
     /** @var boolean */
-    private static $useFilesSupport;
+    private static $useFilesSupport = false;
+
+    /** @var boolean */
+    private static $usePSR4Support = true;
 
     private static function initialize()
     {
@@ -95,15 +98,33 @@ class ClassFinder
         self::$useFilesSupport = false;
     }
 
+    public static function enablePSR4Support()
+    {
+        self::$usePSR4Support = true;
+    }
+
+    public static function disablePSR4Support()
+    {
+        self::$usePSR4Support = false;
+    }
+
     /**
      * @return array
      */
     private static function getSupportedFinders()
     {
         $supportedFinders = array(
-            self::$psr4,
             self::$classmap
         );
+
+        /*
+         * This is done for testing. For some tests, allowing PSR4 classes contaminates the test results. This could also be
+         * disabled for performance reasons (less finders in use means less work), but most people probably won't do that.
+         */
+        if (self::$usePSR4Support) {
+            $supportedFinders[] = self::$psr4;
+        }
+
 
         /*
          * Files support is tucked away behind a flag because it will need to use some kind of shell access via exec, or

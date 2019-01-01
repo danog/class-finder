@@ -72,14 +72,18 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider classesInNamespaceRecursivelyDataProvider
      */
-    public function testClassesInNamespaceRecursivelyDataProvider($namespace, $expected, $message)
+    public function testClassesInNamespaceRecursively($namespace, $expected, $message)
     {
+        ClassFinder::disablePSR4Support();
+
         try {
             $classes = ClassFinder::getClassesInNamespace($namespace, ClassFinder::RECURSIVE_MODE);
         } catch (Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
             $classes = array();
         }
+
+        ClassFinder::enablePSR4Support();
 
         $this->assertEquals($expected, $classes, $message);
     }
@@ -103,7 +107,21 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
                     'TestApp1\ClassmapClasses\Til',
                     'TestApp1\ClassmapClasses\Tir'
                 ),
-                'Classfinder should be able to load classes based on a classmap.'
+                'Classfinder should be able to load classes recursively based on a classmap.'
+            ),
+            array(
+                'HaydenPierce',
+                array(
+                    'HaydenPierce\Classmap2\Classmap2ClassmapINC',
+                    'HaydenPierce\Classmap2\Classmap2ClassmapPHP',
+                    'HaydenPierce\Classmap2\Classmap3ClassesPHP',
+                    'HaydenPierce\Classmap2\ClassmapClassmap2PHP',
+                    'HaydenPierce\Classmap\Classmap2ClassmapINC',
+                    'HaydenPierce\Classmap\Classmap2ClassmapPHP',
+                    'HaydenPierce\Classmap\Classmap3ClassesPHP',
+                    'HaydenPierce\Classmap\ClassmapClassmap2PHP',
+                ),
+                'Classfinder should be able to load third party classes recursively based on a classmap.'
             )
         );
     }
