@@ -1,3 +1,57 @@
+Version 0.3.0 Beta
+------------------
+
+* [#3](https://gitlab.com/hpierce1102/ClassFinder/issues/3) Added support for "recursive mode". Invoking `ClassFinder::getClassesInNamespace()` 
+in this mode will result in classes in subnamespaces being turned up.
+
+```
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE);
+
+/**
+ * array(
+ *   'TestApp1\Foo\Bar',
+ *   'TestApp1\Foo\Baz',
+ *   'TestApp1\Foo\Foo',
+ *   'TestApp1\Foo\Box\Bar',
+ *   'TestApp1\Foo\Box\Baz',
+ *   'TestApp1\Foo\Box\Foo',
+ *   'TestApp1\Foo\Box\Lon\Bar',
+ *   'TestApp1\Foo\Box\Lon\Baz',
+ *   'TestApp1\Foo\Box\Lon\Foo',
+ * )
+ */
+var_dump($classes);
+```
+
+* Added **experimental** support for classes that have been included via `files` entries in `composer.json`.  Including this feature
+is a significant drain on performance, so it must be explicitly enabled.
+
+```
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+ClassFinder::enableExperimentalFilesSupport();
+
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
+```
+
+* PSR4 features can now be disabled. Disabling autoloading features that you don't need will probably improve performance.
+
+```
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+ClassFinder::disablePSR4Support();
+
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
+```
+
 Version 0.2.0
 -------------
 

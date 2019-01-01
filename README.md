@@ -26,13 +26,23 @@ No other installation methods are currently supported.
 Supported Autoloading Methods
 --------------------------------
 
-* PSR-4
-* Classmaps
-* Files (Experimental, must be explicitly enabled via `ClassFinder::enableExperimentalFilesSupport()`)
+| Method     | Supported | with `ClassFinder::RECURSIVE_MODE` |
+| ---------- | --------- | ---------------------------------- |
+| PSR-4      | ✔️     | ✔️                               |
+| PSR-0      | ❌️*    | ❌️*                              |
+| Classmap   | ✔️     | ✔️                               |
+| Files      | ✔️^    | ❌️**                             |
 
+\^ Experimental.
 
-Example
--------
+\* Planned.
+
+\** Not planned. Open an issue if you need this feature.
+
+Examples
+--------
+
+**Standard Mode**
 
 ```
 <?php
@@ -46,6 +56,31 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
  *   'TestApp1\Foo\Bar',
  *   'TestApp1\Foo\Baz',
  *   'TestApp1\Foo\Foo'
+ * )
+ */
+var_dump($classes);
+```
+
+**Recursive Mode** *(in v0.3-beta)*
+
+```
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE);
+
+/**
+ * array(
+ *   'TestApp1\Foo\Bar',
+ *   'TestApp1\Foo\Baz',
+ *   'TestApp1\Foo\Foo',
+ *   'TestApp1\Foo\Box\Bar',
+ *   'TestApp1\Foo\Box\Baz',
+ *   'TestApp1\Foo\Box\Foo',
+ *   'TestApp1\Foo\Box\Lon\Bar',
+ *   'TestApp1\Foo\Box\Lon\Baz',
+ *   'TestApp1\Foo\Box\Lon\Foo',
  * )
  */
 var_dump($classes);
@@ -87,10 +122,10 @@ may be introduced in minor 0.X.Y versions, where X changes.
 
 Various ideas:
 
-* `ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE)`. 
-Providing classes multiple namespaces deep.
+* ~~`ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE)`. 
+Providing classes multiple namespaces deep.~~ (included v0.3-beta)
 
-* `ClassFinder::getClassesImplementingInterface('TestApp1\Foo', 'TestApp1\FooInterface', ClassFinder::RECURSIVE_MODE)`. 
+* `ClassFinder::getClassesImplementingInterface('TestApp1\Foo', 'TestApp1\FooInterface', ClassFinder::RECURSIVE_MODE)`.
 Filtering classes to only classes that implement a namespace.
 
 * `ClassFinder::debugRenderReport('TestApp1\Foo\Baz')` 
