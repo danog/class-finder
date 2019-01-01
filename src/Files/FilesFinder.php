@@ -39,7 +39,6 @@ class FilesFinder implements FinderInterface
     }
 
     /**
-     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
      * @param $options
      * @return bool|string

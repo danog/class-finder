@@ -14,7 +14,6 @@ class PSR4Finder implements FinderInterface
     }
 
     /**
-     * TODO: Add support for RECURSIVE_MODE
      * @param $namespace
      * @param $options
      * @return array
