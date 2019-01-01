@@ -59,7 +59,7 @@ class ClassFinder
 
     /**
      * @param $namespace
-     * @param $options - options used to
+     * @param $options
      * @return array
      * @throws \Exception
      */

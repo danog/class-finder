@@ -212,7 +212,6 @@ class PSR4Namespace
                 // Example: DeepCopy\deep_copy
                 return false;
             } else {
-//                $potentialClass = str_replace('\\\\', '\\', $potentialClass);
                 return class_exists($potentialClass);
             }
         });
