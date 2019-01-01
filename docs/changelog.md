@@ -40,7 +40,7 @@ ClassFinder::enableExperimentalFilesSupport();
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
 ```
 
-* PSR4 features can now be disabled. Disabling autoloading features that you don't need will probably improve performance.
+* PSR4 and Classmap features can now be disabled. Disabling autoloading features that you don't need will probably improve performance.
 
 ```
 <?php
@@ -48,6 +48,7 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
 require_once __DIR__ . '/vendor/autoload.php';
 
 ClassFinder::disablePSR4Support();
+ClassFinder::disableClassmapSupport();
 
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
 ```

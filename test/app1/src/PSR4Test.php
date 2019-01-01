@@ -108,6 +108,8 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
      */
     public function testGetClassesInNamespaceRecursively($namespace, $expected, $message)
     {
+        ClassFinder::disableClassmapSupport();
+
         try {
             $classes = ClassFinder::getClassesInNamespace($namespace, ClassFinder::RECURSIVE_MODE);
         } catch (\Exception $e) {
@@ -121,6 +123,8 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
         $classes = array_filter($classes, function($class) {
             return strpos($class, 'HaydenPierce\ClassFinder') !== 0;
         });
+
+        ClassFinder::enableClassmapSupport();
 
         $this->assertEquals($expected, $classes, $message);
     }

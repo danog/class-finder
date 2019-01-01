@@ -32,6 +32,9 @@ class ClassFinder
     /** @var boolean */
     private static $usePSR4Support = true;
 
+    /** @var boolean */
+    private static $useClassmapSupport = true;
+
     private static function initialize()
     {
         if (!(self::$config instanceof AppConfig)) {
@@ -108,14 +111,22 @@ class ClassFinder
         self::$usePSR4Support = false;
     }
 
+    public static function enableClassmapSupport()
+    {
+        self::$useClassmapSupport = true;
+    }
+
+    public static function disableClassmapSupport()
+    {
+        self::$useClassmapSupport = false;
+    }
+
     /**
      * @return array
      */
     private static function getSupportedFinders()
     {
-        $supportedFinders = array(
-            self::$classmap
-        );
+        $supportedFinders = array();
 
         /*
          * This is done for testing. For some tests, allowing PSR4 classes contaminates the test results. This could also be
@@ -125,6 +136,13 @@ class ClassFinder
             $supportedFinders[] = self::$psr4;
         }
 
+        /*
+         * This is done for testing. For some tests, allowing classmap classes contaminates the test results. This could also be
+         * disabled for performance reasons (less finders in use means less work), but most people probably won't do that.
+         */
+        if (self::$useClassmapSupport) {
+            $supportedFinders[] = self::$classmap;
+        }
 
         /*
          * Files support is tucked away behind a flag because it will need to use some kind of shell access via exec, or
