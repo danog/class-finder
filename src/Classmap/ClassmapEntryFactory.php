@@ -22,6 +22,11 @@ class ClassmapEntryFactory
         // to fetch user provided entries.
         $classmap = require($this->appConfig->getAppRoot() . 'vendor/composer/autoload_classmap.php');
 
+        // if classmap has no entries return empty array
+        if(count($classmap) == 0) {
+            return array();
+        }
+
         $classmapKeys = array_keys($classmap);
         return array_map(function($index) use ($classmapKeys){
             return new ClassmapEntry($classmapKeys[$index]);
