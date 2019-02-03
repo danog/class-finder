@@ -202,8 +202,9 @@ class PSR4Namespace
             return array_merge($carry, $arrayOfClasses);
         }, array());
 
-        $potentialClasses = array_map(function($file) use ($self) {
-            return $self->namespace . str_replace('.php', '', $file);
+        $selfNamespace = $this->namespace; // PHP 5.3 BC
+        $potentialClasses = array_map(function($file) use ($self, $selfNamespace) {
+            return $selfNamespace . str_replace('.php', '', $file);
         }, $potentialClassFiles);
 
         return array_filter($potentialClasses, function($potentialClass) {
