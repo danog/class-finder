@@ -1,3 +1,12 @@
+Version 0.3.0 
+-------------
+
+* [#4](https://gitlab.com/hpierce1102/ClassFinder/issues/4) Warnings will no longer appear if a classmap configuration is present, but empty. [Contributed by](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/6) rotespferd. 
+* Automatically locating `composer.json` should be more consistent and no longer immediately fallback to `/`.
+* Internal - Fix an issue where forking the project resulting in broken CI jobs.
+
+
+
 Version 0.3.0 Beta
 ------------------
 
