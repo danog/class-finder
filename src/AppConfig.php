@@ -31,7 +31,7 @@ class AppConfig
             $workingDirectory = str_replace('/vendor/haydenpierce/class-finder/src', '', $workingDirectory);
             $directoryPathPieces = explode('/', $workingDirectory);
 
-            $appRoot = '/';
+            $appRoot = null;
             do {
                 $path = implode('/', $directoryPathPieces) . '/composer.json';
                 if (file_exists($path)) {
