@@ -6,7 +6,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use HaydenPierce\ClassFinder\ClassFinder;
 
-class ClassmapTest extends \PHPUnit_Framework_TestCase
+class ClassmapNoAutoloadTest extends \PHPUnit_Framework_TestCase
 {
     public function setup()
     {
