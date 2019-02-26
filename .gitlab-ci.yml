@@ -5,7 +5,3 @@ PHP 5.3 - PHPUnit:
 PHP 7.2 - PHPUnit:
   script: "ci/php72.sh $CI_PROJECT_DIR"
   image: "registry.gitlab.com/hpierce1102/classfinder/php72"
-
-PHP 7.2 - No Autoloader Property:
-  script: "ci/php72-no-autoload.sh $CI_PROJECT_DIR"
-  image: "registry.gitlab.com/hpierce1102/classfinder/php72"

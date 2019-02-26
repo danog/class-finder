@@ -8,11 +8,6 @@ use HaydenPierce\ClassFinder\ClassFinder;
 
 class PSR4NoAutoloadTest extends \PHPUnit_Framework_TestCase
 {
-    public static function setupBeforeClass()
-    {
-        var_dump(file_get_contents(__DIR__ . '/composer.json'));
-    }
-
     public function setup()
     {
         // Reset ClassFinder back to normal.
