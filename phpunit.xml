@@ -25,5 +25,9 @@
             <file>test/app1/src/FilesTest.php</file>
             <directory>test/unit/Files</directory>
         </testsuite>
+        <testsuite name="noAutoload">
+            <file>test/app2/PSR4NoAutoloadTest.php</file>
+            <file>test/app2/ClassmapNoAutoloadTest.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
