@@ -1,6 +1,6 @@
 <?php
 
-namespace TestApp1;
+namespace TestApp2;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

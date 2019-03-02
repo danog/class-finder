@@ -1,6 +1,6 @@
 <?php
 
-namespace TestApp1;
+namespace TestApp2;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -58,11 +58,6 @@ class PSR4NoAutoloadTest extends \PHPUnit_Framework_TestCase
                     'HaydenPierce\SandboxAppMulti\Zit'
                 ),
                 'ClassFinder should be able to find 3rd party classes when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
-            ),
-            array(
-                'TestApp1\Foo\Empty',
-                array(),
-                'ClassFinder should return an empty array if the namespace is known, but contains no classes.'
             )
         );
     }
