@@ -1,3 +1,8 @@
+Version 0.3.1
+-------------
+
+* [#8](https://gitlab.com/hpierce1102/ClassFinder/issues/8) ([Merge Request](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/8)) Fixed a bug that caused notices to be raised when a composer.json doesn't include an `autoload` configuration. Thanks, walid.ammar and TheFehr.
+
 Version 0.3.0 
 -------------
 
