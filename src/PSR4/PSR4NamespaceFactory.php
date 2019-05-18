@@ -82,9 +82,9 @@ class PSR4NamespaceFactory
             }
         }, $directories);
 
-        $directories = array_map(function($directory) {
+        $directories = array_filter(array_map(function($directory) {
             return realpath($directory);
-        }, $directories);
+        }, $directories));
 
         $psr4Namespace = new PSR4Namespace($namespace, $directories);
 
