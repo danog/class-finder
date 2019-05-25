@@ -3,7 +3,7 @@
     "description" : "A library that can provide of a list of classes in a given namespace",
     "type": "library",
     "license": "MIT",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "authors": [
         {
             "name": "Hayden Pierce",
