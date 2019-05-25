@@ -1,3 +1,9 @@
+Version 0.3.2
+-------------
+
+* [#11](https://gitlab.com/hpierce1102/ClassFinder/issues/11) ([Merge Request](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/10)) Fixed a bug that caused "Access Denied" errors when some directories were missing some permissions. Thanks, Leonardo Losoviz.
+
+
 Version 0.3.1
 -------------
 
