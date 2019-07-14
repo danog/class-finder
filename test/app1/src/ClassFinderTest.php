@@ -36,4 +36,15 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         // "Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually. See '$link' for details."
         ClassFinder::getClassesInNamespace('TestApp1\Foo\Loo');
     }
+
+    public function testWorksWhenExecIsDisabled()
+    {
+        $disabledFunctions = ini_get('disable_functions');
+
+        if (strpos($disabledFunctions, 'exec') === false) {
+            $this->markTestSkipped('testWorksWhenExecIsDisabled requires exec to be disabled in php.ini');
+        }
+
+        ClassFinder::getClassesInNamespace('TestApp1');
+    }
 }
