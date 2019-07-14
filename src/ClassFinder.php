@@ -51,7 +51,7 @@ class ClassFinder
             self::$classmap = new ClassmapFinder($classmapFactory);
         }
 
-        if (!(self::$files instanceof FilesFinder)) {
+        if (!(self::$files instanceof FilesFinder) && self::$useFilesSupport) {
             $filesFactory = new FilesEntryFactory(self::$config);
             self::$files = new FilesFinder($filesFactory);
         }
