@@ -1,3 +1,9 @@
+Version 0.3.3
+-------------
+
+* ([Original Merge Request](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/12)) via ([Merge Request](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/13)) Fixed a bug that caused an exception to be thrown when the `exec` function was disabled by PHP configuration - even when files support was explicitly disabled. Thanks, incraigulous.
+
+
 Version 0.3.2
 -------------
 
