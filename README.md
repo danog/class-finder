@@ -1,16 +1,17 @@
 ClassFinder
 ===========
 
-A dead simple utility to identify classes in a given namespace.  This package is an improved implementation of an
- [answer on Stack Overflow](https://stackoverflow.com/a/40229665/3000068) that provides additional features with less
- configuration required.
+A dead simple utility to identify classes in a given namespace.
+
+This package is an improved implementation of an [answer on Stack Overflow](https://stackoverflow.com/a/40229665/3000068)
+and provides additional features with less configuration required.
 
 Requirements
 ------------
 
- * Application is using Composer.
- * Classes can be autoloaded with Composer.
- * PHP >= 5.3.0
+* Application is using Composer.
+* Classes can be autoloaded with Composer.
+* PHP >= 5.3.0
 
 Installing
 ----------
