@@ -93,9 +93,10 @@ Documentation
 
 **Exceptions**:
 
-* [Unknown namespace - (Unregistered)](docs/exceptions/unregisteredRoot.md)
-* [Unknown namespace - (Registered)](docs/exceptions/unknownSubNamespace.md)
+* [Files could not locate PHP](docs/exceptions/filesCouldNotLocatePHP.md)
+* [Files exec not available](docs/exceptions/filesExecNotAvailable.md)
 * [Missing composer.json](docs/exceptions/missingComposerConfig.md)
+* [Unknown namespace](docs/exceptions/unknownNamespace.md)
 
 **Internals**
 
