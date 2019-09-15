@@ -103,23 +103,15 @@ Documentation
 * [How Testing Works](docs/testing.md)
 * [Continuous Integration Notes](docs/ci.md)
 
-Roadmap
--------
+Future Work
+-----------
 
 > **WARNING**: Before 1.0.0, expect that bug fixes _will not_ be backported to older versions. Backwards incompatible changes
 may be introduced in minor 0.X.Y versions, where X changes.
 
-0.0.1 - First party `psr4` classes
+* `psr0` support
 
-0.1.0 - Third party `psr4` classes
-
-0.2.0 - `classmap` support.
-
-0.3.0 - `files` support
-
-0.4.0 - `psr0` support
-
-0.5.0 - Additional features: 
+* Additional features: 
 
 Various ideas:
 
@@ -132,5 +124,3 @@ Filtering classes to only classes that implement a namespace.
 * `ClassFinder::debugRenderReport('TestApp1\Foo\Baz')` 
 Guidance for solving "class not found" errors resulting from typos in namespaces, missing directories, etc. Would print
 an HTML report. Not intended for production use, but debugging.
-
-1.0.0 - Better compliance with semantic versioning.
