@@ -1,8 +1,8 @@
-Unreleased
+Version 0.4.0
 ----------
 
-* Don't throw if a namespace contains no classes
-* Add method `Classfinder::namespaceHasClasses` to detect if a namespace is empty
+* [#16](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/16) Don't throw if a namespace contains no classes. Thanks, Benedikt Franke
+* [#16](https://gitlab.com/hpierce1102/ClassFinder/merge_requests/16) Add method `Classfinder::namespaceHasClasses` to detect if a namespace is empty. Thanks, Benedikt Franke
 
 Version 0.3.3
 -------------
