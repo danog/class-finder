@@ -1,6 +1,8 @@
 Unknown Namespace
 -----------------
 
+__This exception only occurs in versions 0.3.x and lower.__
+
 Example PHP:
 ```
 <?php

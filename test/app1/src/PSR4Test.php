@@ -185,13 +185,10 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
-     * @expectedExceptionMessageRegExp  /Unknown namespace 'TestApp1\\DoesNotExist'\./
-     */
-    public function testThrowsOnUnknownSubNameSpace()
+    public function testForClassesInNamespace()
     {
-        ClassFinder::getClassesInNamespace('TestApp1\DoesNotExist');
+        $this->assertFalse(ClassFinder::namespaceHasClasses('DoesNotExist'));
+        $this->assertTrue(ClassFinder::namespaceHasClasses('HaydenPierce\ClassFinder'));
     }
 
     public function testCanFindSelf()

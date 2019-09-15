@@ -1,3 +1,9 @@
+Unreleased
+----------
+
+* Don't throw if a namespace contains no classes
+* Add method `Classfinder::namespaceHasClasses` to detect if a namespace is empty
+
 Version 0.3.3
 -------------
 
