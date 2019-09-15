@@ -67,14 +67,11 @@ class FilesTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /**
-     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
-     * @expectedExceptionMessageRegExp /Unknown namespace 'TestApp1\\FilesClasses'\./
-     */
     public function testFilesSupportRequiresEnabling()
     {
         ClassFinder::disableExperimentalFilesSupport(); // Disabling FilesSupport should cause no files to be found.
-        $classes = ClassFinder::getClassesInNamespace('TestApp1\FilesClasses');
+
+        $this->assertFalse(ClassFinder::namespaceHasClasses('TestApp1\FilesClasses'));
     }
 
 }

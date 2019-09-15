@@ -15,13 +15,10 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         ClassFinder::setAppRoot(null);
     }
 
-    /**
-     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
-     * @expectedExceptionMessageRegExp  /Unknown namespace 'DoesNotExist'\./
-     */
-    public function testThrowsOnUnknownNameSpace()
+    public function testNoClassesInNamespace()
     {
-        ClassFinder::getClassesInNamespace('DoesNotExist');
+        $this->assertCount(0, ClassFinder::getClassesInNamespace('DoesNotExist'));
+        $this->assertFalse(ClassFinder::namespaceHasClasses('DoesNotExist'));
     }
 
     /**

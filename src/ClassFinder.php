@@ -58,31 +58,40 @@ class ClassFinder
     }
 
     /**
-     * @param $namespace
-     * @param $options
-     * @return array
+     * Identify classes in a given namespace.
+     *
+     * @param string $namespace
+     * @param int $options
+     *
+     * @return string[]
+     *
      * @throws \Exception
      */
     public static function getClassesInNamespace($namespace, $options = self::STANDARD_MODE)
     {
         self::initialize();
 
-        $findersWithNamespace = array_filter(self::getSupportedFinders(), function(FinderInterface $finder) use ($namespace){
-            return $finder->isNamespaceKnown($namespace);
-        });
-
-        if (count($findersWithNamespace) === 0) {
-            throw new ClassFinderException(sprintf("Unknown namespace '%s'. See '%s' for details.",
-                $namespace,
-                'https://gitlab.com/hpierce1102/ClassFinder/blob/master/docs/exceptions/unknownNamespace.md'
-            ));
-        }
+        $findersWithNamespace = self::findersWithNamespace($namespace);
 
         $classes = array_reduce($findersWithNamespace, function($carry, FinderInterface $finder) use ($namespace, $options){
             return array_merge($carry, $finder->findClasses($namespace, $options));
         }, array());
 
         return array_unique($classes);
+    }
+
+    /**
+     * Check if a given namespace contains any classes.
+     *
+     * @param string $namespace
+     *
+     * @return bool
+     */
+    public static function namespaceHasClasses($namespace)
+    {
+        self::initialize();
+
+        return count(self::findersWithNamespace($namespace)) > 0;
     }
 
     public static function setAppRoot($appRoot)
@@ -159,5 +168,19 @@ class ClassFinder
         }
 
         return $supportedFinders;
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return FinderInterface[]
+     */
+    private static function findersWithNamespace($namespace)
+    {
+        $findersWithNamespace = array_filter(self::getSupportedFinders(), function (FinderInterface $finder) use ($namespace) {
+            return $finder->isNamespaceKnown($namespace);
+        });
+
+        return $findersWithNamespace;
     }
 }
