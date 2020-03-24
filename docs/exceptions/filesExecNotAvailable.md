@@ -47,5 +47,3 @@ disable_functions = exec,passthru,shell_exec,system,proc_open,popen
 ```
 
 Remove exec from the list and restart your webserver.
-
-

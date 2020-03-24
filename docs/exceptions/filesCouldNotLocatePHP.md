@@ -34,4 +34,4 @@ Upgrade to a newer version of PHP that includes the `PHP_BINARY` constant.
 Possible Solution 2
 -------------------
 
-Add `php` to your `$PATH` so it can be discovered via `which` or `where`. 
+Add `php` to your `$PATH` so it can be discovered via `which` or `where`.

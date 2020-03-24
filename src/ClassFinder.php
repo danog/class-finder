@@ -1,4 +1,5 @@
 <?php
+
 namespace HaydenPierce\ClassFinder;
 
 use HaydenPierce\ClassFinder\Classmap\ClassmapEntryFactory;

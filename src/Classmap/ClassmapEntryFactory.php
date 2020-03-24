@@ -1,4 +1,5 @@
 <?php
+
 namespace HaydenPierce\ClassFinder\Classmap;
 
 use HaydenPierce\ClassFinder\AppConfig;

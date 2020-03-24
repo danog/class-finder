@@ -1,4 +1,5 @@
 <?php
+
 namespace HaydenPierce\ClassFinder\PSR4;
 
 use HaydenPierce\ClassFinder\AppConfig;
