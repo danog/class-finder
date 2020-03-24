@@ -1,11 +1,12 @@
 <?php
 
 namespace HaydenPierce\ClassFinder\UnitTest\Files;
+
 use HaydenPierce\ClassFinder\Files\FilesEntry;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
-class FilesTest extends \PHPUnit_Framework_TestCase
+class FilesEntryTest extends \PHPUnit_Framework_TestCase
 {
     private $file;
 
