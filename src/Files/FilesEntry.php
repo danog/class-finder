@@ -1,4 +1,5 @@
 <?php
+
 namespace HaydenPierce\ClassFinder\Files;
 
 class FilesEntry

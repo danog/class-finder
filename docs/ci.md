@@ -11,4 +11,3 @@ The Dockerfiles used to create these images are contained in a different reposit
 [ClassFinderTestContainers](https://gitlab.com/hpierce1102/ClassFinderTestContainers).
 
 The CI scripts themselves are stored here in `/ci/*`, with the config in `/gitlab-ci.yml`.
-
