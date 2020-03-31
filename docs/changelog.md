@@ -1,3 +1,8 @@
+Version 0.4.1
+----------
+
+* [#12](https://gitlab.com/hpierce1102/ClassFinder/-/issues/12) ([Merge Request](https://gitlab.com/hpierce1102/ClassFinder/-/merge_requests/18)) Fix a deprecation notice. Thanks, Benedikt Franke and Adam Stark
+
 Version 0.4.0
 ----------
 
