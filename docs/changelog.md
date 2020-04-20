@@ -1,3 +1,8 @@
+Version 0.4.2
+----------
+
+* ([Merge Request](https://gitlab.com/hpierce1102/ClassFinder/-/merge_requests/20)) Remove tests and other non-critical files when installing with `composer --perfer-dist`. Thanks, Benedikt Franke
+
 Version 0.4.1
 ----------
 
