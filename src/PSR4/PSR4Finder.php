@@ -7,6 +7,7 @@ use HaydenPierce\ClassFinder\FinderInterface;
 
 class PSR4Finder implements FinderInterface
 {
+    /** @var PSR4NamespaceFactory */
     private $factory;
 
     public function __construct(PSR4NamespaceFactory $factory)
@@ -15,9 +16,9 @@ class PSR4Finder implements FinderInterface
     }
 
     /**
-     * @param $namespace
-     * @param $options
-     * @return array
+     * @param string $namespace
+     * @param int $options
+     * @return string[]
      */
     public function findClasses($namespace, $options)
     {
@@ -42,6 +43,10 @@ class PSR4Finder implements FinderInterface
 
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function isNamespaceKnown($namespace)
     {
         $composerNamespaces = $this->factory->getPSR4Namespaces();
@@ -56,22 +61,20 @@ class PSR4Finder implements FinderInterface
     }
 
     /**
-     * @param $namespace
+     * @param string $namespace
      * @return PSR4Namespace[]
      */
     private function findAllApplicableNamespaces($namespace)
     {
         $composerNamespaces = $this->factory->getPSR4Namespaces();
 
-        $acceptableNamespaces = array_filter($composerNamespaces, function(PSR4Namespace $potentialNamespace) use ($namespace){
+        return array_filter($composerNamespaces, function(PSR4Namespace $potentialNamespace) use ($namespace){
             return $potentialNamespace->isAcceptableNamespaceRecursiveMode($namespace);
         });
-
-        return $acceptableNamespaces;
     }
 
     /**
-     * @param $namespace
+     * @param string $namespace
      * @return PSR4Namespace
      */
     private function findBestPSR4Namespace($namespace)

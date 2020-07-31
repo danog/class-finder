@@ -4,16 +4,26 @@ namespace HaydenPierce\ClassFinder\Files;
 
 class FilesEntry
 {
+    /** @var string */
     private $file;
 
+    /** @var string */
     private $php;
 
+    /**
+     * @param string $fileToInclude
+     * @param string $php
+     */
     public function __construct($fileToInclude, $php)
     {
         $this->file = $this->normalizePath($fileToInclude);
         $this->php = $php;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function knowsNamespace($namespace)
     {
         $classes = $this->getClassesInFile();
@@ -28,7 +38,8 @@ class FilesEntry
     }
 
     /**
-     * Gets a list of classes that belong to the given namespace
+     * Gets a list of classes that belong to the given namespace.
+     *
      * @param string $namespace
      * @return string[]
      */
@@ -48,11 +59,13 @@ class FilesEntry
     }
 
     /**
+     * Dynamically execute files and check for defined classes.
+     *
      * This is where the real magic happens. Since classes in a randomly included file could contain classes in any namespace,
      * (or even multiple namespaces!) we must execute the file and check for newly defined classes. This has a potential
      * downside that files being executed will execute their side effects - which may be undesirable. However, Composer
      * will require these files anyway - so hopefully causing those side effects isn't that big of a deal.
-     * execute the
+     *
      * @return array
      */
     private function getClassesInFile()
@@ -77,8 +90,8 @@ class FilesEntry
 
     /**
      * TODO: Similar to PSR4Namespace::normalizePath. Maybe we refactor?
-     * @param $path
-     * @return mixed
+     * @param string $path
+     * @return string
      */
     private function normalizePath($path)
     {

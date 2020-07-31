@@ -4,7 +4,6 @@ namespace HaydenPierce\ClassFinder;
 
 use HaydenPierce\ClassFinder\Classmap\ClassmapEntryFactory;
 use HaydenPierce\ClassFinder\Classmap\ClassmapFinder;
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\Files\FilesEntryFactory;
 use HaydenPierce\ClassFinder\Files\FilesFinder;
 use HaydenPierce\ClassFinder\PSR4\PSR4Finder;
@@ -36,6 +35,9 @@ class ClassFinder
     /** @var boolean */
     private static $useClassmapSupport = true;
 
+    /**
+     * @return void
+     */
     private static function initialize()
     {
         if (!(self::$config instanceof AppConfig)) {
@@ -63,7 +65,6 @@ class ClassFinder
      *
      * @param string $namespace
      * @param int $options
-     *
      * @return string[]
      *
      * @throws \Exception
@@ -85,7 +86,6 @@ class ClassFinder
      * Check if a given namespace contains any classes.
      *
      * @param string $namespace
-     *
      * @return bool
      */
     public static function namespaceHasClasses($namespace)
@@ -95,44 +95,66 @@ class ClassFinder
         return count(self::findersWithNamespace($namespace)) > 0;
     }
 
+    /**
+     * @param string $appRoot
+     * @return void
+     */
     public static function setAppRoot($appRoot)
     {
         self::initialize();
         self::$config->setAppRoot($appRoot);
     }
 
+    /**
+     * @return void
+     */
     public static function enableExperimentalFilesSupport()
     {
         self::$useFilesSupport = true;
     }
 
+    /**
+     * @return void
+     */
     public static function disableExperimentalFilesSupport()
     {
         self::$useFilesSupport = false;
     }
 
+    /**
+     * @return void
+     */
     public static function enablePSR4Support()
     {
         self::$usePSR4Support = true;
     }
 
+    /**
+     * @return void
+     */
     public static function disablePSR4Support()
     {
         self::$usePSR4Support = false;
     }
 
+    /**
+     * @return void
+     */
     public static function enableClassmapSupport()
     {
         self::$useClassmapSupport = true;
     }
 
+    /**
+     * @return void
+     */
     public static function disableClassmapSupport()
     {
         self::$useClassmapSupport = false;
     }
 
     /**
-     * @return array
+     * @return FinderInterface[]
      */
     private static function getSupportedFinders()
     {
@@ -173,7 +195,6 @@ class ClassFinder
 
     /**
      * @param string $namespace
-     *
      * @return FinderInterface[]
      */
     private static function findersWithNamespace($namespace)

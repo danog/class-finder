@@ -7,18 +7,29 @@ use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 
 class PSR4Namespace
 {
+    /** @var string */
     private $namespace;
+
+    /** @var string[] */
     private $directories;
 
     /** @var PSR4Namespace[] */
     private $directSubnamespaces;
 
+    /**
+     * @param string $namespace
+     * @param string[] $directories
+     */
     public function __construct($namespace, $directories)
     {
         $this->namespace = $namespace;
         $this->directories = $directories;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function knowsNamespace($namespace)
     {
         $numberOfSegments = count(explode('\\', $namespace));
@@ -62,7 +73,7 @@ class PSR4Namespace
      * $c->namespace = "HaydenPierce\\Foo\\Bar";
      * $c->countMatchingNamespaceSegments("TestApp1\\Multi") -> 0, No matches.
      *
-     * @param $namespace
+     * @param string $namespace
      * @return int
      */
     public function countMatchingNamespaceSegments($namespace)
@@ -83,6 +94,10 @@ class PSR4Namespace
         return 0;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function isAcceptableNamespace($namespace)
     {
         $namespaceSegments = count(explode('\\', $this->namespace)) - 1;
@@ -90,6 +105,10 @@ class PSR4Namespace
         return $namespaceSegments === $matchingSegments;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function isAcceptableNamespaceRecursiveMode($namespace)
     {
         // Remove prefix backslash (TODO: review if we do this eariler).
@@ -100,6 +119,8 @@ class PSR4Namespace
 
     /**
      * Used to identify subnamespaces.
+     *
+     * @return string[]
      */
     public function findDirectories()
     {
@@ -140,6 +161,11 @@ class PSR4Namespace
         return $confirmedDirectories;
     }
 
+    /**
+     * @param string $namespace
+     * @param int $options
+     * @return string[]
+     */
     public function findClasses($namespace, $options = ClassFinder::STANDARD_MODE)
     {
         $relativePath = substr($namespace, strlen($this->namespace));
@@ -182,6 +208,9 @@ class PSR4Namespace
         }
     }
 
+    /**
+     * @return string[]
+     */
     private function getDirectClassesOnly()
     {
         $self = $this;
@@ -220,7 +249,7 @@ class PSR4Namespace
     }
 
     /**
-     * @param $namespace
+     * @param string $namespace
      * @return string[]
      */
     public function getClassesFromListRecursively($namespace)
@@ -233,11 +262,12 @@ class PSR4Namespace
     }
 
     /**
-     * Creates a file path based on an absolute path to a directory and a relative path in a way
-     * that will be compatible with both Linux and Windows. This method is also extracted so that
-     * it can be turned into a vfs:// stream URL for unit testing.
-     * @param $directory
-     * @param $relativePath
+     * Join an absolute path and a relative path in a platform agnostic way.
+     *
+     * This method is also extracted so that it can be turned into a vfs:// stream URL for unit testing.
+     *
+     * @param string $directory
+     * @param string $relativePath
      * @return mixed
      */
     public function normalizePath($directory, $relativePath)

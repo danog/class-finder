@@ -16,8 +16,7 @@ class FilesEntryFactory
     }
 
     /**
-     * @return array
-     * @throws ClassFinderException
+     * @return FilesEntry[]
      */
     public function getFilesEntries()
     {
@@ -31,8 +30,11 @@ class FilesEntryFactory
     }
 
     /**
-     * Locates the PHP interrupter. If PHP 5.4 or newer is used, the PHP_BINARY value is used. Otherwise we attempt to
-     * find it from shell commands.
+     * Locates the PHP interrupter.
+     *
+     * If PHP 5.4 or newer is used, the PHP_BINARY value is used.
+     * Otherwise we attempt to find it from shell commands.
+     *
      * @return string
      * @throws ClassFinderException
      */
