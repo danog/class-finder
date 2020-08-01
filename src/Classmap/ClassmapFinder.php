@@ -2,11 +2,11 @@
 
 namespace HaydenPierce\ClassFinder\Classmap;
 
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class ClassmapFinder implements FinderInterface
 {
+    /** @var ClassmapEntryFactory */
     private $factory;
 
     public function __construct(ClassmapEntryFactory $factory)
@@ -14,6 +14,10 @@ class ClassmapFinder implements FinderInterface
         $this->factory = $factory;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function isNamespaceKnown($namespace)
     {
         $classmapEntries = $this->factory->getClassmapEntries();
@@ -28,10 +32,9 @@ class ClassmapFinder implements FinderInterface
     }
 
     /**
-     * @param $namespace
-     * @param $options
-     * @return bool|string
-     * @throws ClassFinderException
+     * @param string $namespace
+     * @param int $options
+     * @return string[]
      */
     public function findClasses($namespace, $options)
     {

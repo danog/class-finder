@@ -6,20 +6,28 @@ use HaydenPierce\ClassFinder\ClassFinder;
 
 class ClassmapEntry
 {
+    /** @var string */
     private $className;
 
+    /**
+     * @param string $fullyQualifiedClassName
+     */
     public function __construct($fullyQualifiedClassName)
     {
         $this->className = $fullyQualifiedClassName;
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function knowsNamespace($namespace)
     {
         return strpos($this->className, $namespace) !== false;
     }
 
     /**
-     * @param $namespace
+     * @param string $namespace
      * @return bool
      */
     public function matches($namespace, $options)
@@ -31,6 +39,9 @@ class ClassmapEntry
         }
     }
 
+    /**
+     * @return string
+     */
     public function getClassName()
     {
         return $this->className;
@@ -38,6 +49,7 @@ class ClassmapEntry
 
     /**
      * Checks if the class is a child or subchild of the given namespace.
+     *
      * @param $namespace
      * @return bool
      */
@@ -48,7 +60,8 @@ class ClassmapEntry
 
     /**
      * Checks if the class is a DIRECT child of the given namespace.
-     * @param $namespace
+     *
+     * @param string $namespace
      * @return bool
      */
     private function doesMatchDirectNamespace($namespace)

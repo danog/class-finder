@@ -7,10 +7,10 @@ use HaydenPierce\ClassFinder\FinderInterface;
 
 class FilesFinder implements FinderInterface
 {
+    /** @var FilesEntryFactory */
     private $factory;
 
     /**
-     * FilesFinder constructor.
      * @param FilesEntryFactory $factory
      * @throws ClassFinderException
      */
@@ -26,6 +26,10 @@ class FilesFinder implements FinderInterface
         }
     }
 
+    /**
+     * @param string $namespace
+     * @return bool
+     */
     public function isNamespaceKnown($namespace)
     {
         $filesEntries = $this->factory->getFilesEntries();
@@ -40,10 +44,9 @@ class FilesFinder implements FinderInterface
     }
 
     /**
-     * @param $namespace
-     * @param $options
-     * @return bool|string
-     * @throws ClassFinderException
+     * @param string $namespace
+     * @param int $options
+     * @return string[]
      */
     public function findClasses($namespace, $options)
     {

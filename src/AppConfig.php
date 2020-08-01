@@ -4,11 +4,6 @@ namespace HaydenPierce\ClassFinder;
 
 use HaydenPierce\ClassFinder\Exception\ClassFinderException;
 
-/**
- * Class AppConfig
- * @package HaydenPierce\ClassFinder
- * @internal
- */
 class AppConfig
 {
     /** @var string */
@@ -20,7 +15,7 @@ class AppConfig
     }
 
     /**
-     * @throws \Exception
+     * @return string
      */
     private function findAppRoot()
     {
@@ -49,7 +44,8 @@ class AppConfig
     }
 
     /**
-     * @param $appRoot
+     * @param string $appRoot
+     * @return void
      * @throws ClassFinderException
      */
     private function throwIfInvalidAppRoot($appRoot)
@@ -77,6 +73,7 @@ class AppConfig
 
     /**
      * @param string $appRoot
+     * @return void
      */
     public function setAppRoot($appRoot)
     {

@@ -15,7 +15,7 @@ class ClassmapEntryFactory
     }
 
     /**
-     * @return array
+     * @return ClassmapEntry[]
      */
     public function getClassmapEntries()
     {

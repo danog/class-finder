@@ -16,7 +16,7 @@ class PSR4NamespaceFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPSR4Namespaces()
     {
@@ -37,7 +37,7 @@ class PSR4NamespaceFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function getUserDefinedPSR4Namespaces()
     {
@@ -56,11 +56,12 @@ class PSR4NamespaceFactory
     }
 
     /**
-     * Creates a namespace from composer_psr4.php and composer.json's autoload.psr4 items
-     * @param $namespace
-     * @param $directories
-     * @throws ClassFinderException
+     * Creates a namespace from composer_psr4.php and composer.json autoload.psr4 items.
+     *
+     * @param string $namespace
+     * @param string[] $directories
      * @return PSR4Namespace
+     * @throws ClassFinderException
      */
     public function createNamespace($namespace, $directories)
     {
@@ -95,10 +96,14 @@ class PSR4NamespaceFactory
         return $psr4Namespace;
     }
 
+    /**
+     * @param PSR4Namespace $psr4Namespace
+     * @return PSR4Namespace[]
+     */
     private function getSubnamespaces(PSR4Namespace $psr4Namespace)
     {
         // Scan it's own directories.
-        $directoreies = $psr4Namespace->findDirectories();
+        $directories = $psr4Namespace->findDirectories();
 
         $self = $this;
         $subnamespaces = array_map(function($directory) use ($self, $psr4Namespace){
@@ -107,18 +112,21 @@ class PSR4NamespaceFactory
 
             $namespace = $psr4Namespace->getNamespace() . "\\" . $subnamespaceSegment . "\\";
             return $self->createNamespace($namespace, $directory);
-        }, $directoreies);
+        }, $directories);
 
         return $subnamespaces;
     }
 
     /**
+     * Check if a path is absolute.
+     *
      * Mostly this answer https://stackoverflow.com/a/38022806/3000068
      * A few changes: Changed exceptions to be ClassFinderExceptions, removed some ctype dependencies,
      * updated the root prefix regex to handle Window paths better.
-     * @param $path string
-     * @throws ClassFinderException
+     *
+     * @param string $path
      * @return bool
+     * @throws ClassFinderException
      */
     public function isAbsolutePath($path) {
         if (!is_string($path)) {
