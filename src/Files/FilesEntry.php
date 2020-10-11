@@ -28,7 +28,7 @@ class FilesEntry
      */
     public function knowsNamespace($namespace)
     {
-        $classes = $this->getClassesInFile();
+        $classes = $this->getClassesInFile(ClassFinder::ALLOW_CLASSES | ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS);
 
         foreach($classes as $class) {
             if (strpos($class, $namespace) !== false) {
@@ -83,7 +83,7 @@ class FilesEntry
      *
      * @return array
      */
-    private function getClassesInFile($options = ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS)
+    private function getClassesInFile($options)
     {
         // get_declared_*() returns a bunch of classes|interfaces|traits that are built into PHP. So we need a control here.
         list($initialInterfaces, 

@@ -166,7 +166,7 @@ class PSR4Namespace
      * @param int $options
      * @return string[]
      */
-    public function findClasses($namespace, $options = ClassFinder::STANDARD_MODE)
+    public function findClasses($namespace, $options)
     {
         $allowAdditional = $options & ~ClassFinder::MODE_MASK;
         $options &= ClassFinder::MODE_MASK;

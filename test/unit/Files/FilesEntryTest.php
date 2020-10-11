@@ -2,6 +2,7 @@
 
 namespace HaydenPierce\ClassFinder\UnitTest\Files;
 
+use HaydenPierce\ClassFinder\ClassFinder;
 use HaydenPierce\ClassFinder\Files\FilesEntry;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
@@ -46,7 +47,7 @@ EOL
 
         $files = new FilesEntry($tmpFilename, $this->findPHP());
 
-        $classes = $files->getClasses($namespace, 0);
+        $classes = $files->getClasses($namespace, ClassFinder::ALLOW_CLASSES);
 
         $this->assertEquals($expected, $classes, 'FilesEntry should be able to determine the classes defined in a given file.');
     }
