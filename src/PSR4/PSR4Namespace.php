@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\PSR4;
+namespace danog\ClassFinder\PSR4;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+use danog\ClassFinder\ClassFinder;
+use danog\ClassFinder\Exception\ClassFinderException;
 
 class PSR4Namespace
 {
@@ -70,7 +70,7 @@ class PSR4Namespace
      * $b->countMatchingNamespaceSegments("TestApp1\\Multi") -> 2, TestApp1\\Multi matches
      *
      * PSR4Namespace $c;
-     * $c->namespace = "HaydenPierce\\Foo\\Bar";
+     * $c->namespace = "danog\\Foo\\Bar";
      * $c->countMatchingNamespaceSegments("TestApp1\\Multi") -> 0, No matches.
      *
      * @param string $namespace

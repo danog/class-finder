@@ -4,7 +4,7 @@ namespace TestApp1;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 class ClassmapTest extends \PHPUnit_Framework_TestCase
 {
@@ -47,22 +47,22 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
                 'Classfinder should be able to load classes based on a classmap.'
             ),
             array(
-                'HaydenPierce\Classmap',
+                'danog\Classmap',
                 array(
-                    'HaydenPierce\Classmap\Classmap2ClassmapINC',
-                    'HaydenPierce\Classmap\Classmap2ClassmapPHP',
-                    'HaydenPierce\Classmap\Classmap3ClassesPHP',
-                    'HaydenPierce\Classmap\ClassmapClassmap2PHP'
+                    'danog\Classmap\Classmap2ClassmapINC',
+                    'danog\Classmap\Classmap2ClassmapPHP',
+                    'danog\Classmap\Classmap3ClassesPHP',
+                    'danog\Classmap\ClassmapClassmap2PHP'
                 ),
                 'Classfinder should be able to load classes based on a classmap from 3rd party packages.'
             ),
             array(
-                'HaydenPierce\Classmap2',
+                'danog\Classmap2',
                 array(
-                    'HaydenPierce\Classmap2\Classmap2ClassmapINC',
-                    'HaydenPierce\Classmap2\Classmap2ClassmapPHP',
-                    'HaydenPierce\Classmap2\Classmap3ClassesPHP',
-                    'HaydenPierce\Classmap2\ClassmapClassmap2PHP'
+                    'danog\Classmap2\Classmap2ClassmapINC',
+                    'danog\Classmap2\Classmap2ClassmapPHP',
+                    'danog\Classmap2\Classmap3ClassesPHP',
+                    'danog\Classmap2\ClassmapClassmap2PHP'
                 ),
                 'Classfinder should be able to handle multiple namespaces in a single file for a classmap.'
             )
@@ -110,16 +110,16 @@ class ClassmapTest extends \PHPUnit_Framework_TestCase
                 'Classfinder should be able to load classes recursively based on a classmap.'
             ),
             array(
-                'HaydenPierce',
+                'danog',
                 array(
-                    'HaydenPierce\Classmap2\Classmap2ClassmapINC',
-                    'HaydenPierce\Classmap2\Classmap2ClassmapPHP',
-                    'HaydenPierce\Classmap2\Classmap3ClassesPHP',
-                    'HaydenPierce\Classmap2\ClassmapClassmap2PHP',
-                    'HaydenPierce\Classmap\Classmap2ClassmapINC',
-                    'HaydenPierce\Classmap\Classmap2ClassmapPHP',
-                    'HaydenPierce\Classmap\Classmap3ClassesPHP',
-                    'HaydenPierce\Classmap\ClassmapClassmap2PHP',
+                    'danog\Classmap2\Classmap2ClassmapINC',
+                    'danog\Classmap2\Classmap2ClassmapPHP',
+                    'danog\Classmap2\Classmap3ClassesPHP',
+                    'danog\Classmap2\ClassmapClassmap2PHP',
+                    'danog\Classmap\Classmap2ClassmapINC',
+                    'danog\Classmap\Classmap2ClassmapPHP',
+                    'danog\Classmap\Classmap3ClassesPHP',
+                    'danog\Classmap\ClassmapClassmap2PHP',
                 ),
                 'Classfinder should be able to load third party classes recursively based on a classmap.'
             )

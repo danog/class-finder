@@ -1,8 +1,8 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\Classmap;
+namespace danog\ClassFinder\Classmap;
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 class ClassmapEntry
 {

@@ -4,7 +4,7 @@ namespace TestApp1;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 class PSR4Test extends \PHPUnit_Framework_TestCase
 {
@@ -58,7 +58,7 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                     'TestApp1\Multi\Uik',
                     'TestApp1\Multi\Yik'
                 ),
-                'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+                'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories (Example: "danog\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
                 'TestApp1\Multi\Yop',
@@ -68,32 +68,32 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                     'TestApp1\Multi\Yop\Eij',
                     'TestApp1\Multi\Yop\Rij'
                 ),
-                'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories multiple levels deep. (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+                'ClassFinder should be able to find 1st party classes when a provided namespace root maps to multiple directories multiple levels deep. (Example: "danog\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
-                'HaydenPierce\SandboxApp',
+                'danog\SandboxApp',
                 array(
-                    'HaydenPierce\SandboxApp\Foy'
+                    'danog\SandboxApp\Foy'
                 ),
                 'ClassFinder should be able to find 3rd party classes'
             ),
             array(
-                'HaydenPierce\SandboxApp\Foo\Bar',
+                'danog\SandboxApp\Foo\Bar',
                 array(
-                    'HaydenPierce\SandboxApp\Foo\Bar\Barc',
-                    'HaydenPierce\SandboxApp\Foo\Bar\Barp'
+                    'danog\SandboxApp\Foo\Bar\Barc',
+                    'danog\SandboxApp\Foo\Bar\Barp'
                 ),
                 'ClassFinder should be able to find 3rd party classes multiple namespaces deep.'
             ),
             array(
-                'HaydenPierce\SandboxAppMulti',
+                'danog\SandboxAppMulti',
                 array(
-                    'HaydenPierce\SandboxAppMulti\Zip',
-                    'HaydenPierce\SandboxAppMulti\Zop',
-                    'HaydenPierce\SandboxAppMulti\Zap',
-                    'HaydenPierce\SandboxAppMulti\Zit'
+                    'danog\SandboxAppMulti\Zip',
+                    'danog\SandboxAppMulti\Zop',
+                    'danog\SandboxAppMulti\Zap',
+                    'danog\SandboxAppMulti\Zit'
                 ),
-                'ClassFinder should be able to find 3rd party classes when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+                'ClassFinder should be able to find 3rd party classes when a provided namespace root maps to multiple directories (Example: "danog\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
                 'TestApp1\Foo\Empty',
@@ -118,10 +118,10 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
         }
 
         // ClassFinder has the ability to find itself. This ability, while intended, is incontinent for tests
-        // because of the 'HaydenPierce' test case. Whenever ClassFinder would be updated, we would need to update the
+        // because of the 'danog' test case. Whenever ClassFinder would be updated, we would need to update the
         // test. To prevent the flakiness, we just remove ClassFinder's classes.
         $classes = array_filter($classes, function($class) {
-            return strpos($class, 'HaydenPierce\ClassFinder') !== 0;
+            return strpos($class, 'danog\ClassFinder') !== 0;
         });
 
         ClassFinder::enableClassmapSupport();
@@ -165,20 +165,20 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
                     'TestApp1\Multi\Yop\Eij',
                     'TestApp1\Multi\Yop\Rij'
                 ),
-                'ClassFinder should be able to find 1st party classes recursively when a provided namespace root maps to multiple directories (Example: "HaydenPierce\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
+                'ClassFinder should be able to find 1st party classes recursively when a provided namespace root maps to multiple directories (Example: "danog\\SandboxAppMulti\\": ["multi/Bop", "multi/Bot"] )'
             ),
             array(
-                'HaydenPierce',
+                'danog',
                 array(
-                    'HaydenPierce\SandboxApp\Foy',
-                    'HaydenPierce\SandboxApp\Fob\Soz',
-                    'HaydenPierce\SandboxApp\Foo\Larc',
-                    'HaydenPierce\SandboxApp\Foo\Bar\Barc',
-                    'HaydenPierce\SandboxApp\Foo\Bar\Barp',
-                    'HaydenPierce\SandboxAppMulti\Zip',
-                    'HaydenPierce\SandboxAppMulti\Zop',
-                    'HaydenPierce\SandboxAppMulti\Zap',
-                    'HaydenPierce\SandboxAppMulti\Zit'
+                    'danog\SandboxApp\Foy',
+                    'danog\SandboxApp\Fob\Soz',
+                    'danog\SandboxApp\Foo\Larc',
+                    'danog\SandboxApp\Foo\Bar\Barc',
+                    'danog\SandboxApp\Foo\Bar\Barp',
+                    'danog\SandboxAppMulti\Zip',
+                    'danog\SandboxAppMulti\Zop',
+                    'danog\SandboxAppMulti\Zap',
+                    'danog\SandboxAppMulti\Zit'
                 ),
                 'ClassFinder should be able to find 3rd party classes'
             )
@@ -188,13 +188,13 @@ class PSR4Test extends \PHPUnit_Framework_TestCase
     public function testForClassesInNamespace()
     {
         $this->assertFalse(ClassFinder::namespaceHasClasses('DoesNotExist'));
-        $this->assertTrue(ClassFinder::namespaceHasClasses('HaydenPierce\ClassFinder'));
+        $this->assertTrue(ClassFinder::namespaceHasClasses('danog\ClassFinder'));
     }
 
     public function testCanFindSelf()
     {
         try {
-            $classes = ClassFinder::getClassesInNamespace('HaydenPierce\ClassFinder', ClassFinder::RECURSIVE_MODE);
+            $classes = ClassFinder::getClassesInNamespace('danog\ClassFinder', ClassFinder::RECURSIVE_MODE);
         } catch (\Exception $e) {
             $this->assertFalse(true, 'An exception occurred: ' . $e->getMessage());
             $classes = array();

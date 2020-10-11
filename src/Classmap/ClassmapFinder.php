@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\Classmap;
+namespace danog\ClassFinder\Classmap;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use HaydenPierce\ClassFinder\FinderInterface;
+use danog\ClassFinder\ClassFinder;
+use danog\ClassFinder\FinderInterface;
 
 class ClassmapFinder implements FinderInterface
 {

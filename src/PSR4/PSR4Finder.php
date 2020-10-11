@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\PSR4;
+namespace danog\ClassFinder\PSR4;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use HaydenPierce\ClassFinder\FinderInterface;
+use danog\ClassFinder\ClassFinder;
+use danog\ClassFinder\FinderInterface;
 
 class PSR4Finder implements FinderInterface
 {

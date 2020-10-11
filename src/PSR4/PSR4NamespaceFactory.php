@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\PSR4;
+namespace danog\ClassFinder\PSR4;
 
-use HaydenPierce\ClassFinder\AppConfig;
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+use danog\ClassFinder\AppConfig;
+use danog\ClassFinder\Exception\ClassFinderException;
 
 class PSR4NamespaceFactory
 {

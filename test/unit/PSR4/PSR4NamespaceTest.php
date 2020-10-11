@@ -1,8 +1,8 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\UnitTest\PSR4;
+namespace danog\ClassFinder\UnitTest\PSR4;
 
-use HaydenPierce\ClassFinder\PSR4\PSR4Namespace;
+use danog\ClassFinder\PSR4\PSR4Namespace;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -73,7 +73,7 @@ EOL;
 
     public function testKnowsNamespace()
     {
-        $namespace = $this->getMockBuilder('\HaydenPierce\ClassFinder\PSR4\PSR4Namespace')
+        $namespace = $this->getMockBuilder('\danog\ClassFinder\PSR4\PSR4Namespace')
             ->setConstructorArgs(array(
                 'MyPSR4Root\\Foot\\',
                 array($this->root->getChild('Baz')->path())

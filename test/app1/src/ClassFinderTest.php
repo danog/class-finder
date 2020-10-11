@@ -4,7 +4,7 @@ namespace TestApp1;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 // "vendor/bin/phpunit" "./test/app1/src/ClassFinderTest.php"
 class ClassFinderTest extends \PHPUnit_Framework_TestCase
@@ -22,7 +22,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException HaydenPierce\ClassFinder\Exception\ClassFinderException
+     * @expectedException danog\ClassFinder\Exception\ClassFinderException
      * @expectedExceptionMessage Could not locate composer.json. You can get around this by setting ClassFinder::$appRoot manually.
      */
     public function testThrowsOnMissingComposerConfig()

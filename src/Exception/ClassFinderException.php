@@ -1,6 +1,6 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\Exception;
+namespace danog\ClassFinder\Exception;
 
 class ClassFinderException extends \Exception
 {

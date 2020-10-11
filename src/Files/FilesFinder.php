@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\Files;
+namespace danog\ClassFinder\Files;
 
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
-use HaydenPierce\ClassFinder\FinderInterface;
+use danog\ClassFinder\Exception\ClassFinderException;
+use danog\ClassFinder\FinderInterface;
 
 class FilesFinder implements FinderInterface
 {

@@ -7,7 +7,7 @@ Example PHP:
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');
 ```
@@ -25,7 +25,7 @@ is the directory that contains the composer.json configuration and where classes
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 ClassFinder::setAppRoot(realpath(__DIR__ . '../../app/')); // This is suggesting that the app root is really someone else.
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');

@@ -4,7 +4,7 @@ namespace TestApp1;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 class FilesTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,14 +53,14 @@ class FilesTest extends \PHPUnit_Framework_TestCase
                 'ClassFinder should be able to find 1st party classes included from `files` listed in composer.json.'
             ),
             array(
-                'HaydenPierce\Files',
+                'danog\Files',
                 array(
-                    'HaydenPierce\Files\z',
-                    'HaydenPierce\Files\z2',
-                    'HaydenPierce\Files\a',
-                    'HaydenPierce\Files\a2',
-                    'HaydenPierce\Files\b',
-                    'HaydenPierce\Files\b2'
+                    'danog\Files\z',
+                    'danog\Files\z2',
+                    'danog\Files\a',
+                    'danog\Files\a2',
+                    'danog\Files\b',
+                    'danog\Files\b2'
                 ),
                 'ClassFinder should be able to find 3rd party classes included from `files` listed in composer.json of those projects.'
             )

@@ -81,7 +81,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "HaydenPierce\\ClassFinder\\": "src/"
+                    "danog\\ClassFinder\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -113,8 +113,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "HaydenPierce\\SandboxApp\\": "src/",
-                    "HaydenPierce\\SandboxAppMulti\\": [
+                    "danog\\SandboxApp\\": "src/",
+                    "danog\\SandboxAppMulti\\": [
                         "multi/Bop",
                         "multi/Bot"
                     ]

@@ -1,8 +1,8 @@
 <?php
 
-namespace HaydenPierce\ClassFinder;
+namespace danog\ClassFinder;
 
-use HaydenPierce\ClassFinder\Exception\ClassFinderException;
+use danog\ClassFinder\Exception\ClassFinderException;
 
 class AppConfig
 {

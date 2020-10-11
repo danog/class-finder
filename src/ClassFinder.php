@@ -1,13 +1,13 @@
 <?php
 
-namespace HaydenPierce\ClassFinder;
+namespace danog\ClassFinder;
 
-use HaydenPierce\ClassFinder\Classmap\ClassmapEntryFactory;
-use HaydenPierce\ClassFinder\Classmap\ClassmapFinder;
-use HaydenPierce\ClassFinder\Files\FilesEntryFactory;
-use HaydenPierce\ClassFinder\Files\FilesFinder;
-use HaydenPierce\ClassFinder\PSR4\PSR4Finder;
-use HaydenPierce\ClassFinder\PSR4\PSR4NamespaceFactory;
+use danog\ClassFinder\Classmap\ClassmapEntryFactory;
+use danog\ClassFinder\Classmap\ClassmapFinder;
+use danog\ClassFinder\Files\FilesEntryFactory;
+use danog\ClassFinder\Files\FilesFinder;
+use danog\ClassFinder\PSR4\PSR4Finder;
+use danog\ClassFinder\PSR4\PSR4NamespaceFactory;
 
 class ClassFinder
 {

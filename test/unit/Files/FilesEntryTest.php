@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\UnitTest\Files;
+namespace danog\ClassFinder\UnitTest\Files;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use HaydenPierce\ClassFinder\Files\FilesEntry;
+use danog\ClassFinder\ClassFinder;
+use danog\ClassFinder\Files\FilesEntry;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 

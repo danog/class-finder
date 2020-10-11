@@ -7,7 +7,7 @@ Example PHP:
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\ClassFinder;
 
 ClassFinder::enableExperimentalFilesSupport();
 $classes = ClassFinder::getClassesInNamespace('Acme\Foo\Bar');

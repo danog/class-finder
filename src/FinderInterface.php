@@ -1,6 +1,6 @@
 <?php
 
-namespace HaydenPierce\ClassFinder;
+namespace danog\ClassFinder;
 
 interface FinderInterface
 {

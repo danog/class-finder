@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\UnitTest\Classmap;
+namespace danog\ClassFinder\UnitTest\Classmap;
 
-use HaydenPierce\ClassFinder\ClassFinder;
-use HaydenPierce\ClassFinder\Classmap\ClassmapEntry;
+use danog\ClassFinder\ClassFinder;
+use danog\ClassFinder\Classmap\ClassmapEntry;
 
 class ClassmapEntryTest extends \PHPUnit_Framework_TestCase
 {

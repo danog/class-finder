@@ -1,9 +1,9 @@
 <?php
 
-namespace HaydenPierce\ClassFinder\Classmap;
+namespace danog\ClassFinder\Classmap;
 
-use HaydenPierce\ClassFinder\AppConfig;
-use HaydenPierce\ClassFinder\ClassFinder;
+use danog\ClassFinder\AppConfig;
+use danog\ClassFinder\ClassFinder;
 
 class ClassmapEntryFactory
 {
