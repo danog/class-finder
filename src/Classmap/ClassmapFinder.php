@@ -2,6 +2,7 @@
 
 namespace HaydenPierce\ClassFinder\Classmap;
 
+use HaydenPierce\ClassFinder\ClassFinder;
 use HaydenPierce\ClassFinder\FinderInterface;
 
 class ClassmapFinder implements FinderInterface
@@ -20,7 +21,7 @@ class ClassmapFinder implements FinderInterface
      */
     public function isNamespaceKnown($namespace)
     {
-        $classmapEntries = $this->factory->getClassmapEntries();
+        $classmapEntries = $this->factory->getClassmapEntries(ClassFinder::ALLOW_CLASSES | ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS);
 
         foreach($classmapEntries as $classmapEntry) {
             if ($classmapEntry->knowsNamespace($namespace)) {

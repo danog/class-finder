@@ -18,7 +18,7 @@ class ClassmapEntryFactory
     /**
      * @return ClassmapEntry[]
      */
-    public function getClassmapEntries($allowAdditional = ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS)
+    public function getClassmapEntries($allowAdditional)
     {
         // Composer will compile user declared mappings to autoload_classmap.php. So no additional work is needed
         // to fetch user provided entries.
