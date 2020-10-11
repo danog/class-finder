@@ -24,11 +24,15 @@ class ClassmapEntryFactory
         // to fetch user provided entries.
         $classmap = require($this->appConfig->getAppRoot() . 'vendor/composer/autoload_classmap.php');
 
-        $classmap = array_filter($classmap, function ($potentialClass) use ($allowAdditional) {
-            return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
+        $finalClassMap = array();
+        foreach ($classmap as $potentialClass => $file) {
+            if ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass)
                 || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
-                || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass));
-        }, ARRAY_FILTER_USE_KEY);
+                || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass))) {
+                $finalClassMap[$potentialClass] = $file;
+            }
+        }
+        $classmap = $finalClassMap;
 
         // if classmap has no entries return empty array
         if(count($classmap) == 0) {

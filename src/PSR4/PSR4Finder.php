@@ -22,7 +22,7 @@ class PSR4Finder implements FinderInterface
      */
     public function findClasses($namespace, $options)
     {
-        if ($options === ClassFinder::RECURSIVE_MODE) {
+        if (($options & ClassFinder::MODE_MASK) === ClassFinder::RECURSIVE_MODE) {
             $applicableNamespaces = $this->findAllApplicableNamespaces($namespace);
         }
 

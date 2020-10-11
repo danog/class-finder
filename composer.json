@@ -1,5 +1,5 @@
 {
-    "name": "haydenpierce/class-finder",
+    "name": "danog/class-finder",
     "description" : "A library that can provide of a list of classes in a given namespace",
     "type": "library",
     "license": "MIT",
@@ -8,6 +8,10 @@
         {
             "name": "Hayden Pierce",
             "email": "hayden@haydenpierce.com"
+        },
+        {
+            "name": "Daniil Gentili",
+            "email": "daniil@daniil.it"
         }
     ],
     "require": {
@@ -20,8 +24,8 @@
     },
     "autoload": {
         "psr-4": {
-            "HaydenPierce\\ClassFinder\\": "src/",
-            "HaydenPierce\\ClassFinder\\UnitTest\\": "test/unit"
+            "danog\\ClassFinder\\": "src/",
+            "danog\\ClassFinder\\UnitTest\\": "test/unit"
         }
     }
 }
