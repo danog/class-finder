@@ -1,6 +1,6 @@
 {
     "name": "danog/class-finder",
-    "description" : "A library that can provide of a list of classes in a given namespace",
+    "description" : "Fork of haydenpierce/class-finder with support for traits and interfaces",
     "type": "library",
     "license": "MIT",
     "version": "0.4.2",
