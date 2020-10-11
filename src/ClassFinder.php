@@ -13,6 +13,11 @@ class ClassFinder
 {
     const STANDARD_MODE = 1;
     const RECURSIVE_MODE = 2;
+    const ALLOW_CLASSES = 4;
+    const ALLOW_INTERFACES = 8;
+    const ALLOW_TRAITS = 16;
+
+    const MODE_MASK = 3;
 
     /** @var AppConfig */
     private static $config;
@@ -71,6 +76,10 @@ class ClassFinder
      */
     public static function getClassesInNamespace($namespace, $options = self::STANDARD_MODE)
     {
+        if (!($options & (self::ALLOW_INTERFACES | self::ALLOW_TRAITS))) {
+            // Default to classes
+            $options |= self::ALLOW_CLASSES;
+        }
         self::initialize();
 
         $findersWithNamespace = self::findersWithNamespace($namespace);

@@ -1,7 +1,7 @@
 ClassFinder
 ===========
 
-A dead simple utility to identify classes in a given namespace.
+A dead simple utility to identify classes, traits and interfaces in a given namespace.
 
 This package is an improved implementation of an [answer on Stack Overflow](https://stackoverflow.com/a/40229665/3000068)
 and provides additional features with less configuration required.
@@ -50,7 +50,14 @@ Examples
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+// Will default to ClassFinder::ALLOW_CLASSES
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_CLASSES);
+$interfaces = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_INTERFACES);
+$traits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_TRAITS);
+
+// You can combine any of the flags
+$interfacesTraits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_TRAITS | ClassFinder::ALLOW_INTERFACES);
 
 /**
  * array(
@@ -60,6 +67,27 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
  * )
  */
 var_dump($classes);
+/**
+ * array(
+ *   'TestApp1\Foo\BarInterface',
+ *   'TestApp1\Foo\FooInterface'
+ * )
+ */
+var_dump($interfaces);
+/**
+ * array(
+ *   'TestApp1\Foo\BazTrait',
+ * )
+ */
+var_dump($traits);
+/**
+ * array(
+ *   'TestApp1\Foo\BarInterface',
+ *   'TestApp1\Foo\FooInterface',
+ *   'TestApp1\Foo\BazTrait',
+ * )
+ */
+var_dump($interfacesTraits);
 ```
 
 **Recursive Mode** *(in v0.3-beta)*
@@ -69,7 +97,15 @@ var_dump($classes);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+// As before, will default to ClassFinder::ALLOW_CLASSES
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE);
+$classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_CLASSES);
+$interfaces = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_INTERFACES);
+$traits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_TRAITS);
+
+
+// You can combine any of the flags
+$classesTraits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_CLASSS | ClassFinder::ALLOW_TRAITS);
 
 /**
  * array(
@@ -85,6 +121,11 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECUR
  * )
  */
 var_dump($classes);
+
+// You get the idea :)
+var_dump($interfaces);
+var_dump($traits);
+var_dump($classesTraits);
 ```
  
 Documentation

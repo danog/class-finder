@@ -46,7 +46,7 @@ EOL
 
         $files = new FilesEntry($tmpFilename, $this->findPHP());
 
-        $classes = $files->getClasses($namespace);
+        $classes = $files->getClasses($namespace, 0);
 
         $this->assertEquals($expected, $classes, 'FilesEntry should be able to determine the classes defined in a given file.');
     }

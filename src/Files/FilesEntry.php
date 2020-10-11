@@ -2,6 +2,8 @@
 
 namespace HaydenPierce\ClassFinder\Files;
 
+use HaydenPierce\ClassFinder\ClassFinder;
+
 class FilesEntry
 {
     /** @var string */
@@ -38,14 +40,14 @@ class FilesEntry
     }
 
     /**
-     * Gets a list of classes that belong to the given namespace.
-     *
+     * Gets a list of classes that belong to the given namespace
      * @param string $namespace
+     * @param int    $options
      * @return string[]
      */
-    public function getClasses($namespace)
+    public function getClasses($namespace, $options)
     {
-        $classes = $this->getClassesInFile();
+        $classes = $this->getClassesInFile($options);
 
         return array_values(array_filter($classes, function($class) use ($namespace) {
             $classNameFragments = explode('\\', $class);
@@ -59,6 +61,19 @@ class FilesEntry
     }
 
     /**
+     * Execute PHP code and return retuend value
+     *
+     * @param string $script
+     * @return mixed
+     */
+    private function execReturn($script)
+    {
+        exec($this->php . " -r \"$script\"", $output);
+        $classes = 'return ' . implode('', $output) . ';';
+        return eval($classes);
+    }
+
+    /**
      * Dynamically execute files and check for defined classes.
      *
      * This is where the real magic happens. Since classes in a randomly included file could contain classes in any namespace,
@@ -68,24 +83,35 @@ class FilesEntry
      *
      * @return array
      */
-    private function getClassesInFile()
+    private function getClassesInFile($options = ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS)
     {
-        // get_declared_classes() returns a bunch of classes that are built into PHP. So we need a control here.
-        $script = "var_export(get_declared_classes());";
-        exec($this->php . " -r \"$script\"", $output);
-        $classes = 'return ' . implode('', $output) . ';';
-        $initialClasses = eval($classes);
-
-        // clear the exec() buffer.
-        unset($output);
+        // get_declared_*() returns a bunch of classes|interfaces|traits that are built into PHP. So we need a control here.
+        list($initialInterfaces, 
+            $initialClasses, 
+            $initialTraits
+        ) = $this->execReturn("var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits()));");
 
         // This brings in the new classes. so $classes here will include the PHP defaults and the newly defined classes
-        $script = "require_once '{$this->file}'; var_export(get_declared_classes());";
-        exec($this->php . ' -r "' . $script . '"', $output);
-        $classes = 'return ' . implode('', $output) . ';';
-        $allClasses = eval($classes);
+        list($allInterfaces,
+            $allClasses,
+            $allTraits
+        ) = $this->execReturn("require_once '{$this->file}'; var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits()));");
 
-        return array_diff($allClasses, $initialClasses);
+        $interfaces = array_diff($allInterfaces, $initialInterfaces);
+        $classes = array_diff($allClasses, $initialClasses);
+        $traits = array_diff($allTraits, $initialTraits);
+
+        $final = array();
+        if ($options & ClassFinder::ALLOW_CLASSES) {
+            $final = $classes;
+        }
+        if ($options & ClassFinder::ALLOW_INTERFACES) {
+            $final = array_merge($final, $interfaces);
+        }
+        if ($options & ClassFinder::ALLOW_TRAITS) {
+            $final = array_merge($final, $traits);
+        }
+        return $final;
     }
 
     /**

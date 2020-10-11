@@ -168,6 +168,9 @@ class PSR4Namespace
      */
     public function findClasses($namespace, $options = ClassFinder::STANDARD_MODE)
     {
+        $allowAdditional = $options & ~ClassFinder::MODE_MASK;
+        $options &= ClassFinder::MODE_MASK;
+
         $relativePath = substr($namespace, strlen($this->namespace));
 
         $self = $this;
@@ -194,24 +197,27 @@ class PSR4Namespace
         }, $potentialClassFiles);
 
         if ($options == ClassFinder::RECURSIVE_MODE) {
-            return $this->getClassesFromListRecursively($namespace);
+            return $this->getClassesFromListRecursively($namespace, $allowAdditional);
         } else {
-            return array_filter($potentialClasses, function($potentialClass) {
+            return array_filter($potentialClasses, function($potentialClass) use ($allowAdditional) {
                 if (function_exists($potentialClass)) {
                     // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
                     // Example: DeepCopy\deep_copy
                     return false;
                 } else {
-                    return class_exists($potentialClass);
+                    return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
+                        || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
+                        || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass));
                 }
             });
         }
     }
 
     /**
+     * @param int $allowAdditional
      * @return string[]
      */
-    private function getDirectClassesOnly()
+    private function getDirectClassesOnly($allowAdditional)
     {
         $self = $this;
         $directories = array_reduce($this->directories, function($carry, $directory) use ($self){
@@ -237,27 +243,30 @@ class PSR4Namespace
             return $selfNamespace . str_replace('.php', '', $file);
         }, $potentialClassFiles);
 
-        return array_filter($potentialClasses, function($potentialClass) {
+        return array_filter($potentialClasses, function($potentialClass) use ($allowAdditional) {
             if (function_exists($potentialClass)) {
                 // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
                 // Example: DeepCopy\deep_copy
                 return false;
             } else {
-                return class_exists($potentialClass);
+                return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
+                    || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
+                    || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass));
             }
         });
     }
 
     /**
      * @param string $namespace
+     * @param $allowAdditional
      * @return string[]
      */
-    public function getClassesFromListRecursively($namespace)
+    public function getClassesFromListRecursively($namespace, $allowAdditional)
     {
-        $initialClasses = strpos( $this->namespace, $namespace) !== false ? $this->getDirectClassesOnly() : array();
+        $initialClasses = strpos( $this->namespace, $namespace) !== false ? $this->getDirectClassesOnly($allowAdditional) : array();
 
-        return array_reduce($this->getDirectSubnamespaces(), function($carry, PSR4Namespace $subNamespace) use ($namespace) {
-            return array_merge($carry, $subNamespace->getClassesFromListRecursively($namespace));
+        return array_reduce($this->getDirectSubnamespaces(), function($carry, PSR4Namespace $subNamespace) use ($namespace, $allowAdditional) {
+            return array_merge($carry, $subNamespace->getClassesFromListRecursively($namespace, $allowAdditional));
         }, $initialClasses);
     }
 

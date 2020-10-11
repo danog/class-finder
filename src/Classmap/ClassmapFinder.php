@@ -38,7 +38,7 @@ class ClassmapFinder implements FinderInterface
      */
     public function findClasses($namespace, $options)
     {
-        $classmapEntries = $this->factory->getClassmapEntries();
+        $classmapEntries = $this->factory->getClassmapEntries($options);
 
         $matchingEntries = array_filter($classmapEntries, function(ClassmapEntry $entry) use ($namespace, $options) {
             return $entry->matches($namespace, $options);
