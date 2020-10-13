@@ -16,6 +16,9 @@ class ClassFinder
     const ALLOW_CLASSES = 4;
     const ALLOW_INTERFACES = 8;
     const ALLOW_TRAITS = 16;
+    const ALLOW_FUNCTIONS = 32;
+
+    const ALLOW_ALL = 60;
 
     const MODE_MASK = 3;
 

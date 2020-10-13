@@ -203,7 +203,7 @@ class PSR4Namespace
                 if (function_exists($potentialClass)) {
                     // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
                     // Example: DeepCopy\deep_copy
-                    return false;
+                    return ($allowAdditional & ClassFinder::ALLOW_FUNCTIONS);
                 } else {
                     return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
                         || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
@@ -247,7 +247,7 @@ class PSR4Namespace
             if (function_exists($potentialClass)) {
                 // For some reason calling class_exists() on a namespace'd function raises a Fatal Error (tested PHP 7.0.8)
                 // Example: DeepCopy\deep_copy
-                return false;
+                return ($allowAdditional & ClassFinder::ALLOW_FUNCTIONS);
             } else {
                 return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
                     || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))

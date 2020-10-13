@@ -28,7 +28,7 @@ class FilesEntry
      */
     public function knowsNamespace($namespace)
     {
-        $classes = $this->getClassesInFile(ClassFinder::ALLOW_CLASSES | ClassFinder::ALLOW_INTERFACES | ClassFinder::ALLOW_TRAITS);
+        $classes = $this->getClassesInFile(ClassFinder::ALLOW_ALL);
 
         foreach($classes as $class) {
             if (strpos($class, $namespace) !== false) {
@@ -88,18 +88,21 @@ class FilesEntry
         // get_declared_*() returns a bunch of classes|interfaces|traits that are built into PHP. So we need a control here.
         list($initialInterfaces, 
             $initialClasses, 
-            $initialTraits
-        ) = $this->execReturn("var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits()));");
+            $initialTraits,
+            $initialFuncs
+        ) = $this->execReturn("var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits(), get_defined_functions()['user']));");
 
         // This brings in the new classes. so $classes here will include the PHP defaults and the newly defined classes
         list($allInterfaces,
             $allClasses,
-            $allTraits
-        ) = $this->execReturn("require_once '{$this->file}'; var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits()));");
+            $allTraits,
+            $allFuncs
+        ) = $this->execReturn("require_once '{$this->file}'; var_export(array(get_declared_interfaces(), get_declared_classes(), get_declared_traits(), get_defined_functions()['user']));");
 
         $interfaces = array_diff($allInterfaces, $initialInterfaces);
         $classes = array_diff($allClasses, $initialClasses);
         $traits = array_diff($allTraits, $initialTraits);
+        $funcs = array_diff($allFuncs, $initialFuncs);
 
         $final = array();
         if ($options & ClassFinder::ALLOW_CLASSES) {
@@ -110,6 +113,9 @@ class FilesEntry
         }
         if ($options & ClassFinder::ALLOW_TRAITS) {
             $final = array_merge($final, $traits);
+        }
+        if ($options & ClassFinder::ALLOW_FUNCTIONS) {
+            $final = array_merge($final, $funcs);
         }
         return $final;
     }

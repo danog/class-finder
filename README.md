@@ -1,7 +1,7 @@
 ClassFinder
 ===========
 
-A dead simple utility to identify classes, traits and interfaces in a given namespace.
+A dead simple utility to identify classes, traits, functions and interfaces in a given namespace.
 
 This package is an improved implementation of an [answer on Stack Overflow](https://stackoverflow.com/a/40229665/3000068)
 and provides additional features with less configuration required.
@@ -55,6 +55,7 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo');
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_CLASSES);
 $interfaces = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_INTERFACES);
 $traits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_TRAITS);
+$funcs = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_FUNCTIONS);
 
 // You can combine any of the flags
 $interfacesTraits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::ALLOW_TRAITS | ClassFinder::ALLOW_INTERFACES);
@@ -82,6 +83,12 @@ var_dump($interfaces);
 var_dump($traits);
 /**
  * array(
+ *   'TestApp1\Foo\myFunc',
+ * )
+ */
+var_dump($funcs);
+/**
+ * array(
  *   'TestApp1\Foo\BarInterface',
  *   'TestApp1\Foo\FooInterface',
  *   'TestApp1\Foo\BazTrait',
@@ -102,6 +109,7 @@ $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECUR
 $classes = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_CLASSES);
 $interfaces = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_INTERFACES);
 $traits = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_TRAITS);
+$funcs = ClassFinder::getClassesInNamespace('TestApp1\Foo', ClassFinder::RECURSIVE_MODE | ClassFinder::ALLOW_FUNCTIONS);
 
 
 // You can combine any of the flags
@@ -125,6 +133,7 @@ var_dump($classes);
 // You get the idea :)
 var_dump($interfaces);
 var_dump($traits);
+var_dump($funcs);
 var_dump($classesTraits);
 ```
  

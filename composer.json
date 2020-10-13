@@ -1,9 +1,8 @@
 {
     "name": "danog/class-finder",
-    "description": "Fork of haydenpierce/class-finder with support for traits and interfaces",
+    "description": "Fork of haydenpierce/class-finder with support for traits, interfaces and functions",
     "type": "library",
     "license": "MIT",
-    "version": "0.4.3",
     "authors": [
         {
             "name": "Hayden Pierce",
