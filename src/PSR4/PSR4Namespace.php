@@ -206,8 +206,8 @@ class PSR4Namespace
                     return ($allowAdditional & ClassFinder::ALLOW_FUNCTIONS);
                 } else {
                     return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
-                        || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
-                        || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass));
+                        || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass, false))
+                        || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass, false));
                 }
             });
         }
@@ -250,8 +250,8 @@ class PSR4Namespace
                 return ($allowAdditional & ClassFinder::ALLOW_FUNCTIONS);
             } else {
                 return ($allowAdditional & ClassFinder::ALLOW_CLASSES && class_exists($potentialClass))
-                    || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass))
-                    || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass));
+                    || ($allowAdditional & ClassFinder::ALLOW_INTERFACES && interface_exists($potentialClass, false))
+                    || ($allowAdditional & ClassFinder::ALLOW_TRAITS && trait_exists($potentialClass, false));
             }
         });
     }
