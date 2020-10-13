@@ -23,7 +23,7 @@ class AppConfig
             $appRoot = $this->appRoot;
         } else {
             $workingDirectory = str_replace('\\', '/', __DIR__);
-            $workingDirectory = str_replace('/vendor/haydenpierce/class-finder/src', '', $workingDirectory);
+            $workingDirectory = str_replace('/vendor/danog/class-finder/src', '', $workingDirectory);
             $directoryPathPieces = explode('/', $workingDirectory);
 
             $appRoot = null;
