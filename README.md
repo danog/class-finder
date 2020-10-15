@@ -19,7 +19,7 @@ Installing
 Installing is done by requiring it with Composer.
 
 ```
-$ composer require haydenpierce/class-finder
+$ composer require danog/class-finder
 ```
 
 No other installation methods are currently supported.
